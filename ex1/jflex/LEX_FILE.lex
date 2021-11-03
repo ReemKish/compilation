@@ -111,8 +111,8 @@ STRING		= \"[a-zA-Z]*\"
 ID				= [a-zA-Z]+[a-zA-Z0-9]*
 COMMENT_CHAR		= [a-zA-Z0-9 \t\f\(\)\[\]\{\}\?\!\+\-\*\/\.\;]*
 MULTI_COMMENT		= \/\*({COMMENT_CHAR}|{LineTerminator})*\*\/
-UNCLOSED_COMMENT= \/\*
-COMMENT					= \/\/{COMMENT_CHAR}*
+COMMENT					= \/\/{COMMENT_CHAR}*{LineTerminator}
+INVALID_COMMENT= (\/\*)|(\/\/)
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
 /******************************/
@@ -133,7 +133,7 @@ COMMENT					= \/\/{COMMENT_CHAR}*
 
 {COMMENT}		    { /* skip, do nothing */ }
 {MULTI_COMMENT}	{ /* skip, do nothing */ }
-{UNCLOSED_COMMENT}	{ throw new Exception("unclosed comment"); }
+{INVALID_COMMENT}	{ throw new Exception("invalid comment"); }
 {LPAREN}		{ return symbol(TokenNames.LPAREN)		;}
 {RPAREN}		{ return symbol(TokenNames.RPAREN)		;}
 {LBRACK}		{ return symbol(TokenNames.LBRACK)		;}
