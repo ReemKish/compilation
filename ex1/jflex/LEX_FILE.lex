@@ -112,7 +112,7 @@ ID				= [a-zA-Z]+[a-zA-Z0-9]*
 COMMENT_CHAR		= [a-zA-Z0-9 \t\f\(\)\[\]\{\}\?\!\+\-\*\/\.\;]*
 MULTI_COMMENT		= \/\*({COMMENT_CHAR}|{LineTerminator})*\*\/
 COMMENT					= \/\/{COMMENT_CHAR}*{LineTerminator}
-INVALID_COMMENT= (\/\*)|(\/\/)
+INVALID_COMMENT= (\/\*)|(\/\/{LineTerminator})
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
 /******************************/
