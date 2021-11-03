@@ -109,8 +109,10 @@ TYPE_STRING = "string"
 INT				= 0 | [1-9][0-9]*
 STRING		= \"[a-zA-Z]*\"
 ID				= [a-zA-Z]+[a-zA-Z0-9]*
-MULTI_COMMENT		= \/\*(\*(?!\/)|[0-9a-zA-Z \t\f\r\n\,\.\;\!\?\(\)\[\]\{\}\+\-\/])*\*\/
-COMMENT					= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator}
+COMMENT_CHAR		= [a-zA-Z0-9 \t\f\(\)\[\]\{\}\?\!\+\-\*\/\.\;]*
+MULTI_COMMENT		= \/\*({COMMENT_CHAR}|{LineTerminator})*\*\/
+UNCLOSED_COMMENT= \/\*
+COMMENT					= \/\/{COMMENT_CHAR}*
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
 /******************************/
@@ -131,6 +133,7 @@ COMMENT					= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator
 
 {COMMENT}		    { /* skip, do nothing */ }
 {MULTI_COMMENT}	{ /* skip, do nothing */ }
+{UNCLOSED_COMMENT}	{ throw new Exception("unclosed comment"); }
 {LPAREN}		{ return symbol(TokenNames.LPAREN)		;}
 {RPAREN}		{ return symbol(TokenNames.RPAREN)		;}
 {LBRACK}		{ return symbol(TokenNames.LBRACK)		;}
