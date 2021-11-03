@@ -1,4 +1,3 @@
-   
 import java.io.*;
 import java.io.PrintWriter;
 
@@ -14,7 +13,37 @@ public class Main
 		PrintWriter file_writer;
 		String inputFilename = argv[0];
 		String outputFilename = argv[1];
-		
+		String TokenNameDict [] = {"EOF",
+			"LPAREN",
+			"RPAREN",
+			"LBRACK",
+			"RBRACK",
+			"LBRACE",
+			"RBRACE",
+			"NIL",
+			"PLUS",
+			"MINUS",
+			"TIMES",
+			"DIVIDE",
+			"COMMA",
+			"DOT",
+			"SEMICOLON",
+			"TYPE_INT",
+			"ASSIGN",
+			"EQ",
+			"LT",
+			"GT",
+			"ARRAY",
+			"CLASS",
+			"EXTENDS",
+			"RETURN",
+			"WHILE",
+			"IF",
+			"NEW",
+			"INT",
+			"STRING",
+			"ID",
+			"TYPE_STRING"};
 		try
 		{
 			/********************************/
@@ -45,12 +74,15 @@ public class Main
 				/************************/
 				/* [6] Print to console */
 				/************************/
+				System.out.print(TokenNameDict[s.sym]);
+				System.out.print("(");
+				System.out.print(s.value);
+				System.out.print(")");
 				System.out.print("[");
 				System.out.print(l.getLine());
 				System.out.print(",");
 				System.out.print(l.getTokenStartPosition());
-				System.out.print("]:");
-				System.out.print(s.value);
+				System.out.print("]");
 				System.out.print("\n");
 				
 				/*********************/
