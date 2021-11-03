@@ -109,7 +109,7 @@ TYPE_STRING = "string"
 INT				= 0 | [1-9][0-9]*
 STRING		= \"[a-zA-Z]*\"
 ID				= [a-zA-Z]+[a-zA-Z0-9]*
-MULTI_COMMENT		= \/\*[0-9a-zA-Z \t\f\r\n\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+\*\/
+MULTI_COMMENT		= \/\*(\*(?!\/)|[0-9a-zA-Z \t\f\r\n\,\.\;\!\?\(\)\[\]\{\}\+\-\/])*\*\/
 COMMENT					= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator}
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
