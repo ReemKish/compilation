@@ -73,8 +73,10 @@ import java_cup.runtime.*;
 LineTerminator	= \r|\n|\r\n
 WhiteSpace		= {LineTerminator} | [ \t\f]
 INTEGER			= 0 | [1-9][0-9]*
-ID				= [a-z]+
-
+ID				= [a-zA-Z]+[a-zA-Z0-9]+
+STRING			= \"[a-zA-Z]+\"
+MULTI_COMMENT	= \/\*[0-9a-zA-Z \t\f\r\n\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+\*\/
+COMMENT			= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator}
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
 /******************************/
@@ -93,14 +95,38 @@ ID				= [a-z]+
 
 <YYINITIAL> {
 
-"+"					{ return symbol(TokenNames.PLUS);}
-"-"					{ return symbol(TokenNames.MINUS);}
-"PPP"				{ return symbol(TokenNames.TIMES);}
-"/"					{ return symbol(TokenNames.DIVIDE);}
+{COMMENT}		    { /* just skip what was found, do nothing */ }
+{MULTI_COMMENT}		{ /* just skip what was found, do nothing */ }
 "("					{ return symbol(TokenNames.LPAREN);}
 ")"					{ return symbol(TokenNames.RPAREN);}
-{INTEGER}			{ return symbol(TokenNames.NUMBER, new Integer(yytext()));}
-{ID}				{ return symbol(TokenNames.ID,     new String( yytext()));}   
+"["					{ return symbol(TokenNames.LBRACK);}
+"]"					{ return symbol(TokenNames.RBRACK);}
+"{"					{ return symbol(TokenNames.LBRACE);}
+"}"					{ return symbol(TokenNames.RBRACE);}
+"nil"				{ return symbol(TokenNames.NIL);}
+"+"					{ return symbol(TokenNames.PLUS);}
+"-"					{ return symbol(TokenNames.MINUS);}
+"*"					{ return symbol(TokenNames.TIMES);}
+"/"					{ return symbol(TokenNames.DIVIDE);}
+","					{ return symbol(TokenNames.COMMA);}
+"."					{ return symbol(TokenNames.DOT);}
+";"					{ return symbol(TokenNames.SEMICOLON);}
+"int"				{ return symbol(TokenNames.TYPE_INT);}
+"string"			{ return symbol(TokenNames.TYPE_STRING);}
+":="				{ return symbol(TokenNames.ASSIGN);}
+"="					{ return symbol(TokenNames.EQ);}
+">"					{ return symbol(TokenNames.LT);}
+"<"					{ return symbol(TokenNames.GT);}
+"array"				{ return symbol(TokenNames.ARRAY);}
+"class"			    { return symbol(TokenNames.CLASS);}
+"extends"			{ return symbol(TokenNames.EXTENDS);}
+"return"			{ return symbol(TokenNames.RETURN);}
+"while"				{ return symbol(TokenNames.WHILE);}
+"if"				{ return symbol(TokenNames.IF);}
+"new"				{ return symbol(TokenNames.NEW);}
+{INTEGER}			{ return symbol(TokenNames.INT, new Integer(yytext()));}
+{STRING}			{ return symbol(TokenNames.STRING,     new String( yytext()));}
+{ID}				{ return symbol(TokenNames.ID,     new String( yytext()));}
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 <<EOF>>				{ return symbol(TokenNames.EOF);}
 }
