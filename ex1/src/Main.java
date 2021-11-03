@@ -88,9 +88,15 @@ public class Main
 				/*********************/
 				/* [7] Print to file */
 				/*********************/
-				file_writer.print(l.getLine());
-				file_writer.print(": ");
+				file_writer.print(TokenNameDict[s.sym]);
+				file_writer.print("(");
 				file_writer.print(s.value);
+				file_writer.print(")");
+				file_writer.print("[");
+				file_writer.print(l.getLine());
+				file_writer.print(",");
+				file_writer.print(l.getTokenStartPosition());
+				file_writer.print("]");
 				file_writer.print("\n");
 				
 				/***********************/
