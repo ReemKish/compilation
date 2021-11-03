@@ -109,8 +109,16 @@ TYPE_STRING = "string"
 INT				= 0 | [1-9][0-9]*
 STRING		= \"[a-zA-Z]*\"
 ID				= [a-zA-Z]+[a-zA-Z0-9]*
-MULTI_COMMENT		= \/\*(\*(?!\/)|[0-9a-zA-Z \t\f\r\n\,\.\;\!\?\(\)\[\]\{\}\+\-\/])*\*\/
-COMMENT					= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator}
+LComFriend		= [a-zA-Z] | [0-9] | [ \t\f] | [\(\)\[\]\{\}\?\!\+\-\*\/\.\;] 
+NOTSLASHNOTSTAR 	= [a-zA-Z] | [0-9] | {WhiteSpace} | [\(\)\[\]\{\}\?\!\+\-\.\;]
+BComFriend		= [a-zA-Z] | [0-9] | {WhiteSpace} | [\(\)\[\]\{\}\?\!\+\-\/\.\;] | (\*)+{NOTSLASHNOTSTAR}
+LCOMMENT		= \/\/{LComFriend}*{LineTerminator}
+BCOMMENT		= \/\*{BComFriend}*(\*)+\/ 
+BADBCOM			= \/\*{BComFriend}*
+BADLCOM			= \/\/
+BADCOMMENT		= {BADBCOM} | {BADLCOM}
+ONLYSTARS		= \/\*(\*)*\*\/
+COMMENT			= {LCOMMENT} | {BCOMMENT} | {ONLYSTARS}
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
 /******************************/
@@ -129,8 +137,8 @@ COMMENT					= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator
 
 <YYINITIAL> {
 
-{COMMENT}		    { /* skip, do nothing */ }
-{MULTI_COMMENT}	{ /* skip, do nothing */ }
+{WhiteSpace}	{ /* skip, do nothing */ }
+{COMMENT}		{ System.out.println(yytext());}
 {LPAREN}		{ return symbol(TokenNames.LPAREN)		;}
 {RPAREN}		{ return symbol(TokenNames.RPAREN)		;}
 {LBRACK}		{ return symbol(TokenNames.LBRACK)		;}
@@ -165,7 +173,6 @@ COMMENT					= \/\/[0-9a-zA-Z \t\f\,\.\;\!\?\(\)\[\]\{\}\+\-\*\/]+{LineTerminator
 }
 {STRING}	{ return symbol(TokenNames.STRING, new String( yytext()));}
 {ID}			{ return symbol(TokenNames.ID,     new String( yytext()));}
-{WhiteSpace}	{ /* skip, do nothing */ }
 <<EOF>>				{ return symbol(TokenNames.EOF);}
 .					{throw new Exception("invalid token");}
 }
