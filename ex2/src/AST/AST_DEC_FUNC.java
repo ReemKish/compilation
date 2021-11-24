@@ -63,8 +63,8 @@ public class AST_DEC_FUNC extends AST_DEC
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,al.SerialNumber);
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,sl.SerialNumber);
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
+		if (al != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,al.SerialNumber);
+		if (sl != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,sl.SerialNumber);
+		if (type != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 	}
 }

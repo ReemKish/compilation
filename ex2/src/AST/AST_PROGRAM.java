@@ -44,12 +44,14 @@ public class AST_PROGRAM extends AST_Node
 		/*************************************/
 		/* RECURSIVELY PRINT HEAD + TAIL ... */
 		/*************************************/
-		if (head != null) head.PrintMe();
+		if (head != null) {
+			head.PrintMe();
+		}
 		if (tail != null) tail.PrintMe();
-
 		/**********************************/
 		/* PRINT to AST GRAPHVIZ DOT file */
 		/**********************************/
+		
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
 			"PROGRAM\n");

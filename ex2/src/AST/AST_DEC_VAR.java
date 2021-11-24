@@ -45,6 +45,7 @@ public class AST_DEC_VAR extends AST_DEC
 		/***********************************/
 		/* RECURSIVELY PRINT VAR + EXP ... */
 		/***********************************/
+		if (type != null) type.PrintMe();
 		if (name != null) System.out.format("%s\n", name);
 		if (exp != null) exp.PrintMe();
 
@@ -58,7 +59,7 @@ public class AST_DEC_VAR extends AST_DEC
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
+		if (name != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
+		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
 	}
 }

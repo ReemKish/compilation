@@ -42,20 +42,20 @@ public class Main
 			/***********************************/
 			/* [5] 3 ... 2 ... 1 ... Parse !!! */
 			/***********************************/
-            try {
-                AST = (AST_PROGRAM) p.parse().value;
-                file_writer.print("OK");
+      try {
+				AST = (AST_PROGRAM) p.parse().value;
+        file_writer.print("OK");
                 
-                /*************************/
-                /* [6] Print the AST ... */
-                /*************************/
-                AST.PrintMe();
-            }
-            catch (Exception e) {
+        /*************************/
+        /* [6] Print the AST ... */
+        /*************************/
+        AST.PrintMe();
+      }
+      catch (Exception e) {
 				file_writer.print("ERROR(");
 				file_writer.print(l.getLine());
 				file_writer.print(")");
-            }
+      }
 			/*************************/
 			/* [7] Close output file */
 			/*************************/
