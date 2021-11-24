@@ -7,9 +7,7 @@ import AST.*;
 parser code 
 {:
 	public Lexer lexer;
-
-	public Parser(Lexer lexer)
-	{
+	public Parser(Lexer lexer){
 		super(lexer);
 		this.lexer = lexer;
 	}
@@ -69,11 +67,26 @@ terminal RBRACE;
 terminal SEMICOLON;
 terminal ASSIGN;
 
+terminal TYPE_STRING;
+terminal TYPE_INT;
+terminal TYPE_VOID;
+terminal GT;
+terminal LT;
+terminal ARRAY;
+terminal NEW;
+terminal CLASS;
+terminal RETURN;
+terminal EXTENDS;
+terminal COMMA;
+terminal NIL;
+
+
 /*************/
 /* TERMINALS */
 /*************/
 terminal Integer INT;
 terminal String ID;
+terminal String STRING;
 
 /*****************/
 /* NON TERMINALS */
@@ -81,7 +94,23 @@ terminal String ID;
 non terminal AST_EXP exp;
 non terminal AST_VAR var;
 non terminal AST_STMT stmt;
+non terminal AST_ARG arg;
+non terminal AST_CFIELD cField;
+non terminal AST_NEW_EXP newExp;
+
+
 non terminal AST_STMT_LIST stmtList;
+non terminal AST_ARG_LIST argList;
+non terminal AST_CFIELD_LIST cFieldList;
+non terminal AST_EXP_LIST expList;
+
+non terminal AST_PROGRAM Program;
+non terminal AST_DEC dec;
+non terminal AST_DEC_ARRAY_TYPEDEF arrayTypedefDec;
+non terminal AST_DEC_CLASS classDec;
+non terminal AST_DEC_VAR varDec;
+non terminal AST_DEC_FUNC funcDec;
+non terminal AST_TYPE type;
 
 /***********************/
 /* OPERATOR PRECEDENCE */
@@ -90,18 +119,63 @@ precedence left PLUS;
 precedence left MINUS;
 precedence left TIMES;
 precedence left DIVIDE;
+precedence left EQ;
+precedence left LT;
+precedence left GT;
 
 /************************/
 /* START WITH: stmtList */
 /************************/
-start with stmtList;
+start with Program;
 
 /********************/
 /* DERIVATION RULES */
 /********************/
+Program ::= dec:d	Program:p		{: RESULT = new AST_PROGRAM(d,p);    :}
+            | dec:d {: RESULT = new AST_PROGRAM(d,null); :}
+            ;
+
+
+dec	::= arrayTypedefDec | varDec | funcDec | classDec;
+
+
+arrayTypedefDec ::=
+ARRAY ID:name EQ type:t LBRACK RBRACK SEMICOLON {: RESULT = new AST_DEC_ARRAY_TYPEDEF(t, name); :};
+
+varDec ::=
+type:t ID:varName ASSIGN exp:e SEMICOLON {: RESULT = new AST_DEC_VAR(t, varName, e); :}
+| type:t ID:varName SEMICOLON {: RESULT = new AST_DEC_VAR(t, varName, null); :}
+| type:t ID:varName ASSIGN newExp:e SEMICOLON {: RESULT = new AST_DEC_VAR(t, varName, e); :};
+
+funcDec ::=
+type:t ID:name LPAREN RPAREN LBRACE stmtList:sl RBRACE {: new AST_DEC_FUNC(t, name, null, sl); :}
+| type:t ID:name LPAREN argList:al RPAREN LBRACE stmtList:sl RBRACE {: new AST_DEC_FUNC(t, name, al, sl); :};
+
+classDec ::=
+CLASS ID:cName EXTENDS ID:eClass LBRACE cFieldList:cfl RBRACE {: RESULT = new AST_DEC_CLASS(cName, eClass, cfl); :}
+| CLASS ID:cName LBRACE cFieldList:cfl RBRACE {: RESULT = new AST_DEC_CLASS(cName, null, cfl); :};
+
+
+type ::=
+TYPE_INT {: RESULT = new AST_TYPE("type_int"); :}
+| TYPE_STRING {: RESULT = new AST_TYPE("type_string"); :}
+| TYPE_VOID {: RESULT = new AST_TYPE("type_void"); :}
+| ID:t {: RESULT = new AST_TYPE(t); :};
+cField ::= varDec | funcDec;
+arg ::= type:t ID:name {: RESULT = new AST_ARG(t, name); :};
+
 
 stmtList	::=		stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
 					| stmt:s				{: RESULT = new AST_STMT_LIST(s,null); :}
+					;
+argList	::=		arg:a COMMA argList:l		{: RESULT = new AST_ARG_LIST(a,l);    :}
+					| arg:a				{: RESULT = new AST_ARG_LIST(a,null); :}
+					;
+expList	::=		exp:e COMMA expList:l		{: RESULT = new AST_EXP_LIST(e,l);    :}
+					| exp:e				{: RESULT = new AST_EXP_LIST(e,null); :}
+					;
+cFieldList	::=		cField:cf	cFieldList:l		{: RESULT = new AST_CFIELD_LIST(cf,l);    :}
+					| cField:cf				{: RESULT = new AST_CFIELD_LIST(cf,null); :}
 					;
 
 var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
@@ -109,13 +183,39 @@ var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
 					| var:v LBRACK exp:e RBRACK			{: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} 
 					;
 					
-stmt		::=		var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
+stmt		::=		varDec
+                    | var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
+					| var:v ASSIGN newExp:e SEMICOLON							{: RESULT = new AST_STMT_ASSIGN(v,e); :}
 					| IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(   cond,body); :}
 					| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body); :}
+					| RETURN exp:e SEMICOLON {: RESULT = new AST_STMT_RETURN(e); :}
+					| RETURN SEMICOLON {: RESULT = new AST_STMT_RETURN(null); :}
+					| var:v DOT ID:fname LPAREN expList:args RPAREN SEMICOLON {: RESULT = new AST_STMT_FUNCCALL(fname, v, args);:}
+					| var:v DOT ID:fname LPAREN RPAREN SEMICOLON {: RESULT = new AST_STMT_FUNCCALL(fname, v, null);:}
+					| ID:fname LPAREN expList:args RPAREN SEMICOLON {: RESULT = new AST_STMT_FUNCCALL(fname, null, args);:}
+					| ID:fname LPAREN RPAREN SEMICOLON {: RESULT = new AST_STMT_FUNCCALL(fname, null, null);:}
 					;
 
-exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i);          :}
-					| var:v								{: RESULT = new AST_EXP_VAR(v);          :}
-					| exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
-					| exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
-					;
+exp			::=
+INT:i								{: RESULT = new AST_EXP_INT(i); :}
+| MINUS INT:i								{: RESULT = new AST_EXP_INT(-i); :}
+| NIL
+| STRING:s						    {: RESULT = new AST_EXP_STRING(s);       :}
+| var:v								{: RESULT = new AST_EXP_VAR(v);          :}
+| exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
+| exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
+| exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:}
+| exp:e1 DIVIDE exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 3);:}
+| exp:e1 LT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 4);:}
+| exp:e1 GT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 5);:}
+| exp:e1 EQ exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 6);:}
+| var:v DOT ID:fname LPAREN expList:args RPAREN {: RESULT = new AST_EXP_FUNCCALL(fname, v, args);:}
+| var:v DOT ID:fname LPAREN RPAREN {: RESULT = new AST_EXP_FUNCCALL(fname, v, null);:}
+| ID:fname LPAREN expList:args RPAREN {: RESULT = new AST_EXP_FUNCCALL(fname, null, args);:}
+| ID:fname LPAREN RPAREN {: RESULT = new AST_EXP_FUNCCALL(fname, null, null);:}
+;
+
+newExp ::=
+NEW type:t {: RESULT = new AST_NEW_EXP(t, null);:}
+| NEW type:t LBRACK exp:e RBRACK {: RESULT = new AST_NEW_EXP(t, e);:}
+;
