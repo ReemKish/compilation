@@ -135,7 +135,7 @@ INVALID_COMMENT= (\/\*)|(\/\/{LineTerminator})
 
 {COMMENT}		    { /* skip, do nothing */ }
 {MULTI_COMMENT}	{ /* skip, do nothing */ }
-{INVALID_COMMENT}	{ throw new Exception("invalid comment"); }
+{INVALID_COMMENT}	{ throw new Exception("LEXICAL ERROR: invalid comment"); }
 {LPAREN}		{ return symbol(TokenNames.LPAREN)		;}
 {RPAREN}		{ return symbol(TokenNames.RPAREN)		;}
 {LBRACK}		{ return symbol(TokenNames.LBRACK)		;}
@@ -165,7 +165,7 @@ INVALID_COMMENT= (\/\*)|(\/\/{LineTerminator})
 {TYPE_STRING}	{ return symbol(TokenNames.TYPE_STRING);}
 {INT} {
 	int x = new Integer(yytext());
-	if(x < 0 || x > 65535) {throw new Exception("integer out of bounds"); }
+	if(x < 0 || x > 65535) {throw new Exception("LEXICAL ERROR: integer out of bounds"); }
 	return symbol(TokenNames.INT, x);
 }
 {STRING} {
@@ -176,5 +176,5 @@ INVALID_COMMENT= (\/\*)|(\/\/{LineTerminator})
 {ID}			{ return symbol(TokenNames.ID,     new String( yytext()));}
 {WhiteSpace}	{ /* skip, do nothing */ }
 <<EOF>>				{ return symbol(TokenNames.EOF);}
-.					{throw new Exception("invalid token");}
+.					{throw new Exception("LEXICAL ERROR: invalid token");}
 }

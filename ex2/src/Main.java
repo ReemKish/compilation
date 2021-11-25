@@ -52,9 +52,14 @@ public class Main
         AST.PrintMe();
       }
       catch (Exception e) {
-				file_writer.print("ERROR(");
-				file_writer.print(l.getLine());
-				file_writer.print(")");
+				  if(e.getMessage().contains("LEXICAL ERROR")){
+					  file_writer.print("ERROR");
+				  }
+				  else {
+					  file_writer.print("ERROR(");
+					  file_writer.print(l.getLine());
+					  file_writer.print(")");
+				  }
       }
 			/*************************/
 			/* [7] Close output file */
