@@ -54,7 +54,7 @@ public class AST_ARG_LIST extends AST_Node
 		/**********************************/
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
-			"ARG\nLIST\n");
+			"ARG LIST\n");
 		
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */

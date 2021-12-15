@@ -39,7 +39,7 @@ public class AST_ARG extends AST_Node
 		/*******************************/
 		/* AST NODE TYPE = AST INT EXP */
 		/*******************************/
-		System.out.format("AST ARG type %s\n",name);
+		System.out.format("AST ARG %s %s\n", type.type, name);
 
 		/*********************************/
 		/* Print to AST GRAPHIZ DOT file */

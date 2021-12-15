@@ -161,10 +161,6 @@ cField ::=
 		| type:t ID:name LPAREN argList:al RPAREN LBRACE stmtList:sl RBRACE {: RESULT = new AST_CFIELD_DEC_FUNC(t, name, al, sl); :}
 		;
 
-arg ::= type:t ID:name {: RESULT = new AST_ARG(t, name); :}
-		;
-
-
 stmtList	::=		
 			stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
 		| stmt:s								{: RESULT = new AST_STMT_LIST(s,null); :}
@@ -230,3 +226,5 @@ newExp ::=
 			NEW type:t 											{: RESULT = new AST_NEW_EXP(t, null);:}
 		| NEW type:t LBRACK exp:e RBRACK 	{: RESULT = new AST_NEW_EXP(t, e);:}
 		;
+
+arg ::= type:t ID:name {: RESULT = new AST_ARG(t, name); :};
