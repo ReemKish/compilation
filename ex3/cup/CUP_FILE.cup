@@ -204,7 +204,7 @@ stmt	::=
 		;
 
 exp	::=
-			INT:i																					{: RESULT = new AST_EXP_INT(i); :}
+		INT:i																					{: RESULT = new AST_EXP_INT(i); :}
 		| MINUS INT:i																		{: RESULT = new AST_EXP_INT(-i); :}
 		| NIL
 		| STRING:s						    											{: RESULT = new AST_EXP_STRING(s);       :}
@@ -219,7 +219,8 @@ exp	::=
 		| var:v DOT ID:fname LPAREN expList:args RPAREN {: RESULT = new AST_EXP_FUNCCALL(fname, v, args);:}
 		| var:v DOT ID:fname LPAREN RPAREN 							{: RESULT = new AST_EXP_FUNCCALL(fname, v, null);:}
 		| ID:fname LPAREN expList:args RPAREN 					{: RESULT = new AST_EXP_FUNCCALL(fname, null, args);:}
-		| ID:fname LPAREN RPAREN 												{: RESULT = new AST_EXP_FUNCCALL(fname, null, null);:}
+		| ID:fname LPAREN RPAREN 								{: RESULT = new AST_EXP_FUNCCALL(fname, null, null);:}
+		| LPAREN exp:e RPAREN										{: RESULT = new AST_PAREN_EXP(e); :}
 		;
 
 newExp ::=
