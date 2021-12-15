@@ -2,23 +2,19 @@ digraph
 {
 graph [ordering = "out"]
 v0 [label = "TYPE
-...->type_int"];
-v1 [label = "SIMPLE
-VAR
-(d)"];
+...->int"];
+v1 [label = "TYPE
+...->int"];
 v2 [label = "INT(1)"];
-v3 [label = "ASSIGN
-left := right
-"];
+v3 [label = "DEC
+type d = exp;"];
 v3 -> v1;
 v3 -> v2;
-v4 [label = "SIMPLE
-VAR
-(d)"];
+v4 [label = "TYPE
+...->int"];
 v5 [label = "INT(2)"];
-v6 [label = "ASSIGN
-left := right
-"];
+v6 [label = "DEC
+type d = exp;"];
 v6 -> v4;
 v6 -> v5;
 v7 [label = "SIMPLE
@@ -62,30 +58,39 @@ v19 [label = "IF
 (cond) {body}"];
 v19 -> v14;
 v19 -> v18;
-v20 [label = "STMT
-LIST
-"];
-v20 -> v19;
+v20 [label = "INT(1)"];
+v0 [label = "Return
+statement"];
+v0 -> v20;
 v21 [label = "STMT
 LIST
 "];
-v21 -> v9;
-v21 -> v20;
+v21 -> v0;
 v22 [label = "STMT
 LIST
 "];
-v22 -> v6;
+v22 -> v19;
 v22 -> v21;
 v23 [label = "STMT
 LIST
 "];
-v23 -> v3;
+v23 -> v9;
 v23 -> v22;
-v24 [label = "DEC
-type foo(args){stmtLst}"];
-v24 -> v23;
-v24 -> v0;
-v25 [label = "PROGRAM
+v24 [label = "STMT
+LIST
 "];
+v24 -> v6;
+v24 -> v23;
+v25 [label = "STMT
+LIST
+"];
+v25 -> v3;
 v25 -> v24;
+v26 [label = "DEC
+type foo(args){stmtLst}"];
+v26 -> v25;
+v26 -> v0;
+v27 [label = "PROGRAM
+"];
+v27 -> v26;
 }

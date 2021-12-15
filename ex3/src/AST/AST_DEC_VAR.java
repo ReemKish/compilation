@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public class AST_DEC_VAR extends AST_DEC
 {
@@ -62,5 +63,43 @@ public class AST_DEC_VAR extends AST_DEC
 		/****************************************/
 		if (name != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
+	}
+
+	public TYPE SemantMe()
+	{
+		SYMBOL_TABLE_ENTRY t;
+
+		/****************************/
+		/* [1] Check If Type exists */
+		/****************************/
+		t = SYMBOL_TABLE.getInstance().find(type.type);
+		if (t == null)
+		{
+			System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,type);
+			System.exit(0);
+		}
+
+		/**************************************/
+		/* [2] Check That Name does NOT exist */
+		/**************************************/
+		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		if (prevDec != null)
+		{
+			SYMBOL_TABLE_ENTRY scope = SYMBOL_TABLE.getInstance().getScope();
+			/* print error only if declaration shadows a previous declaration in the same scope*/
+			if(scope.prevtop_index < prevDec.prevtop_index) {
+				System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n", 2, 2, name);
+			}
+		}
+
+		/***************************************************/
+		/* [3] Enter the Function Type to the Symbol Table */
+		/***************************************************/
+		SYMBOL_TABLE.getInstance().enter(name, t.type);
+
+		/*********************************************************/
+		/* [4] Return value is irrelevant for class declarations */
+		/*********************************************************/
+		return null;
 	}
 }

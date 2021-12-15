@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public class AST_PROGRAM extends AST_Node
 {
@@ -34,6 +35,9 @@ public class AST_PROGRAM extends AST_Node
 
 	public TYPE SemantMe()
 	{
+		if (head != null) head.SemantMe();
+		if (tail != null) tail.SemantMe();
+
 		return null;
 	}
 

@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public class AST_ARG extends AST_Node
 {
@@ -28,6 +29,7 @@ public class AST_ARG extends AST_Node
 		this.name = name;
 		this.type = type;
 	}
+	public TYPE SemantMe() {return null;}
 
 	/************************************************/
 	/* The printing message for an INT EXP AST node */

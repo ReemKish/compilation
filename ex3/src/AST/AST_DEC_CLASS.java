@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public class AST_DEC_CLASS extends AST_DEC
 {
@@ -54,13 +55,69 @@ public class AST_DEC_CLASS extends AST_DEC
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
 		AST_GRAPHVIZ.getInstance().logNode(
-			SerialNumber,
+				SerialNumber,
 				String.format("DEC\nclass %s [extends class] {cFieldList}",name)
 		);
-		
+
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,cfl.SerialNumber);
+	}
+	public TYPE_CLASS SemantMe()
+	{
+		/*************************/
+		/* [1] Begin Class Scope */
+		/*************************/
+		SYMBOL_TABLE.getInstance().beginScope();
+
+		SYMBOL_TABLE_ENTRY extending = null;
+
+		/****************************/
+		/* [1] Check if class extends valid class */
+		/****************************/
+		if(extendsClass != null) {
+			extending = SYMBOL_TABLE.getInstance().find(extendsClass);
+			if (extending == null)
+			{
+				System.out.format(">> ERROR [%d:%d] non existing class %s\n",2,2,extendsClass);
+				System.exit(0);
+			}
+		}
+
+		/**************************************/
+		/* [2] Check That Name does NOT exist */
+		/**************************************/
+		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		if (prevDec != null)
+		{
+			SYMBOL_TABLE_ENTRY scope = SYMBOL_TABLE.getInstance().getScope();
+			/* print error only if declaration shadows a previous declaration in the same scope*/
+			if(scope.prevtop_index < prevDec.prevtop_index) {
+				System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n", 2, 2, name);
+			}
+		}
+		/***************************/
+		/* [2] Semant Data Members */
+		/***************************/
+
+		TYPE_LIST fields = cfl.SemantMe();
+		TYPE_CLASS father = (TYPE_CLASS) extending.type;
+		TYPE_CLASS t = new TYPE_CLASS(father, name, fields);
+
+		/*****************/
+		/* [3] End Scope */
+		/*****************/
+		SYMBOL_TABLE.getInstance().endScope();
+
+		/************************************************/
+		/* [4] Enter the Class Type to the Symbol Table */
+		/************************************************/
+		SYMBOL_TABLE.getInstance().enter(name,t);
+
+		/*********************************************************/
+		/* [5] Return value is irrelevant for class declarations */
+		/*********************************************************/
+		return null;
 	}
 }

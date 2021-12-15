@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public abstract class AST_CFIELD extends AST_Node
 {
@@ -10,4 +11,5 @@ public abstract class AST_CFIELD extends AST_Node
 	{
 		System.out.print("UNKNOWN AST CLASS FIELD NODE");
 	}
+	public TYPE SemantMe() {return null;}
 }

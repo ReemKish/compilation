@@ -1,10 +1,11 @@
 int foo()
 {
-    d:= 1;
-    d:= 2;
+    int d:= 1;
+    k:= 2;
     d:= 3;
     if (d > k)
     {
         d := 3;
     }
+    return 1;
 }
