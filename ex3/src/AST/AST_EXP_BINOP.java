@@ -2,9 +2,12 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
+import java.util.Objects;
+
 public class AST_EXP_BINOP extends AST_EXP
 {
 	int OP;
+	String sOP;
 	public AST_EXP left;
 	public AST_EXP right;
 	
@@ -29,6 +32,18 @@ public class AST_EXP_BINOP extends AST_EXP
 		this.left = left;
 		this.right = right;
 		this.OP = OP;
+
+		/*********************************/
+		/* CONVERT OP to a printable sOP */
+		/*********************************/
+		if (OP == 0) {sOP = "+";}
+		if (OP == 1) {sOP = "-";}
+		if (OP == 2) {sOP = "*";}
+		if (OP == 3) {sOP = "/";}
+		if (OP == 4) {sOP = "<";}
+		if (OP == 5) {sOP = ">";}
+		if (OP == 6) {sOP = "=";}
+
 	}
 	
 	/*************************************************/
@@ -36,13 +51,6 @@ public class AST_EXP_BINOP extends AST_EXP
 	/*************************************************/
 	public void PrintMe()
 	{
-		String sOP="";
-		
-		/*********************************/
-		/* CONVERT OP to a printable sOP */
-		/*********************************/
-		if (OP == 0) {sOP = "+";}
-		if (OP == 1) {sOP = "-";}
 		
 		/*************************************/
 		/* AST NODE TYPE = AST BINOP EXP */
@@ -67,5 +75,22 @@ public class AST_EXP_BINOP extends AST_EXP
 		/****************************************/
 		if (left  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,left.SerialNumber);
 		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,right.SerialNumber);
+	}
+	public TYPE SemantMe() {
+		TYPE left_type = left.SemantMe();
+		TYPE right_type = right.SemantMe();
+		if(!Objects.equals(left_type.name, right_type.name)){
+			System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
+			System.exit(0);
+		}
+		if(Objects.equals(sOP, "/")){
+			if(right instanceof AST_EXP_INT){
+				if(((AST_EXP_INT) right).value == 0){
+					System.out.format(">> ERROR [%d:%d] division by 0\n",2,2);
+					System.exit(0);
+				}
+			}
+		}
+		return TYPE_INT.getInstance();
 	}
 }

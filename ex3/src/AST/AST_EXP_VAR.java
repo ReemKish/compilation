@@ -53,6 +53,7 @@ public class AST_EXP_VAR extends AST_EXP
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
-			
 	}
+
+	public TYPE SemantMe() { return var.SemantMe(); }
 }

@@ -2,6 +2,8 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
+import java.util.Objects;
+
 public class AST_STMT_IF extends AST_STMT
 {
 	public AST_EXP cond;
@@ -44,6 +46,14 @@ public class AST_STMT_IF extends AST_STMT
 				String.format("IF\n(cond) {body}"));
 		if (cond != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,cond.SerialNumber);
 		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,body.SerialNumber);
-
+	}
+	public TYPE SemantMe() {
+		TYPE condType = cond.SemantMe();
+		TYPE bodyType = body.SemantMe();
+		if(!Objects.equals(condType.name, TYPE_INT.getInstance().name)){
+			System.out.format(">> ERROR [%d:%d] invalid condition\n",2,2);
+			System.exit(0);
+		}
+		return TYPE_INT.getInstance();
 	}
 }

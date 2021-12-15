@@ -2,6 +2,8 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
+import java.util.Objects;
+
 public class AST_STMT_FUNCCALL extends AST_STMT
 {
 	public String fName;
@@ -49,7 +51,7 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 		/**************************************/
 		/* RECURSIVELY PRINT left + right ... */
 		/**************************************/
-		if (fName != null) System.out.format("function %s", fName);
+		if (fName != null) System.out.format("FUNCTION CALL STATEMENT %s\n", fName);
 		if (objName != null) objName.PrintMe();
 		if (el != null) el.PrintMe();
 
@@ -65,5 +67,34 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 		/****************************************/
 		if (el  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,el.SerialNumber);
 		if (objName  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,objName.SerialNumber);
+	}
+	public TYPE SemantMe() {
+		SYMBOL_TABLE_ENTRY func = SYMBOL_TABLE.getInstance().find(fName);
+		if(func == null || !(func.type instanceof TYPE_FUNCTION)){
+			System.out.format(">> ERROR [%d:%d] can't find function %s\n",2,2, fName);
+			System.exit(0);
+		}
+		TYPE returnType =  (TYPE_FUNCTION)func.type;
+		TYPE_LIST expectedParams = ((TYPE_FUNCTION) func.type).params;
+		for (AST_EXP_LIST it=el; it != null; it=it.tail)
+		{
+			if(expectedParams == null){
+				System.out.format(">> ERROR [%d:%d] too many arguments for function %s\n",2,2, fName);
+				System.exit(0);
+			}
+			String argType = it.head.SemantMe().name;
+			String expected = expectedParams.head.name;
+			if (!Objects.equals(argType, expected))
+			{
+				System.out.format(">> ERROR [%d:%d] argument type mismatch in %s: can't convert %s to %s \n",2,2, fName, argType, expected);
+				System.exit(0);
+			}
+			expectedParams = expectedParams.tail;
+		}
+		if(expectedParams != null){
+			System.out.format(">> ERROR [%d:%d] function %s expect more arguments\n",2,2, fName);
+			System.exit(0);
+		}
+		return returnType;
 	}
 }
