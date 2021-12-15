@@ -47,4 +47,20 @@ public class AST_VAR_SIMPLE extends AST_VAR
 			SerialNumber,
 			String.format("SIMPLE\nVAR\n(%s)",name));
 	}
+
+	public TYPE SemantMe()
+	{
+		/**************************************/
+		/* [2] Check That Identifier Exists */
+		/**************************************/
+		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		if (prevDec == null)
+		{
+			SYMBOL_TABLE_ENTRY scope = SYMBOL_TABLE.getInstance().getScope();
+			/* print error only if declaration shadows a previous declaration in the same scope*/
+			System.out.format(">> ERROR [%d:%d] variable %s does not exist in scope\n", 2, 2, name);
+			System.exit(0);
+		}
+		return prevDec.type;
+	}
 }

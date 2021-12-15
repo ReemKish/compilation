@@ -195,12 +195,9 @@ stmt	::=
 			type:t ID:varName ASSIGN exp:e SEMICOLON 									{: RESULT = new AST_STMT_DEC_VAR(t, varName, e); :}
 		| type:t ID:varName SEMICOLON 															{: RESULT = new AST_STMT_DEC_VAR(t, varName, null); :}
 		| type:t ID:varName ASSIGN newExp:e SEMICOLON 							{: RESULT = new AST_STMT_DEC_VAR(t, varName, e); :}
-    | var:v ASSIGN exp:e SEMICOLON			 												{: RESULT = new AST_STMT_ASSIGN(v,e); :}
+        | var:v ASSIGN exp:e SEMICOLON			 												{: RESULT = new AST_STMT_ASSIGN(v,e); :}
 		| var:v ASSIGN newExp:e SEMICOLON														{: RESULT = new AST_STMT_ASSIGN(v,e); :}
-		| IF LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{:
-		System.out.print("atlas");
-		RESULT = new AST_STMT_IF(cond,body);
-		:}
+		| IF LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{:RESULT = new AST_STMT_IF(cond,body);:}
 		| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body); :}
 		| RETURN exp:e SEMICOLON 																		{: RESULT = new AST_STMT_RETURN(e); :}
 		| RETURN SEMICOLON 																					{: RESULT = new AST_STMT_RETURN(null); :}

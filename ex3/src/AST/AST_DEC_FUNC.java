@@ -98,6 +98,7 @@ public class AST_DEC_FUNC extends AST_DEC
 			if (t == null)
 			{
 				System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,it.head.type.type);
+				System.exit(0);
 			}
 			else
 			{

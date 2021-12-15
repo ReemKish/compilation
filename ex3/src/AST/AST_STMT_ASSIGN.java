@@ -62,4 +62,32 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
 	}
 
+	public TYPE SemantMe()
+	{
+		TYPE v;
+
+		/****************************/
+		/* [1] Check that the variable exists */
+		/****************************/
+		v = var.SemantMe();
+		if (v == null)
+		{
+			System.out.format(">> ERROR [%d:%d] non existent identifier\n",2,2);
+			System.exit(0);
+		}
+
+		/**************************************/
+		/* [2] Check That Name does NOT exist */
+		/**************************************/
+		TYPE ex = exp.SemantMe();
+		if (ex.name != v.name)
+		{
+			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, ex.name, v.name);
+		}
+
+		/*********************************************************/
+		/* [4] Return value is irrelevant for class declarations */
+		/*********************************************************/
+		return null;
+	}
 }
