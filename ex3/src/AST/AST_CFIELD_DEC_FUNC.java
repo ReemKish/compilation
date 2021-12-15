@@ -1,7 +1,7 @@
 package AST;
 import TYPES.*;
 
-public class AST_DEC_FUNC extends AST_DEC
+public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 {
 	/***************/
 	/*  var := exp */
@@ -14,7 +14,7 @@ public class AST_DEC_FUNC extends AST_DEC
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_DEC_FUNC(AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
+	public AST_CFIELD_DEC_FUNC(AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */

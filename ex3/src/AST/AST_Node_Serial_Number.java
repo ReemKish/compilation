@@ -1,4 +1,5 @@
 package AST;
+import TYPES.*;
 
 public class AST_Node_Serial_Number
 {

@@ -1,83 +1,66 @@
 package AST;
-
 import TYPES.*;
-import SYMBOL_TABLE.*;
 
 public class AST_DEC_CLASS extends AST_DEC
 {
-	/********/
-	/* NAME */
-	/********/
+	/***************/
+	/*  var := exp */
+	/***************/
 	public String name;
+	public String extendsClass;
+	public AST_CFIELD_LIST cfl;
 
-	/****************/
-	/* DATA MEMBERS */
-	/****************/
-	public AST_TYPE_NAME_LIST data_members;
-	
-	/******************/
-	/* CONSTRUCTOR(S) */
-	/******************/
-	public AST_DEC_CLASS(String name,AST_TYPE_NAME_LIST data_members)
+	/*******************/
+	/*  CONSTRUCTOR(S) */
+	/*******************/
+	public AST_DEC_CLASS(String name, String extendsClass, AST_CFIELD_LIST cfl)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
 		SerialNumber = AST_Node_Serial_Number.getFresh();
-	
+
+		/***************************************/
+		/* PRINT CORRESPONDING DERIVATION RULE */
+		/***************************************/
+		System.out.print("====================== stmt -> var ASSIGN exp SEMICOLON\n");
+
+		/*******************************/
+		/* COPY INPUT DATA NENBERS ... */
+		/*******************************/
+		this.cfl = cfl;
 		this.name = name;
-		this.data_members = data_members;
+		this.extendsClass = extendsClass;
 	}
 
 	/*********************************************************/
-	/* The printing message for a class declaration AST node */
+	/* The printing message for an assign statement AST node */
 	/*********************************************************/
 	public void PrintMe()
 	{
-		/*************************************/
-		/* RECURSIVELY PRINT HEAD + TAIL ... */
-		/*************************************/
-		System.out.format("CLASS DEC = %s\n",name);
-		if (data_members != null) data_members.PrintMe();
-		
+		/********************************************/
+		/* AST NODE TYPE = AST ASSIGNMENT STATEMENT */
+		/********************************************/
+		System.out.print("AST NODE ASSIGN STMT\n");
+
+		/***********************************/
+		/* RECURSIVELY PRINT VAR + EXP ... */
+		/***********************************/
+		if (cfl != null) cfl.PrintMe();
+		if (name != null) System.out.format("%s\n", name);
+		if (extendsClass != null) System.out.format("%s\n", extendsClass);
+
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
-			String.format("CLASS\n%s",name));
+				String.format("DEC\nclass %s [extends class] {cFieldList}",name)
+		);
 		
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,data_members.SerialNumber);		
-	}
-	
-	public TYPE SemantMe()
-	{	
-		/*************************/
-		/* [1] Begin Class Scope */
-		/*************************/
-		SYMBOL_TABLE.getInstance().beginScope();
-
-		/***************************/
-		/* [2] Semant Data Members */
-		/***************************/
-		TYPE_CLASS t = new TYPE_CLASS(null,name,data_members.SemantMe());
-
-		/*****************/
-		/* [3] End Scope */
-		/*****************/
-		SYMBOL_TABLE.getInstance().endScope();
-
-		/************************************************/
-		/* [4] Enter the Class Type to the Symbol Table */
-		/************************************************/
-		SYMBOL_TABLE.getInstance().enter(name,t);
-
-		/*********************************************************/
-		/* [5] Return value is irrelevant for class declarations */
-		/*********************************************************/
-		return null;		
+		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,cfl.SerialNumber);
 	}
 }

@@ -1,16 +1,15 @@
 package AST;
 import TYPES.*;
 
-public class AST_EXP_BINOP extends AST_EXP
+public class AST_VAR_FIELD extends AST_VAR
 {
-	int OP;
-	public AST_EXP left;
-	public AST_EXP right;
+	public AST_VAR var;
+	public String fieldName;
 	
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_BINOP(AST_EXP left,AST_EXP right,int OP)
+	public AST_VAR_FIELD(AST_VAR var,String fieldName)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -20,51 +19,41 @@ public class AST_EXP_BINOP extends AST_EXP
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== exp -> exp BINOP exp\n");
+		System.out.format("====================== var -> var DOT ID( %s )\n",fieldName);
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
-		this.left = left;
-		this.right = right;
-		this.OP = OP;
+		this.var = var;
+		this.fieldName = fieldName;
 	}
-	
+
 	/*************************************************/
-	/* The printing message for a binop exp AST node */
+	/* The printing message for a field var AST node */
 	/*************************************************/
 	public void PrintMe()
 	{
-		String sOP="";
-		
 		/*********************************/
-		/* CONVERT OP to a printable sOP */
+		/* AST NODE TYPE = AST FIELD VAR */
 		/*********************************/
-		if (OP == 0) {sOP = "+";}
-		if (OP == 1) {sOP = "-";}
-		
-		/*************************************/
-		/* AST NODE TYPE = AST BINOP EXP */
-		/*************************************/
-		System.out.print("AST NODE BINOP EXP\n");
+		System.out.print("AST NODE FIELD VAR\n");
 
-		/**************************************/
-		/* RECURSIVELY PRINT left + right ... */
-		/**************************************/
-		if (left != null) left.PrintMe();
-		if (right != null) right.PrintMe();
-		
+		/**********************************************/
+		/* RECURSIVELY PRINT VAR, then FIELD NAME ... */
+		/**********************************************/
+		if (var != null) var.PrintMe();
+		System.out.format("FIELD NAME( %s )\n",fieldName);
+
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
-			String.format("BINOP(%s)",sOP));
+			String.format("FIELD\nVAR\n...->%s",fieldName));
 		
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		if (left  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,left.SerialNumber);
-		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,right.SerialNumber);
+		if (var != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
 	}
 }

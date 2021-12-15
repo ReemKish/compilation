@@ -1,4 +1,5 @@
 package AST;
+import TYPES.*;
 
 public class AST_STMT_WHILE extends AST_STMT
 {
@@ -12,5 +13,30 @@ public class AST_STMT_WHILE extends AST_STMT
 	{
 		this.cond = cond;
 		this.body = body;
+		/***************************************/
+		/* PRINT CORRESPONDING DERIVATION RULE */
+		/***************************************/
+		System.out.print("====================== stmt -> WHILE(exp){stmtList}\n");
+	}
+	/*********************************************************/
+	/* Printed Text */
+	/*********************************************************/
+	public void PrintMe()
+	{
+		System.out.print("WHILE STATEMENT\n");
+		/**************************************/
+		/* RECURSIVELY PRINT left + right ... */
+		/**************************************/
+		if (cond != null) cond.PrintMe();
+		if (body != null) body.PrintMe();
+		/***************************************/
+		/* PRINT Node to AST GRAPHVIZ DOT file */
+		/***************************************/
+		AST_GRAPHVIZ.getInstance().logNode(
+				SerialNumber,
+				String.format("WHILE\ncond {body}"));
+		if (cond != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,cond.SerialNumber);
+		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,body.SerialNumber);
+
 	}
 }

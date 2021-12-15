@@ -1,3 +1,33 @@
-class IntList {
-  int v := 1;
+string left := "LEFT";
+string right := "RIGHT";
+
+class Person
+{
+    int left;
+    int right;
 }
+
+int foo(int d, int k)
+{
+    int left := 50;
+    int right := 70;
+
+    if (d = 17)
+    {
+        Person left;
+        Person right;
+
+        return left.left;
+    }
+
+    return left;
+}
+
+void main()
+{
+    if (foo(2,4))
+    {
+        PrintInt(800);
+    }
+}
+

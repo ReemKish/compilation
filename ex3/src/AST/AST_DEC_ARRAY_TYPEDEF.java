@@ -1,20 +1,18 @@
 package AST;
 import TYPES.*;
 
-public class AST_DEC_FUNC extends AST_DEC
+public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 {
 	/***************/
 	/*  var := exp */
 	/***************/
 	public AST_TYPE type;
 	public String name;
-	public AST_STMT_LIST sl;
-	public AST_ARG_LIST al;
 
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_DEC_FUNC(AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
+	public AST_DEC_ARRAY_TYPEDEF(AST_TYPE type, String name)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -24,15 +22,13 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== funcDec -> type ID(argList){stmtLst}\n");
+		System.out.print("====================== arrayTypedefDec -> array ID = type[];\n");
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
 		this.type = type;
 		this.name = name;
-		this.sl = sl;
-		this.al = al;
 	}
 
 	/*********************************************************/
@@ -43,14 +39,12 @@ public class AST_DEC_FUNC extends AST_DEC
 		/********************************************/
 		/* AST NODE TYPE = AST ASSIGNMENT STATEMENT */
 		/********************************************/
-		System.out.print("AST NODE DEC FUNC\n");
+		System.out.print("AST NODE ASSIGN STMT\n");
 
 		/***********************************/
 		/* RECURSIVELY PRINT VAR + EXP ... */
 		/***********************************/
 		if (type != null) type.PrintMe();
-		if (sl != null) sl.PrintMe();
-		if (al != null) al.PrintMe();
 		if (name != null) System.out.format("%s\n", name);
 
 		/***************************************/
@@ -58,14 +52,11 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************************/
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
-				String.format("DEC\ntype %s(args){stmtLst}",name)
-		);
+			String.format("array %s = type[];\n", name));
 		
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		if (al != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,al.SerialNumber);
-		if (sl != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,sl.SerialNumber);
-		if (type != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
+		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 	}
 }

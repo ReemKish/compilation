@@ -1,16 +1,16 @@
 package AST;
 import TYPES.*;
 
-public class AST_EXP_BINOP extends AST_EXP
+public class AST_STMT_FUNCCALL extends AST_STMT
 {
-	int OP;
-	public AST_EXP left;
-	public AST_EXP right;
-	
+	public String fName;
+	public AST_VAR objName;
+	public AST_EXP_LIST el;
+
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_BINOP(AST_EXP left,AST_EXP right,int OP)
+	public AST_STMT_FUNCCALL(String fName, AST_VAR objName, AST_EXP_LIST el)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -20,51 +20,49 @@ public class AST_EXP_BINOP extends AST_EXP
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== exp -> exp BINOP exp\n");
+		System.out.print("====================== exp -> [obj.]f(expLst);\n");
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
-		this.left = left;
-		this.right = right;
-		this.OP = OP;
+		this.fName = fName;
+		this.objName = objName;
+		this.el = el;
 	}
-	
+
 	/*************************************************/
 	/* The printing message for a binop exp AST node */
 	/*************************************************/
 	public void PrintMe()
 	{
-		String sOP="";
-		
+
 		/*********************************/
 		/* CONVERT OP to a printable sOP */
 		/*********************************/
-		if (OP == 0) {sOP = "+";}
-		if (OP == 1) {sOP = "-";}
-		
+
 		/*************************************/
 		/* AST NODE TYPE = AST BINOP EXP */
 		/*************************************/
-		System.out.print("AST NODE BINOP EXP\n");
+		System.out.print("AST NODE FUNC CALL STMT\n");
 
 		/**************************************/
 		/* RECURSIVELY PRINT left + right ... */
 		/**************************************/
-		if (left != null) left.PrintMe();
-		if (right != null) right.PrintMe();
-		
+		if (fName != null) System.out.format("function %s", fName);
+		if (objName != null) objName.PrintMe();
+		if (el != null) el.PrintMe();
+
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
 		AST_GRAPHVIZ.getInstance().logNode(
-			SerialNumber,
-			String.format("BINOP(%s)",sOP));
-		
+				SerialNumber,
+				String.format("FUNCCALL(%s)",fName));
+
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		if (left  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,left.SerialNumber);
-		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,right.SerialNumber);
+		if (el  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,el.SerialNumber);
+		if (objName  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,objName.SerialNumber);
 	}
 }

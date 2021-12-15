@@ -1,14 +1,16 @@
 package AST;
 import TYPES.*;
 
-public class AST_EXP_STRING extends AST_EXP
+public class AST_ARG extends AST_Node
 {
-	public String value;
+
+	public String name;
+	AST_TYPE type;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_STRING(String value)
+	public AST_ARG(AST_TYPE type, String name)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -18,12 +20,13 @@ public class AST_EXP_STRING extends AST_EXP
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.format("====================== exp -> STRING(\\\"%s\\\")\n", value);
+		System.out.format("====================== arg -> type %s\n", name);
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
-		this.value = value;
+		this.name = name;
+		this.type = type;
 	}
 
 	/************************************************/
@@ -34,13 +37,14 @@ public class AST_EXP_STRING extends AST_EXP
 		/*******************************/
 		/* AST NODE TYPE = AST INT EXP */
 		/*******************************/
-		System.out.format("AST NODE STRING(\\\"%s\\\")\n",value);
+		System.out.format("AST ARG type %s\n",name);
 
 		/*********************************/
 		/* Print to AST GRAPHIZ DOT file */
 		/*********************************/
 		AST_GRAPHVIZ.getInstance().logNode(
-			SerialNumber,
-			String.format("STRING(\\\"%s\\\")",value));
+				SerialNumber,
+				String.format("ARGUMENT type %s\n",name)
+		);
 	}
 }

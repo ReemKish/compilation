@@ -1,5 +1,5 @@
 package AST;
-
+import TYPES.*;
 import java.io.*;
 import java.io.PrintWriter;
 
