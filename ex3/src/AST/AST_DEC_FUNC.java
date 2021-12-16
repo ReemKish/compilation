@@ -73,6 +73,7 @@ public class AST_DEC_FUNC extends AST_DEC
 	{
 		SYMBOL_TABLE_ENTRY t;
 		SYMBOL_TABLE_ENTRY returnType = null;
+		TYPE_LIST reverse_type_list = null;
 		TYPE_LIST type_list = null;
 
 		/*******************/
@@ -102,10 +103,12 @@ public class AST_DEC_FUNC extends AST_DEC
 			}
 			else
 			{
-				type_list = new TYPE_LIST(t.type,type_list);
+				reverse_type_list = new TYPE_LIST(t.type,reverse_type_list);
 				SYMBOL_TABLE.getInstance().enter(it.head.name,t.type);
 			}
 		}
+		/* reverse type list to preserve original argument order */
+		for (TYPE_LIST it = reverse_type_list; it  != null; it = it.tail) {type_list = new TYPE_LIST(it.head,type_list);}
 
 		/*******************/
 		/* [3] Semant Body */

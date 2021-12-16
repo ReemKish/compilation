@@ -11,6 +11,10 @@ public class AST_STMT_RETURN extends AST_STMT
 	/*******************/
 	public AST_STMT_RETURN(AST_EXP val)
 	{
+		/******************************/
+		/* SET A UNIQUE SERIAL NUMBER */
+		/******************************/
+		SerialNumber = AST_Node_Serial_Number.getFresh();
 		this.val = val;
 	}
 	/*********************************************************/

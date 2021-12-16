@@ -161,10 +161,6 @@ cField ::=
 		| type:t ID:name LPAREN argList:al RPAREN LBRACE stmtList:sl RBRACE {: RESULT = new AST_CFIELD_DEC_FUNC(t, name, al, sl); :}
 		;
 
-arg ::= type:t ID:name {: RESULT = new AST_ARG(t, name); :}
-		;
-
-
 stmtList	::=		
 			stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
 		| stmt:s								{: RESULT = new AST_STMT_LIST(s,null); :}
@@ -208,7 +204,7 @@ stmt	::=
 		;
 
 exp	::=
-			INT:i																					{: RESULT = new AST_EXP_INT(i); :}
+		INT:i																					{: RESULT = new AST_EXP_INT(i); :}
 		| MINUS INT:i																		{: RESULT = new AST_EXP_INT(-i); :}
 		| NIL
 		| STRING:s						    											{: RESULT = new AST_EXP_STRING(s);       :}
@@ -223,10 +219,13 @@ exp	::=
 		| var:v DOT ID:fname LPAREN expList:args RPAREN {: RESULT = new AST_EXP_FUNCCALL(fname, v, args);:}
 		| var:v DOT ID:fname LPAREN RPAREN 							{: RESULT = new AST_EXP_FUNCCALL(fname, v, null);:}
 		| ID:fname LPAREN expList:args RPAREN 					{: RESULT = new AST_EXP_FUNCCALL(fname, null, args);:}
-		| ID:fname LPAREN RPAREN 												{: RESULT = new AST_EXP_FUNCCALL(fname, null, null);:}
+		| ID:fname LPAREN RPAREN 								{: RESULT = new AST_EXP_FUNCCALL(fname, null, null);:}
+		| LPAREN exp:e RPAREN										{: RESULT = new AST_PAREN_EXP(e); :}
 		;
 
 newExp ::=
 			NEW type:t 											{: RESULT = new AST_NEW_EXP(t, null);:}
 		| NEW type:t LBRACK exp:e RBRACK 	{: RESULT = new AST_NEW_EXP(t, e);:}
 		;
+
+arg ::= type:t ID:name {: RESULT = new AST_ARG(t, name); :};
