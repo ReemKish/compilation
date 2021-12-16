@@ -18,7 +18,7 @@ import TYPES.*;
 /****************/
 public class SYMBOL_TABLE
 {
-	private int hashArraySize = 13;
+	private int hashArraySize = 32;
 	
 	/**********************************************/
 	/* The actual symbol table data structure ... */
@@ -32,15 +32,11 @@ public class SYMBOL_TABLE
 	/**************************************************************/
 	private int hash(String s)
 	{
-		if (s.charAt(0) == 'l') {return 1;}
-		if (s.charAt(0) == 'm') {return 1;}
-		if (s.charAt(0) == 'r') {return 3;}
-		if (s.charAt(0) == 'i') {return 6;}
-		if (s.charAt(0) == 'd') {return 6;}
-		if (s.charAt(0) == 'k') {return 6;}
-		if (s.charAt(0) == 'f') {return 6;}
-		if (s.charAt(0) == 'S') {return 6;}
-		return 12;
+		int hash = 7;
+		for (int i = 0; i < s.length(); i++) {
+				hash = hash*31 + s.charAt(i);
+		}
+		return (hash % hashArraySize + hashArraySize) % hashArraySize;
 	}
 
 	/****************************************************************************/
@@ -276,6 +272,9 @@ public class SYMBOL_TABLE
 			/* [2] How should we handle void ??? */
 			/*************************************/
 
+			instance.beginScope();
+
+
 			/***************************************/
 			/* [3] Enter library function PrintInt */
 			/***************************************/
@@ -287,7 +286,30 @@ public class SYMBOL_TABLE
 					new TYPE_LIST(
 						TYPE_INT.getInstance(),
 						null)));
-			
+
+			/***************************************/
+			/* [4] Enter library function PrintString */
+			/***************************************/
+			instance.enter(
+				"PrintString",
+				new TYPE_FUNCTION(
+					TYPE_VOID.getInstance(),
+					"PrintString",
+					new TYPE_LIST(
+						TYPE_STRING.getInstance(),
+						null)));
+
+			/***************************************/
+			/* [5] Enter library function PrintTrace */
+			/***************************************/
+			instance.enter(
+				"PrintTrace",
+				new TYPE_FUNCTION(
+					TYPE_VOID.getInstance(),
+					"PrintTrace",
+					new TYPE_LIST(
+						TYPE_VOID.getInstance(),
+						null)));
 		}
 		return instance;
 	}
