@@ -101,8 +101,8 @@ public class AST_DEC_CLASS extends AST_DEC
 		/* [2] Semant Data Members */
 		/***************************/
 
-		TYPE_LIST fields = cfl.SemantMe();
-		TYPE_CLASS father = (TYPE_CLASS) extending.type;
+		TYPE_LIST fields = cfl == null ? null : cfl.SemantMe();
+		TYPE_CLASS father = extending == null ? null : (TYPE_CLASS) extending.type;
 		TYPE_CLASS t = new TYPE_CLASS(father, name, fields);
 
 		/*****************/
