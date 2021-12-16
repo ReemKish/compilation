@@ -204,9 +204,11 @@ stmt	::=
 		;
 
 exp	::=
-		INT:i																					{: RESULT = new AST_EXP_INT(i); :}
+
+		LPAREN exp:e RPAREN										{: RESULT = new AST_PAREN_EXP(e); :}
+		| INT:i																					{: RESULT = new AST_EXP_INT(i); :}
 		| MINUS INT:i																		{: RESULT = new AST_EXP_INT(-i); :}
-		| NIL
+		| NIL {: RESULT = new AST_EXP_NIL(); :}
 		| STRING:s						    											{: RESULT = new AST_EXP_STRING(s);       :}
 		| var:v																					{: RESULT = new AST_EXP_VAR(v);          :}
 		| exp:e1 PLUS  exp:e2														{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
@@ -220,7 +222,6 @@ exp	::=
 		| var:v DOT ID:fname LPAREN RPAREN 							{: RESULT = new AST_EXP_FUNCCALL(fname, v, null);:}
 		| ID:fname LPAREN expList:args RPAREN 					{: RESULT = new AST_EXP_FUNCCALL(fname, null, args);:}
 		| ID:fname LPAREN RPAREN 								{: RESULT = new AST_EXP_FUNCCALL(fname, null, null);:}
-		| LPAREN exp:e RPAREN										{: RESULT = new AST_PAREN_EXP(e); :}
 		;
 
 newExp ::=
