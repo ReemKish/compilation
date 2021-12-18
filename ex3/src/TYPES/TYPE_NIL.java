@@ -24,4 +24,11 @@ public class TYPE_NIL extends TYPE
 		}
 		return instance;
 	}
+
+	public boolean isInstanceOf(TYPE t) {
+		if (t.isArray() || t.isClass()) {
+			return true;
+		}
+		return false;
+	}
 }

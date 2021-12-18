@@ -80,7 +80,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		/* [2] Check That Name does NOT exist */
 		/**************************************/
 		TYPE ex = exp.SemantMe();
-		if (ex.name != v.name)
+		if (!ex.isInstanceOf(v))
 		{
 			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, ex.name, v.name);
 		}
