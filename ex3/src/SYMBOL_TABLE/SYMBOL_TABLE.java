@@ -269,11 +269,6 @@ public class SYMBOL_TABLE
 			instance.enter("string", TYPE_STRING.getInstance());
 			instance.enter("void", TYPE_NIL.getInstance());
 
-			/*************************************/
-			/* [2] How should we handle void ??? */
-			/*************************************/
-			instance.enter("void",TYPE_VOID.getInstance());
-
 
 
 			/***************************************/
