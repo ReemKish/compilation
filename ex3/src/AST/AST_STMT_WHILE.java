@@ -51,7 +51,7 @@ public class AST_STMT_WHILE extends AST_STMT
 		/* begin scope */
 		/***************/
 		SYMBOL_TABLE.getInstance().beginScope();
-		TYPE bodyType = body.SemantMe();
+		TYPE_LIST bodyType = body.SemantMe();
 	        /***************/
 		/* end scope */
 		/***************/
