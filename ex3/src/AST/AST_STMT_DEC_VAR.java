@@ -88,6 +88,14 @@ public class AST_STMT_DEC_VAR extends AST_STMT
 		/***************************************************/
 		SYMBOL_TABLE.getInstance().enter(name, t);
 
+		/***************************************************/
+		/* [3] check assigned expression type validity */
+		/***************************************************/
+		if(exp != null && (exp.SemantMe() == null || !exp.SemantMe().isInstanceOf(t))){
+			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, exp.SemantMe().name, t.name);
+			System.exit(0);
+		}
+		
 		/*********************************************************/
 		/* [4] Return value is irrelevant for class declarations */
 		/*********************************************************/
