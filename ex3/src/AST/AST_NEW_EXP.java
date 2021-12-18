@@ -10,7 +10,7 @@ public class AST_NEW_EXP extends AST_EXP
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_NEW_EXP(AST_TYPE t, AST_EXP e)
+	public AST_NEW_EXP(int line, AST_TYPE t, AST_EXP e)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -25,6 +25,7 @@ public class AST_NEW_EXP extends AST_EXP
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.t = t;
 		this.e = e;
 	}

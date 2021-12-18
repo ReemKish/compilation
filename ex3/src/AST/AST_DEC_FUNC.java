@@ -15,7 +15,7 @@ public class AST_DEC_FUNC extends AST_DEC
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_DEC_FUNC(AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
+	public AST_DEC_FUNC(int line, AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -30,6 +30,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.type = type;
 		this.name = name;
 		this.sl = sl;
@@ -69,7 +70,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		if (sl != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,sl.SerialNumber);
 		if (type != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 	}
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws SemanticException
 	{
 		TYPE arg_type;
 		TYPE returnType = null;

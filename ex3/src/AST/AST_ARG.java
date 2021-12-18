@@ -11,7 +11,7 @@ public class AST_ARG extends AST_Node
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_ARG(AST_TYPE type, String name)
+	public AST_ARG(int line, AST_TYPE type, String name)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -26,6 +26,7 @@ public class AST_ARG extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.name = name;
 		this.type = type;
 	}

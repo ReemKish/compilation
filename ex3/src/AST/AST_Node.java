@@ -9,6 +9,7 @@ public abstract class AST_Node
 	/* In particular, it can help in creating  */
 	/* a graphviz dot format of the AST ...    */
 	/*******************************************/
+	public int line;
 	public int SerialNumber;
 	
 	/***********************************************/

@@ -13,7 +13,7 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_STMT_FUNCCALL(String fName, AST_VAR objName, AST_EXP_LIST el)
+	public AST_STMT_FUNCCALL(int line, String fName, AST_VAR objName, AST_EXP_LIST el)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -28,6 +28,7 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.fName = fName;
 		this.objName = objName;
 		this.el = el;
@@ -68,11 +69,11 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 		if (el  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,el.SerialNumber);
 		if (objName  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,objName.SerialNumber);
 	}
-	public TYPE SemantMe() {
+	public TYPE SemantMe() throws SemanticException {
 		SYMBOL_TABLE_ENTRY func = SYMBOL_TABLE.getInstance().find(fName);
 		if(func == null || !(func.type instanceof TYPE_FUNCTION)){
 			System.out.format(">> ERROR [%d:%d] can't find function %s\n",2,2, fName);
-			System.exit(0);
+			throw new SemanticException(this.line);
 		}
 		TYPE returnType =  (TYPE_FUNCTION)func.type;
 		TYPE_LIST expectedParams = ((TYPE_FUNCTION) func.type).params;
@@ -80,20 +81,20 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 		{
 			if(expectedParams == null){
 				System.out.format(">> ERROR [%d:%d] too many arguments for function %s\n",2,2, fName);
-				System.exit(0);
+				throw new SemanticException(this.line);
 			}
 			String argType = it.head.SemantMe().name;
 			String expected = expectedParams.head.name;
 			if (!Objects.equals(argType, expected))
 			{
 				System.out.format(">> ERROR [%d:%d] argument type mismatch in %s: can't convert %s to %s \n",2,2, fName, argType, expected);
-				System.exit(0);
+				throw new SemanticException(this.line);
 			}
 			expectedParams = expectedParams.tail;
 		}
 		if(expectedParams != null){
 			System.out.format(">> ERROR [%d:%d] function %s expect more arguments\n",2,2, fName);
-			System.exit(0);
+			throw new SemanticException(this.line);
 		}
 		return returnType;
 	}

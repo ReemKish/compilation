@@ -13,7 +13,7 @@ public class AST_EXP_BINOP extends AST_EXP
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_BINOP(AST_EXP left,AST_EXP right,int OP)
+	public AST_EXP_BINOP(int line, AST_EXP left,AST_EXP right,int OP)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -28,6 +28,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.left = left;
 		this.right = right;
 		this.OP = OP;
@@ -75,7 +76,8 @@ public class AST_EXP_BINOP extends AST_EXP
 		if (left  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,left.SerialNumber);
 		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,right.SerialNumber);
 	}
-	public TYPE SemantMe() {
+	public TYPE SemantMe() throws SemanticException
+	{
 		TYPE left_type = left.SemantMe();
 		TYPE right_type = right.SemantMe();
 		/****************************************/
@@ -84,7 +86,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		if(Objects.equals(sOP, "=")){
 			if(!left_type.isInstanceOf(right_type)){
 				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
-				System.exit(0);
+				throw new SemanticException(this.line);
 			}
 		}
 		/****************************************/
@@ -96,7 +98,7 @@ public class AST_EXP_BINOP extends AST_EXP
 					&& !(left_type.isInstanceOf(TYPE_STRING.getInstance()) && right_type.isInstanceOf(TYPE_STRING.getInstance()))
 			){
 				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
-				System.exit(0);
+				throw new SemanticException(this.line);
 			}
 		}
 		/****************************************/
@@ -111,7 +113,7 @@ public class AST_EXP_BINOP extends AST_EXP
 					!(left_type.isInstanceOf(TYPE_INT.getInstance()) && right_type.isInstanceOf(TYPE_INT.getInstance()))
 			){
 				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
-				System.exit(0);
+				throw new SemanticException(this.line);
 			}
 		}
 		/****************************************/
@@ -121,7 +123,7 @@ public class AST_EXP_BINOP extends AST_EXP
 			if(right instanceof AST_EXP_INT){
 				if(((AST_EXP_INT) right).value == 0){
 					System.out.format(">> ERROR [%d:%d] division by 0\n",2,2);
-					System.exit(0);
+					throw new SemanticException(this.line);
 				}
 			}
 		}

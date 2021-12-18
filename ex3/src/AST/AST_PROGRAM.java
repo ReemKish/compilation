@@ -13,7 +13,7 @@ public class AST_PROGRAM extends AST_Node
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_PROGRAM(AST_DEC head, AST_PROGRAM tail)
+	public AST_PROGRAM(int line, AST_DEC head, AST_PROGRAM tail)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -29,11 +29,12 @@ public class AST_PROGRAM extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.head = head;
 		this.tail = tail;
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws SemanticException
 	{
 		if (head != null) head.SemantMe();
 		if (tail != null) tail.SemantMe();

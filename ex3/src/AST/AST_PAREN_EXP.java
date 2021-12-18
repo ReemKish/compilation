@@ -12,7 +12,7 @@ public class AST_PAREN_EXP extends AST_EXP
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_PAREN_EXP(AST_EXP e)
+	public AST_PAREN_EXP(int line, AST_EXP e)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -27,6 +27,7 @@ public class AST_PAREN_EXP extends AST_EXP
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.e = e;
 	}
 	
@@ -58,7 +59,7 @@ public class AST_PAREN_EXP extends AST_EXP
 		/****************************************/
 		if (e  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,e.SerialNumber);
 	}
-	public TYPE SemantMe() {
+	public TYPE SemantMe() throws SemanticException {
 		return e.SemantMe();
 	}
 }
