@@ -43,11 +43,19 @@ public class AST_STMT_WHILE extends AST_STMT
 	}
 	public TYPE SemantMe() {
 		TYPE condType = cond.SemantMe();
-		TYPE bodyType = body.SemantMe();
 		if(!Objects.equals(condType.name, TYPE_INT.getInstance().name)){
 			System.out.format(">> ERROR [%d:%d] invalid condition\n",2,2);
 			System.exit(0);
 		}
-		return TYPE_INT.getInstance();
+	        /***************/
+		/* begin scope */
+		/***************/
+		SYMBOL_TABLE.getInstance().beginScope();
+		TYPE bodyType = body.SemantMe();
+	        /***************/
+		/* end scope */
+		/***************/
+		SYMBOL_TABLE.getInstance().endScope();
+		return null;
 	}
 }
