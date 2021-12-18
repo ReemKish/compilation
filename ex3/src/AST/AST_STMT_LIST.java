@@ -62,11 +62,20 @@ public class AST_STMT_LIST extends AST_Node
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,tail.SerialNumber);
 	}
-	public TYPE SemantMe()
+	public TYPE_LIST SemantMe()
 	{
-		if (head != null) head.SemantMe();
-		if (tail != null) tail.SemantMe();
+		TYPE returnType = null;
+		TYPE_LIST prevReturnTypes = null;
+		if (head != null){
+			TYPE statementType = head.SemantMe();
+			if(head instanceof AST_STMT_RETURN){
+				returnType = statementType;
+			}
+		}
+		if (tail != null){
+			prevReturnTypes = tail.SemantMe();
+		};
 
-		return null;
+		return new TYPE_LIST(returnType, prevReturnTypes);
 	}
 }
