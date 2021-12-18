@@ -12,7 +12,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_VAR_SIMPLE(String name)
+	public AST_VAR_SIMPLE(int line, String name)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -27,6 +27,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.name = name;
 	}
 

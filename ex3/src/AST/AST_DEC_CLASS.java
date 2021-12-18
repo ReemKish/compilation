@@ -14,7 +14,7 @@ public class AST_DEC_CLASS extends AST_DEC
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_DEC_CLASS(String name, String extendsClass, AST_CFIELD_LIST cfl)
+	public AST_DEC_CLASS(int line, String name, String extendsClass, AST_CFIELD_LIST cfl)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -29,6 +29,7 @@ public class AST_DEC_CLASS extends AST_DEC
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.cfl = cfl;
 		this.name = name;
 		this.extendsClass = extendsClass;

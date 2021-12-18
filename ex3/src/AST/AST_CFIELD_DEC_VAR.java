@@ -12,7 +12,7 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_CFIELD_DEC_VAR(AST_TYPE type, String name, AST_EXP exp)
+	public AST_CFIELD_DEC_VAR(int line, AST_TYPE type, String name, AST_EXP exp)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -27,6 +27,7 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.type = type;
 		this.name = name;
 		this.exp = exp;

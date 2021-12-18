@@ -9,7 +9,7 @@ public class AST_EXP_STRING extends AST_EXP
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_STRING(String value)
+	public AST_EXP_STRING(int line, String value)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -23,7 +23,8 @@ public class AST_EXP_STRING extends AST_EXP
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
-		/*******************************/
+	 	/*******************************/
+		this.line = ++line;
 		this.value = value;
 	}
 

@@ -14,7 +14,7 @@ public class AST_DEC_VAR extends AST_DEC
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_DEC_VAR(AST_TYPE type, String name, AST_EXP exp)
+	public AST_DEC_VAR(int line, AST_TYPE type, String name, AST_EXP exp)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -29,6 +29,7 @@ public class AST_DEC_VAR extends AST_DEC
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.type = type;
 		this.name = name;
 		this.exp = exp;
@@ -65,7 +66,7 @@ public class AST_DEC_VAR extends AST_DEC
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws SemanticException
 	{
 		TYPE t = type.SemantMe();
 
@@ -79,7 +80,7 @@ public class AST_DEC_VAR extends AST_DEC
 			/* print error only if declaration shadows a previous declaration in the same scope*/
 			if(scope == null || scope.prevtop_index < prevDec.prevtop_index) {
 				System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n", 2, 2, name);
-				System.exit(0);
+				throw new SemanticException(line);
 			}
 		}
 
@@ -93,7 +94,7 @@ public class AST_DEC_VAR extends AST_DEC
 		/***************************************************/
 		if(exp != null && (exp.SemantMe() == null || !exp.SemantMe().isInstanceOf(t))){
 			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, exp.SemantMe().name, t.name);
-			System.exit(0);
+			throw new SemanticException(line);
 		}
 
 		/*********************************************************/

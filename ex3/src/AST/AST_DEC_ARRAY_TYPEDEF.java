@@ -13,7 +13,7 @@ public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_DEC_ARRAY_TYPEDEF(AST_TYPE type, String name)
+	public AST_DEC_ARRAY_TYPEDEF(int line, AST_TYPE type, String name)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -28,6 +28,7 @@ public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.type = type;
 		this.name = name;
 	}
@@ -61,7 +62,7 @@ public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 	}
 
-	public TYPE_ARRAY SemantMe()
+	public TYPE_ARRAY SemantMe() throws SemanticException
 	{
 		TYPE t = type.SemantMe();
 		TYPE_ARRAY at = new TYPE_ARRAY(t);
@@ -76,6 +77,7 @@ public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 			/* print error only if declaration shadows a previous declaration in the same scope*/
 			if(scope.prevtop_index < prevDec.prevtop_index) {
 				System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n", 2, 2, name);
+				throw new SemanticException(this.line);
 			}
 		}
 

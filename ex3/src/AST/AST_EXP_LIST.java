@@ -13,7 +13,7 @@ public class AST_EXP_LIST extends AST_Node
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_LIST(AST_EXP head, AST_EXP_LIST tail)
+	public AST_EXP_LIST(int line, AST_EXP head, AST_EXP_LIST tail)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -29,6 +29,7 @@ public class AST_EXP_LIST extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.head = head;
 		this.tail = tail;
 	}
@@ -62,7 +63,7 @@ public class AST_EXP_LIST extends AST_Node
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,tail.SerialNumber);
 	}
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws SemanticException
 	{
 		if (head != null) head.SemantMe();
 		if (tail != null) tail.SemantMe();

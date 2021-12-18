@@ -25,6 +25,7 @@ public class AST_TYPE extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.typeName = typeName;
 	}
 

@@ -7,13 +7,14 @@ public class AST_ARG_LIST extends AST_Node
 	/****************/
 	/* DATA MEMBERS */
 	/****************/
+	public int line;
 	public AST_ARG head;
 	public AST_ARG_LIST tail;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_ARG_LIST(AST_ARG head, AST_ARG_LIST tail)
+	public AST_ARG_LIST(int line, AST_ARG head, AST_ARG_LIST tail)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -29,6 +30,7 @@ public class AST_ARG_LIST extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.head = head;
 		this.tail = tail;
 	}

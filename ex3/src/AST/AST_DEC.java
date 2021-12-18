@@ -11,5 +11,5 @@ public abstract class AST_DEC extends AST_Node
 	{
 		System.out.print("UNKNOWN AST DEC NODE");
 	}
-	public TYPE SemantMe() {return null;}
+	public TYPE SemantMe() throws SemanticException {return null;}
 }

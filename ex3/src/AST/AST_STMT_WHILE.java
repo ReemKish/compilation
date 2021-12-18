@@ -12,8 +12,9 @@ public class AST_STMT_WHILE extends AST_STMT
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_STMT_WHILE(AST_EXP cond,AST_STMT_LIST body)
+	public AST_STMT_WHILE(int line, AST_EXP cond,AST_STMT_LIST body)
 	{
+		this.line = ++line;
 		this.cond = cond;
 		this.body = body;
 		/***************************************/
@@ -41,11 +42,11 @@ public class AST_STMT_WHILE extends AST_STMT
 		if (cond != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,cond.SerialNumber);
 		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,body.SerialNumber);
 	}
-	public TYPE SemantMe() {
+	public TYPE SemantMe() throws SemanticException {
 		TYPE condType = cond.SemantMe();
 		if(!Objects.equals(condType.name, TYPE_INT.getInstance().name)){
 			System.out.format(">> ERROR [%d:%d] invalid condition\n",2,2);
-			System.exit(0);
+			throw new SemanticException(this.line);
 		}
 	        /***************/
 		/* begin scope */

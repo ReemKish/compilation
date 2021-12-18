@@ -14,7 +14,7 @@ public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_CFIELD_DEC_FUNC(AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
+	public AST_CFIELD_DEC_FUNC(int line, AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -29,6 +29,7 @@ public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.type = type;
 		this.name = name;
 		this.sl = sl;

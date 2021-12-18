@@ -13,7 +13,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_STMT_ASSIGN(AST_VAR var,AST_EXP exp)
+	public AST_STMT_ASSIGN(int line, AST_VAR var,AST_EXP exp)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -28,6 +28,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.var = var;
 		this.exp = exp;
 	}
@@ -62,7 +63,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws SemanticException
 	{
 		TYPE v;
 
@@ -73,7 +74,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		if (v == null)
 		{
 			System.out.format(">> ERROR [%d:%d] non existent identifier\n",2,2);
-			System.exit(0);
+			throw new SemanticException(this.line);
 		}
 
 		/**************************************/
@@ -83,7 +84,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		if (!ex.isInstanceOf(v))
 		{
 			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, ex.name, v.name);
-			System.exit(0);
+			throw new SemanticException(this.line);
 		}
 
 		/*********************************************************/

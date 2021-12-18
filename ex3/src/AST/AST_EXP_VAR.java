@@ -9,7 +9,7 @@ public class AST_EXP_VAR extends AST_EXP
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_EXP_VAR(AST_VAR var)
+	public AST_EXP_VAR(int line, AST_VAR var)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -24,6 +24,7 @@ public class AST_EXP_VAR extends AST_EXP
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.var = var;
 	}
 	
