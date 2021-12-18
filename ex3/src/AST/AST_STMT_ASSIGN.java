@@ -83,6 +83,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		if (!ex.isInstanceOf(v))
 		{
 			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, ex.name, v.name);
+			System.exit(0);
 		}
 
 		/*********************************************************/
