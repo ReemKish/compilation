@@ -67,20 +67,10 @@ public class AST_DEC_VAR extends AST_DEC
 
 	public TYPE SemantMe()
 	{
-		SYMBOL_TABLE_ENTRY t;
-
-		/****************************/
-		/* [1] Check If Type exists */
-		/****************************/
-		t = SYMBOL_TABLE.getInstance().find(type.type);
-		if (t == null)
-		{
-			System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,type);
-			System.exit(0);
-		}
+		TYPE t = type.SemantMe();
 
 		/**************************************/
-		/* [2] Check That Name does NOT exist */
+		/* [1] Check That Name is available */
 		/**************************************/
 		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
 		if (prevDec != null)
@@ -93,9 +83,9 @@ public class AST_DEC_VAR extends AST_DEC
 		}
 
 		/***************************************************/
-		/* [3] Enter the Function Type to the Symbol Table */
+		/* [2] Enter the Function Type to the Symbol Table */
 		/***************************************************/
-		SYMBOL_TABLE.getInstance().enter(name, t.type);
+		SYMBOL_TABLE.getInstance().enter(name, t);
 
 		/*********************************************************/
 		/* [4] Return value is irrelevant for class declarations */

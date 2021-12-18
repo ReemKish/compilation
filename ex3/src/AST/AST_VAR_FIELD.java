@@ -2,6 +2,8 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
+import java.util.Objects;
+
 public class AST_VAR_FIELD extends AST_VAR
 {
 	public AST_VAR var;
@@ -56,5 +58,15 @@ public class AST_VAR_FIELD extends AST_VAR
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
 		if (var != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
+	}
+	public TYPE SemantMe() {
+		/* TODO: add a dedicated AST node for class types*/
+		TYPE_CLASS parent_type = (TYPE_CLASS) var.SemantMe();
+		for(TYPE_CLASS_VAR_DEC_LIST field = parent_type.data_members; field != null; field = field.tail){
+			if(Objects.equals(field.head.name, fieldName)){
+				return field.head.t;
+			}
+		}
+		return null;
 	}
 }

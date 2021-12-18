@@ -8,7 +8,6 @@ public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 	/*  var := exp */
 	/***************/
 	public AST_TYPE type;
-	public String name;
 	public AST_STMT_LIST sl;
 	public AST_ARG_LIST al;
 
@@ -68,5 +67,10 @@ public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 		if (al != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,al.SerialNumber);
 		if (sl != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,sl.SerialNumber);
 		if (type != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
+	}
+	public TYPE SemantMe()
+	{
+		type.SemantMe();
+		return null;
 	}
 }

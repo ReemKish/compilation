@@ -4,12 +4,13 @@ import SYMBOL_TABLE.*;
 
 public class AST_TYPE extends AST_Node
 {
-	public String type;
+	public String typeName;
+	TYPE type;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_TYPE(String type)
+	public AST_TYPE(String typeName)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -24,7 +25,7 @@ public class AST_TYPE extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
-		this.type = type;
+		this.typeName = typeName;
 	}
 
 	/*************************************************/
@@ -48,6 +49,26 @@ public class AST_TYPE extends AST_Node
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
 			String.format("TYPE\n...->%s",type));
+	}
 
+	public TYPE SemantMe()
+	{
+		SYMBOL_TABLE_ENTRY t;
+
+		/****************************/
+		/* [1] Check If Type exists */
+		/****************************/
+		t = SYMBOL_TABLE.getInstance().find(this.typeName);
+		if (t == null || t.type == null)
+		{
+			System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,type);
+			System.exit(0);
+		}
+
+		/** check that this is in fact declarable type (i.e. class, array, string, or int) **/
+		/*********************************************************/
+		/* [4] Return value is irrelevant for class declarations */
+		/*********************************************************/
+		return t.type;
 	}
 }
