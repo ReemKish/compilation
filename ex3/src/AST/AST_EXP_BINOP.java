@@ -1,6 +1,5 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
 
 import java.util.Objects;
 
@@ -79,10 +78,45 @@ public class AST_EXP_BINOP extends AST_EXP
 	public TYPE SemantMe() {
 		TYPE left_type = left.SemantMe();
 		TYPE right_type = right.SemantMe();
-		if(!Objects.equals(left_type.name, right_type.name)){
-			System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
-			System.exit(0);
+		/****************************************/
+		/* Type check for equality testing */
+		/****************************************/
+		if(Objects.equals(sOP, "=")){
+			if(!left_type.isInstanceOf(right_type)){
+				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
+				System.exit(0);
+			}
 		}
+		/****************************************/
+		/* Type check for addition/concatenation */
+		/****************************************/
+		else if(Objects.equals(sOP, "+")){
+			if(
+					!(left_type.isInstanceOf(TYPE_INT.getInstance()) && right_type.isInstanceOf(TYPE_INT.getInstance()))
+					|| !(left_type.isInstanceOf(TYPE_STRING.getInstance()) && right_type.isInstanceOf(TYPE_STRING.getInstance()))
+			){
+				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
+				System.exit(0);
+			}
+		}
+		/****************************************/
+		/* Type check for all other BINOPs */
+		/****************************************/
+		else{
+
+			if(left_type == null){
+				System.out.print("");
+			}
+			if(
+					!(left_type.isInstanceOf(TYPE_INT.getInstance()) && right_type.isInstanceOf(TYPE_INT.getInstance()))
+			){
+				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
+				System.exit(0);
+			}
+		}
+		/****************************************/
+		/* Division by 0 check */
+		/****************************************/
 		if(Objects.equals(sOP, "/")){
 			if(right instanceof AST_EXP_INT){
 				if(((AST_EXP_INT) right).value == 0){

@@ -4,6 +4,8 @@ import SYMBOL_TABLE.*;
 
 public abstract class AST_CFIELD extends AST_Node
 {
+	public AST_TYPE type;
+	public String name;
 	/*********************************************************/
 	/* The default message for an unknown AST statement node */
 	/*********************************************************/
@@ -11,5 +13,5 @@ public abstract class AST_CFIELD extends AST_Node
 	{
 		System.out.print("UNKNOWN AST CLASS FIELD NODE");
 	}
-	public TYPE SemantMe() {return null;}
+	public TYPE SemantMe() {return type.SemantMe();}
 }

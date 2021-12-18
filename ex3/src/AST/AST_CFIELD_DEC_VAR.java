@@ -7,8 +7,6 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 	/***************/
 	/*  var := exp */
 	/***************/
-	public AST_TYPE type;
-	public String name;
 	public AST_EXP exp;
 
 	/*******************/
@@ -24,7 +22,7 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== varDec -> type ID [ASSIGN exp] SEMICOLON\n");
+		System.out.print("====================== cField -> type varName [assignExp [newExp] e];\n");
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
@@ -42,7 +40,7 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 		/********************************************/
 		/* AST NODE TYPE = AST ASSIGNMENT STATEMENT */
 		/********************************************/
-		System.out.print("AST NODE DEC VAR\n");
+		System.out.print("AST CFIELD NODE DEC VAR\n");
 
 		/***********************************/
 		/* RECURSIVELY PRINT VAR + EXP ... */
@@ -63,5 +61,11 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 		/****************************************/
 		if (name != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
+	}
+
+	public TYPE SemantMe()
+	{
+		type.SemantMe();
+		return null;
 	}
 }

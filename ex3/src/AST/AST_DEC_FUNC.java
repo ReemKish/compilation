@@ -71,19 +71,15 @@ public class AST_DEC_FUNC extends AST_DEC
 	}
 	public TYPE SemantMe()
 	{
-		SYMBOL_TABLE_ENTRY t;
-		SYMBOL_TABLE_ENTRY returnType = null;
+		TYPE arg_type;
+		TYPE returnType = null;
 		TYPE_LIST reverse_type_list = null;
 		TYPE_LIST type_list = null;
 
 		/*******************/
-		/* [0] return type */
+		/* [0] check return type */
 		/*******************/
-		returnType = SYMBOL_TABLE.getInstance().find(type.type);
-		if (returnType == null)
-		{
-			System.out.format(">> ERROR [%d:%d] non existing return type %s\n",6,6,type.type);
-		}
+		returnType = type.SemantMe();
 
 		/****************************/
 		/* [1] Begin Function Scope */
@@ -95,17 +91,9 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************/
 		for (AST_ARG_LIST it = al; it  != null; it = it.tail)
 		{
-			t = SYMBOL_TABLE.getInstance().find(it.head.type.type);
-			if (t == null)
-			{
-				System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,it.head.type.type);
-				System.exit(0);
-			}
-			else
-			{
-				reverse_type_list = new TYPE_LIST(t.type,reverse_type_list);
-				SYMBOL_TABLE.getInstance().enter(it.head.name,t.type);
-			}
+			arg_type = it.head.type.SemantMe();
+			reverse_type_list = new TYPE_LIST(arg_type,reverse_type_list);
+			SYMBOL_TABLE.getInstance().enter(it.head.name, arg_type);
 		}
 		/* reverse type list to preserve original argument order */
 		for (TYPE_LIST it = reverse_type_list; it  != null; it = it.tail) {type_list = new TYPE_LIST(it.head,type_list);}
@@ -123,7 +111,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************************************/
 		/* [5] Enter the Function Type to the Symbol Table */
 		/***************************************************/
-		SYMBOL_TABLE.getInstance().enter(name,new TYPE_FUNCTION(returnType.type,name,type_list));
+		SYMBOL_TABLE.getInstance().enter(name,new TYPE_FUNCTION(returnType, name,type_list));
 
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */

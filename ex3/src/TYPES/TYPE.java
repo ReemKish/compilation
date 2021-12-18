@@ -1,5 +1,7 @@
 package TYPES;
 
+import java.util.Objects;
+
 public abstract class TYPE
 {
 	/******************************/
@@ -16,4 +18,6 @@ public abstract class TYPE
 	/* isArray() */
 	/*************/
 	public boolean isArray(){ return false;}
+
+	public boolean isInstanceOf(TYPE t){ return Objects.equals(t.name, this.name);}
 }

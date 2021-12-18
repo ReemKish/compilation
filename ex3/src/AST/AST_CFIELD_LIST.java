@@ -62,13 +62,22 @@ public class AST_CFIELD_LIST extends AST_Node
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,tail.SerialNumber);
 	}
-	public TYPE_LIST SemantMe()
+	public TYPE_CLASS_VAR_DEC_LIST SemantMe()
 	{
-		/* todo initialize type list*/
-		TYPE_LIST l = new TYPE_LIST(null, null);
-		if (head != null) head.SemantMe();
-		if (tail != null) tail.SemantMe();
+		TYPE_CLASS_VAR_DEC_LIST reverse_type_list = null;
+		TYPE_CLASS_VAR_DEC_LIST type_list = null;
+		SYMBOL_TABLE_ENTRY t;
 
-		return null;
+		/* TODO - make sure there are no duplicate field names*/
+		for (AST_CFIELD_LIST it = this; it  != null; it = it.tail)
+		{
+			reverse_type_list = new TYPE_CLASS_VAR_DEC_LIST(new TYPE_CLASS_VAR_DEC(it.head.type.type, it.head.name), reverse_type_list);
+		}
+		/* reverse type list to preserve original argument order */
+		for (TYPE_CLASS_VAR_DEC_LIST it = reverse_type_list; it  != null; it = it.tail) {
+			type_list = new TYPE_CLASS_VAR_DEC_LIST(it.head, type_list);
+		}
+
+		return type_list;
 	}
 }
