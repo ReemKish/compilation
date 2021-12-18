@@ -173,8 +173,8 @@ debug:
 	@echo "*                                                         *"
 	@echo "*                                                         *"
 	@echo "***********************************************************"
-	rm ${OUTPUT_DIR}/*.txt
-	rm ${OUTPUT_DIR}/*.jpeg
+	rm -f ${OUTPUT_DIR}/*.txt
+	rm -f ${OUTPUT_DIR}/*.jpeg
 	jar cfm COMPILER ${MANIFEST_FILE} -C ${BIN_DIR} .
 	@echo "\n"
 	@echo "*****************************"
