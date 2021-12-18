@@ -125,7 +125,7 @@ public class SYMBOL_TABLE
 		/**************************************************************************/
 		/* Pop elements from the symbol table stack until a SCOPE-BOUNDARY is hit */
 		/**************************************************************************/
-		while (top.name != "SCOPE-BOUNDARY")
+		while (top != null && top.name != "SCOPE-BOUNDARY")
 		{
 			table[top.index] = top.next;
 			top_index = top_index-1;
