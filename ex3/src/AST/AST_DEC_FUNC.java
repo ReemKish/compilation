@@ -91,6 +91,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************/
 		for (AST_ARG_LIST it = al; it  != null; it = it.tail)
 		{
+			it.head.SemantMe();
 			arg_type = it.head.type.SemantMe();
 			reverse_type_list = new TYPE_LIST(arg_type,reverse_type_list);
 			SYMBOL_TABLE.getInstance().enter(it.head.name, arg_type);
@@ -99,10 +100,6 @@ public class AST_DEC_FUNC extends AST_DEC
 		for (TYPE_LIST it = reverse_type_list; it  != null; it = it.tail) {type_list = new TYPE_LIST(it.head,type_list);}
 
 
-		/*****************/
-		/* [4] End Scope */
-		/*****************/
-		SYMBOL_TABLE.getInstance().endScope();
 
 		/***************************************************/
 		/* [5] Enter the Function Type to the Symbol Table */
@@ -113,6 +110,11 @@ public class AST_DEC_FUNC extends AST_DEC
 		/* [3] Semant Body */
 		/*******************/
 		sl.SemantMe();
+
+		/*****************/
+		/* [4] End Scope */
+		/*****************/
+		SYMBOL_TABLE.getInstance().endScope();
 
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */

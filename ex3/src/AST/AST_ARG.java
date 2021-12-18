@@ -29,7 +29,11 @@ public class AST_ARG extends AST_Node
 		this.name = name;
 		this.type = type;
 	}
-	public TYPE SemantMe() {return null;}
+	public TYPE SemantMe() {
+		SYMBOL_TABLE.getInstance().enter(name, type.SemantMe());
+		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		return null;
+	}
 
 	/************************************************/
 	/* The printing message for an INT EXP AST node */
