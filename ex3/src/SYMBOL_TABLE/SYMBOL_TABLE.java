@@ -271,8 +271,8 @@ public class SYMBOL_TABLE
 			/*************************************/
 			/* [2] How should we handle void ??? */
 			/*************************************/
+			instance.enter("void",TYPE_VOID.getInstance());
 
-			instance.beginScope();
 
 
 			/***************************************/
