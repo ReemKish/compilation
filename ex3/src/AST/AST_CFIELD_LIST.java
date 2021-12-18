@@ -71,7 +71,8 @@ public class AST_CFIELD_LIST extends AST_Node
 		/* TODO - make sure there are no duplicate field names*/
 		for (AST_CFIELD_LIST it = this; it  != null; it = it.tail)
 		{
-			reverse_type_list = new TYPE_CLASS_VAR_DEC_LIST(new TYPE_CLASS_VAR_DEC(it.head.type.type, it.head.name), reverse_type_list);
+			TYPE fieldType = it.head.type.SemantMe();
+			reverse_type_list = new TYPE_CLASS_VAR_DEC_LIST(new TYPE_CLASS_VAR_DEC(fieldType, it.head.name), reverse_type_list);
 		}
 		/* reverse type list to preserve original argument order */
 		for (TYPE_CLASS_VAR_DEC_LIST it = reverse_type_list; it  != null; it = it.tail) {

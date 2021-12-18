@@ -97,12 +97,19 @@ public class AST_DEC_CLASS extends AST_DEC
 				System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n", 2, 2, name);
 			}
 		}
+
+		TYPE_CLASS father = extending == null ? null : (TYPE_CLASS) extending.type;
+
+		/************************************************/
+		/* [4] Enter the Class Type to the Symbol Table */
+		/************************************************/
+		SYMBOL_TABLE.getInstance().enter(name, new TYPE_CLASS(null, name, null));
+
 		/***************************/
 		/* [2] Semant Data Members */
 		/***************************/
 
 		TYPE_CLASS_VAR_DEC_LIST fields = cfl == null ? null : cfl.SemantMe();
-		TYPE_CLASS father = extending == null ? null : (TYPE_CLASS) extending.type;
 		TYPE_CLASS t = new TYPE_CLASS(father, name, fields);
 
 		/*****************/

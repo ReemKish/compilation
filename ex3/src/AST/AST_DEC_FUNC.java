@@ -98,10 +98,6 @@ public class AST_DEC_FUNC extends AST_DEC
 		/* reverse type list to preserve original argument order */
 		for (TYPE_LIST it = reverse_type_list; it  != null; it = it.tail) {type_list = new TYPE_LIST(it.head,type_list);}
 
-		/*******************/
-		/* [3] Semant Body */
-		/*******************/
-		sl.SemantMe();
 
 		/*****************/
 		/* [4] End Scope */
@@ -111,7 +107,12 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************************************/
 		/* [5] Enter the Function Type to the Symbol Table */
 		/***************************************************/
-		SYMBOL_TABLE.getInstance().enter(name,new TYPE_FUNCTION(returnType, name,type_list));
+		SYMBOL_TABLE.getInstance().enter(name, new TYPE_FUNCTION(returnType, name,type_list));
+
+		/*******************/
+		/* [3] Semant Body */
+		/*******************/
+		sl.SemantMe();
 
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */
