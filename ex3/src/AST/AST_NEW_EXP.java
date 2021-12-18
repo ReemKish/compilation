@@ -25,8 +25,8 @@ public class AST_NEW_EXP extends AST_EXP
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
-		this.t = t;
 		this.e = e;
+		this.t = t;
 	}
 
 	/************************************************/
@@ -46,5 +46,14 @@ public class AST_NEW_EXP extends AST_EXP
 			SerialNumber,
 			String.format("New Exp")
 		);
+	}
+
+	public TYPE SemantMe(){
+		if(e == null) {
+			return t.SemantMe();
+		}
+		else{
+			return new TYPE_ARRAY(t.SemantMe());
+		}
 	}
 }
