@@ -70,13 +70,27 @@ public class AST_EXP_FUNCCALL extends AST_EXP
 		if (objName  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,objName.SerialNumber);
 	}
 	public TYPE SemantMe() throws SemanticException {
-		SYMBOL_TABLE_ENTRY func = SYMBOL_TABLE.getInstance().find(fName);
-		if(func == null || !(func.type instanceof TYPE_FUNCTION)){
+		TYPE func = null;
+		if(objName == null) {
+			func = SYMBOL_TABLE.getInstance().find(fName).type;
+		}
+		else{
+			TYPE_CLASS parent_type = (TYPE_CLASS) objName.SemantMe();
+			while(parent_type != null) {
+				for (TYPE_CLASS_VAR_DEC_LIST field = parent_type.data_members; field != null; field = field.tail) {
+					if (Objects.equals(field.head.name, fName)) {
+						func = field.head.t;
+					}
+				}
+				parent_type = parent_type.father;
+			}
+		}
+		if(!(func instanceof TYPE_FUNCTION)){
 			System.out.format(">> ERROR [%d:%d] can't find function %s\n",2,2, fName);
 			throw new SemanticException(this.line);
 		}
-		TYPE returnType =  ((TYPE_FUNCTION) func.type).returnType;
-		TYPE_LIST expectedParams = ((TYPE_FUNCTION) func.type).params;
+		TYPE returnType =  ((TYPE_FUNCTION) func).returnType;
+		TYPE_LIST expectedParams = ((TYPE_FUNCTION) func).params;
 		for (AST_EXP_LIST it=el; it != null; it=it.tail)
 		{
 			if(expectedParams == null){

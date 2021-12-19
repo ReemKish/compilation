@@ -65,6 +65,38 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 	}
 
 	public TYPE SemantMe() throws SemanticException {
-		return type.SemantMe();
+		TYPE t = type.SemantMe();
+
+		/**************************************/
+		/* [1] Check That Name is available */
+		/**************************************/
+		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		if (prevDec != null)
+		{
+			SYMBOL_TABLE_ENTRY scope = SYMBOL_TABLE.getInstance().getScope();
+			/* print error only if declaration shadows a previous declaration in the same scope*/
+			if(scope == null || scope.prevtop_index < prevDec.prevtop_index) {
+				System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n", 2, 2, name);
+				throw new SemanticException(line);
+			}
+		}
+
+		/***************************************************/
+		/* [2] Enter the Function Type to the Symbol Table */
+		/***************************************************/
+		SYMBOL_TABLE.getInstance().enter(name, t);
+
+		/***************************************************/
+		/* [3] check assigned expression type validity */
+		/***************************************************/
+		if(exp != null && (exp.SemantMe() == null || !exp.SemantMe().isInstanceOf(t))){
+			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, exp.SemantMe().name, t.name);
+			throw new SemanticException(line);
+		}
+
+		/*********************************************************/
+		/* [4] Return value is irrelevant for class declarations */
+		/*********************************************************/
+		return t;
 	}
 }

@@ -63,10 +63,13 @@ public class AST_VAR_FIELD extends AST_VAR
 	public TYPE SemantMe() throws SemanticException {
 		/* TODO: add a dedicated AST node for class types*/
 		TYPE_CLASS parent_type = (TYPE_CLASS) var.SemantMe();
-		for(TYPE_CLASS_VAR_DEC_LIST field = parent_type.data_members; field != null; field = field.tail){
-			if(Objects.equals(field.head.name, fieldName)){
-				return field.head.t;
+		while(parent_type != null) {
+			for (TYPE_CLASS_VAR_DEC_LIST field = parent_type.data_members; field != null; field = field.tail) {
+				if (Objects.equals(field.head.name, fieldName)) {
+					return field.head.t;
+				}
 			}
+			parent_type = parent_type.father;
 		}
 		return null;
 	}
