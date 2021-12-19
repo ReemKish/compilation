@@ -47,8 +47,7 @@ public class AST_TYPE extends AST_Node
 			String.format("TYPE\n...->%s",type));
 	}
 
-	public TYPE SemantMe()
-	{
+	public TYPE SemantMe() throws SemanticException {
 		SYMBOL_TABLE_ENTRY t;
 
 		/****************************/
@@ -58,7 +57,7 @@ public class AST_TYPE extends AST_Node
 		if (t == null || t.type == null)
 		{
 			System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,type);
-			System.exit(0);
+			throw new SemanticException(this.line);
 		}
 
 		/** check that this is in fact declarable type (i.e. class, array, string, or int) **/

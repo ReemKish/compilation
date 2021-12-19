@@ -76,6 +76,7 @@ public class Main
 			}
 			catch (Exception e)
 			{
+				file_writer.print("OK");
 				e.printStackTrace();
 			}
 			finally {

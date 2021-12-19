@@ -49,7 +49,7 @@ public class AST_NEW_EXP extends AST_EXP
 		);
 	}
 
-	public TYPE SemantMe(){
+	public TYPE SemantMe() throws SemanticException {
 		if(e == null) {
 			return t.SemantMe();
 		}

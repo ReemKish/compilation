@@ -64,8 +64,7 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
 	}
 
-	public TYPE SemantMe()
-	{
+	public TYPE SemantMe() throws SemanticException {
 		return type.SemantMe();
 	}
 }
