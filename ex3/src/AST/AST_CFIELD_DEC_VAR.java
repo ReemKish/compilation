@@ -66,7 +66,6 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 
 	public TYPE SemantMe()
 	{
-		type.SemantMe();
-		return null;
+		return type.SemantMe();
 	}
 }

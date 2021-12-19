@@ -43,7 +43,7 @@ public class AST_DEC_CLASS extends AST_DEC
 		/********************************************/
 		/* AST NODE TYPE = AST ASSIGNMENT STATEMENT */
 		/********************************************/
-		System.out.print("AST NODE ASSIGN STMT\n");
+		System.out.print("AST DEC CLASS\n");
 
 		/***********************************/
 		/* RECURSIVELY PRINT VAR + EXP ... */

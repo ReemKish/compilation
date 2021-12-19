@@ -59,4 +59,17 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		if (var       != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
 		if (subscript != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,subscript.SerialNumber);
 	}
+	public TYPE SemantMe() throws SemanticException {
+		TYPE arr_type = var.SemantMe();
+		TYPE exp_type = subscript.SemantMe();
+		if(!arr_type.isArray()){
+			System.out.format(">> ERROR [%d:%d] %s is not an array type\n", 2, 2, arr_type.name);
+			throw new SemanticException(line);
+		}
+		if(!exp_type.isInstanceOf(TYPE_INT.getInstance())){
+			System.out.format(">> ERROR [%d:%d] can't cast %s to int\n", 2, 2, exp_type.name);
+			throw new SemanticException(line);
+		}
+		return ((TYPE_ARRAY)arr_type).arrayType;
+	}
 }

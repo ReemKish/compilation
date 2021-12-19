@@ -13,5 +13,5 @@ public abstract class AST_CFIELD extends AST_Node
 	{
 		System.out.print("UNKNOWN AST CLASS FIELD NODE");
 	}
-	public TYPE SemantMe() {return type.SemantMe();}
+	public TYPE SemantMe() throws SemanticException {return type.SemantMe();}
 }

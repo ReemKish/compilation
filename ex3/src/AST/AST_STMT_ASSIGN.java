@@ -78,7 +78,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		}
 
 		/**************************************/
-		/* [2] Check That Name does NOT exist */
+		/* [2] Check that expression type matches var type */
 		/**************************************/
 		TYPE ex = exp.SemantMe();
 		if (!ex.isInstanceOf(v))
