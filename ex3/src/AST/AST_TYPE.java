@@ -20,7 +20,7 @@ public class AST_TYPE extends AST_Node
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.format("====================== type ->  %s \n",type);
+		System.out.format("====================== type ->  %s \n", typeName);
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
@@ -37,12 +37,7 @@ public class AST_TYPE extends AST_Node
 		/*********************************/
 		/* AST NODE TYPE = AST FIELD VAR */
 		/*********************************/
-		System.out.print("AST NODE TYPE\n");
-
-		/**********************************************/
-		/* RECURSIVELY PRINT VAR, then FIELD NAME ... */
-		/**********************************************/
-		System.out.format("TYPE( %s )\n",type);
+		System.out.format("AST NODE TYPE ( %s )\n", typeName);
 
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */

@@ -153,13 +153,6 @@ type ::=
 		| ID:t 				{: RESULT = new AST_TYPE(t); :}
 		;
 
-cField ::=
-		type:t ID:varName ASSIGN exp:e SEMICOLON 	    				    							{: RESULT = new AST_CFIELD_DEC_VAR(tleft, t, varName, e); :}
-		| type:t ID:varName SEMICOLON 																					{: RESULT = new AST_CFIELD_DEC_VAR(tleft, t, varName, null); :}
-		| type:t ID:varName ASSIGN newExp:e SEMICOLON 													{: RESULT = new AST_CFIELD_DEC_VAR(tleft, t, varName, e); :}
-		| type:t ID:varName LPAREN RPAREN LBRACE stmtList:sl RBRACE 						{: RESULT = new AST_CFIELD_DEC_FUNC(tleft, t, varName, null, sl); :}
-		| type:t ID:varName LPAREN argList:al RPAREN LBRACE stmtList:sl RBRACE 	{: RESULT = new AST_CFIELD_DEC_FUNC(tleft, t, varName, al, sl); :}
-		;
 
 stmtList	::=		
 			stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(sleft, s,l);    :}
@@ -177,8 +170,8 @@ expList	::=
 		;
 
 cFieldList	::=		
-			cField:cf	cFieldList:l		{: RESULT = new AST_CFIELD_LIST(cfleft, cf,l);    :}
-		| cField:cf									{: RESULT = new AST_CFIELD_LIST(cfleft, cf,null); :}
+			cField:cf cFieldList:l		{: RESULT = new AST_CFIELD_LIST(cfleft, cf, l);    :}
+		| cField:cf									{: RESULT = new AST_CFIELD_LIST(cfleft, cf, null); :}
 		;
 
 var	::=		
@@ -186,7 +179,16 @@ var	::=
 		| var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(vleft, v,fieldName); :} 
 		| var:v LBRACK exp:e RBRACK		{: RESULT = new AST_VAR_SUBSCRIPT(vleft, v,e);     :} 
 		;
-					
+
+cField ::=
+		type:t ID:varName ASSIGN exp:e SEMICOLON 	    				        {: RESULT = new AST_CFIELD_DEC_VAR(tleft, t, varName, e); :}
+		| type:t ID:varName SEMICOLON 										    {: RESULT = new AST_CFIELD_DEC_VAR(tleft, t, varName, null); :}
+		| type:t ID:varName ASSIGN newExp:e SEMICOLON 							{: RESULT = new AST_CFIELD_DEC_VAR(tleft, t, varName, e); :}
+		| type:t ID:varName LPAREN RPAREN LBRACE stmtList:sl RBRACE 			{: RESULT = new AST_CFIELD_DEC_FUNC(tleft, t, varName, null, sl); :}
+		| type:t ID:varName LPAREN argList:al RPAREN LBRACE stmtList:sl RBRACE 	{: RESULT = new AST_CFIELD_DEC_FUNC(tleft, t, varName, al, sl); :}
+		;
+
+
 stmt	::=
 			type:t ID:varName ASSIGN exp:e SEMICOLON 									{: RESULT = new AST_STMT_DEC_VAR(tleft, t, varName, e); :}
 		| type:t ID:varName SEMICOLON 															{: RESULT = new AST_STMT_DEC_VAR(tleft, t, varName, null); :}

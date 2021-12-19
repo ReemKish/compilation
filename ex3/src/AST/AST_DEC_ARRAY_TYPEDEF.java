@@ -41,7 +41,7 @@ public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 		/********************************************/
 		/* AST NODE TYPE = AST ASSIGNMENT STATEMENT */
 		/********************************************/
-		System.out.print("AST NODE ASSIGN STMT\n");
+		System.out.print("AST NODE ARRAY TYPEDEF\n");
 
 		/***********************************/
 		/* RECURSIVELY PRINT VAR + EXP ... */

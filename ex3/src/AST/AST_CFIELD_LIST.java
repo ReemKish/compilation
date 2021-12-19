@@ -20,7 +20,6 @@ public class AST_CFIELD_LIST extends AST_Node
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
 		SerialNumber = AST_Node_Serial_Number.getFresh();
-
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
@@ -28,7 +27,7 @@ public class AST_CFIELD_LIST extends AST_Node
 		if (tail == null) System.out.print("====================== fields -> field      \n");
 
 		/*******************************/
-		/* COPY INPUT DATA NENBERS ... */
+		/* COPY INPUT DATA MEMBERS ... */
 		/*******************************/
 		this.line = ++line;
 		this.head = head;
@@ -64,21 +63,23 @@ public class AST_CFIELD_LIST extends AST_Node
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,tail.SerialNumber);
 	}
-	public TYPE_CLASS_VAR_DEC_LIST SemantMe()
-	{
+	public TYPE_CLASS_VAR_DEC_LIST SemantMe() throws SemanticException {
 		TYPE_CLASS_VAR_DEC_LIST reverse_type_list = null;
 		TYPE_CLASS_VAR_DEC_LIST type_list = null;
 		SYMBOL_TABLE_ENTRY t;
 
 		/* TODO - make sure there are no duplicate field names*/
-		for (AST_CFIELD_LIST it = this; it  != null; it = it.tail)
-		{
-			TYPE fieldType = it.head.type.SemantMe();
+		AST_CFIELD_LIST it = this;
+		while(it != null){
+			TYPE fieldType = it.head.SemantMe();
 			reverse_type_list = new TYPE_CLASS_VAR_DEC_LIST(new TYPE_CLASS_VAR_DEC(fieldType, it.head.name), reverse_type_list);
+			it = it.tail;
 		}
 		/* reverse type list to preserve original argument order */
-		for (TYPE_CLASS_VAR_DEC_LIST it = reverse_type_list; it  != null; it = it.tail) {
-			type_list = new TYPE_CLASS_VAR_DEC_LIST(it.head, type_list);
+		TYPE_CLASS_VAR_DEC_LIST r_it = reverse_type_list;
+		while (r_it  != null) {
+			type_list = new TYPE_CLASS_VAR_DEC_LIST(r_it.head, type_list);
+			r_it = r_it.tail;
 		}
 
 		return type_list;

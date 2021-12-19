@@ -20,7 +20,7 @@ public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
 		SerialNumber = AST_Node_Serial_Number.getFresh();
-
+		System.out.println(type.typeName);
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
