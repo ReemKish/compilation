@@ -1,21 +1,19 @@
 package AST;
-
 import TYPES.*;
-import TEMP.*;
-import IR.*;
+import SYMBOL_TABLE.*;
 
 public class AST_STMT_ASSIGN extends AST_STMT
 {
 	/***************/
 	/*  var := exp */
 	/***************/
-	public AST_EXP_VAR var;
+	public AST_VAR var;
 	public AST_EXP exp;
 
 	/*******************/
 	/*  CONSTRUCTOR(S) */
 	/*******************/
-	public AST_STMT_ASSIGN(AST_EXP_VAR var,AST_EXP exp)
+	public AST_STMT_ASSIGN(int line, AST_VAR var,AST_EXP exp)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -30,6 +28,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.var = var;
 		this.exp = exp;
 	}
@@ -60,31 +59,37 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
+		if (var != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
+		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,exp.SerialNumber);
 	}
-	public TYPE SemantMe()
+
+	public TYPE SemantMe() throws SemanticException
 	{
-		TYPE t1 = null;
-		TYPE t2 = null;
-		
-		if (var != null) t1 = var.SemantMe();
-		if (exp != null) t2 = exp.SemantMe();
-		
-		if (t1 != t2)
+		TYPE v;
+
+		/****************************/
+		/* [1] Check that the variable exists */
+		/****************************/
+		v = var.SemantMe();
+		if (v == null)
 		{
-			System.out.format(">> ERROR [%d:%d] type mismatch for var := exp\n",6,6);				
+			System.out.format(">> ERROR [%d:%d] non existent identifier\n",2,2);
+			throw new SemanticException(this.line);
 		}
+
+		/**************************************/
+		/* [2] Check that expression type matches var type */
+		/**************************************/
+		TYPE ex = exp.SemantMe();
+		if (!ex.isInstanceOf(v))
+		{
+			System.out.format(">> ERROR [%d:%d] illegal type cast from %s to %s\n", 2, 2, ex.name, v.name);
+			throw new SemanticException(this.line);
+		}
+
+		/*********************************************************/
+		/* [4] Return value is irrelevant for class declarations */
+		/*********************************************************/
 		return null;
 	}
-	public TEMP IRme()
-	{
-		TEMP src = exp.IRme();
-		IR.
-		getInstance().
-		Add_IRcommand(new IRcommand_Store(((AST_EXP_VAR_SIMPLE) var).name,src));
-
-		return null;
-	}
-
 }

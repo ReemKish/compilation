@@ -1,7 +1,6 @@
 package AST;
-
 import TYPES.*;
-import TEMP.*;
+import SYMBOL_TABLE.*;
 
 public class AST_STMT_LIST extends AST_Node
 {
@@ -14,7 +13,7 @@ public class AST_STMT_LIST extends AST_Node
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
-	public AST_STMT_LIST(AST_STMT head,AST_STMT_LIST tail)
+	public AST_STMT_LIST(int line, AST_STMT head,AST_STMT_LIST tail)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
@@ -30,6 +29,7 @@ public class AST_STMT_LIST extends AST_Node
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
+		this.line = ++line;
 		this.head = head;
 		this.tail = tail;
 	}
@@ -63,20 +63,20 @@ public class AST_STMT_LIST extends AST_Node
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,tail.SerialNumber);
 	}
-	
-	public TEMP IRme()
+	public TYPE_LIST SemantMe() throws SemanticException
 	{
-		if (head != null) head.IRme();
-		if (tail != null) tail.IRme();
-		
-		return null;
-	}
-	
-	public TYPE SemantMe()
-	{
-		if (head != null) head.SemantMe();
-		if (tail != null) tail.SemantMe();
-		
-		return null;
+		TYPE returnType = null;
+		TYPE_LIST prevReturnTypes = null;
+		if (head != null){
+			TYPE statementType = head.SemantMe();
+			if(head instanceof AST_STMT_RETURN){
+				returnType = statementType;
+			}
+		}
+		if (tail != null){
+			prevReturnTypes = tail.SemantMe();
+		};
+
+		return new TYPE_LIST(returnType, prevReturnTypes);
 	}
 }

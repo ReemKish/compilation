@@ -18,7 +18,7 @@ import TYPES.*;
 /****************/
 public class SYMBOL_TABLE
 {
-	private int hashArraySize = 13;
+	private int hashArraySize = 32;
 	
 	/**********************************************/
 	/* The actual symbol table data structure ... */
@@ -32,15 +32,11 @@ public class SYMBOL_TABLE
 	/**************************************************************/
 	private int hash(String s)
 	{
-		if (s.charAt(0) == 'l') {return 1;}
-		if (s.charAt(0) == 'm') {return 1;}
-		if (s.charAt(0) == 'r') {return 3;}
-		if (s.charAt(0) == 'i') {return 6;}
-		if (s.charAt(0) == 'd') {return 6;}
-		if (s.charAt(0) == 'k') {return 6;}
-		if (s.charAt(0) == 'f') {return 6;}
-		if (s.charAt(0) == 'S') {return 6;}
-		return 12;
+		int hash = 7;
+		for (int i = 0; i < s.length(); i++) {
+				hash = hash*31 + s.charAt(i);
+		}
+		return (hash % hashArraySize + hashArraySize) % hashArraySize;
 	}
 
 	/****************************************************************************/
@@ -83,7 +79,7 @@ public class SYMBOL_TABLE
 	/***********************************************/
 	/* Find the inner-most scope element with name */
 	/***********************************************/
-	public TYPE find(String name)
+	public SYMBOL_TABLE_ENTRY find(String name)
 	{
 		SYMBOL_TABLE_ENTRY e;
 				
@@ -91,7 +87,7 @@ public class SYMBOL_TABLE
 		{
 			if (name.equals(e.name))
 			{
-				return e.type;
+				return e;
 			}
 		}
 		
@@ -117,6 +113,25 @@ public class SYMBOL_TABLE
 		/* Print the symbol table after every change */
 		/*********************************************/
 		PrintMe();
+	}
+
+	/********************************************************************************/
+	/* end scope = Keep popping elements out of the data structure,                 */
+	/* from most recent element entered, until a <NEW-SCOPE> element is encountered */
+	/**
+	 * @return******************************************************************************/
+	public SYMBOL_TABLE_ENTRY getScope()
+	{
+		/**************************************************************************/
+		/* Pop elements from the symbol table stack until a SCOPE-BOUNDARY is hit */
+		/**************************************************************************/
+		while (top != null && top.name != "SCOPE-BOUNDARY")
+		{
+			table[top.index] = top.next;
+			top_index = top_index-1;
+			top = top.prevtop;
+		}
+		return top;
 	}
 
 	/********************************************************************************/
@@ -153,7 +168,7 @@ public class SYMBOL_TABLE
 	{
 		int i=0;
 		int j=0;
-		String dirname="./FOLDER_5_OUTPUT/";
+		String dirname="./output/";
 		String filename=String.format("SYMBOL_TABLE_%d_IN_GRAPHVIZ_DOT_FORMAT.txt",n++);
 
 		try
@@ -251,11 +266,10 @@ public class SYMBOL_TABLE
 			/* [1] Enter primitive types int, string */
 			/*****************************************/
 			instance.enter("int",   TYPE_INT.getInstance());
-			instance.enter("string",TYPE_STRING.getInstance());
+			instance.enter("string", TYPE_STRING.getInstance());
+			instance.enter("void", TYPE_NIL.getInstance());
 
-			/*************************************/
-			/* [2] How should we handle void ??? */
-			/*************************************/
+
 
 			/***************************************/
 			/* [3] Enter library function PrintInt */
@@ -268,7 +282,30 @@ public class SYMBOL_TABLE
 					new TYPE_LIST(
 						TYPE_INT.getInstance(),
 						null)));
-			
+
+			/***************************************/
+			/* [4] Enter library function PrintString */
+			/***************************************/
+			instance.enter(
+				"PrintString",
+				new TYPE_FUNCTION(
+					TYPE_VOID.getInstance(),
+					"PrintString",
+					new TYPE_LIST(
+						TYPE_STRING.getInstance(),
+						null)));
+
+			/***************************************/
+			/* [5] Enter library function PrintTrace */
+			/***************************************/
+			instance.enter(
+				"PrintTrace",
+				new TYPE_FUNCTION(
+					TYPE_VOID.getInstance(),
+					"PrintTrace",
+					new TYPE_LIST(
+						TYPE_VOID.getInstance(),
+						null)));
 		}
 		return instance;
 	}

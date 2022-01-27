@@ -1,6 +1,6 @@
 package AST;
-
-import TEMP.*;
+import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public abstract class AST_Node
 {
@@ -9,6 +9,7 @@ public abstract class AST_Node
 	/* In particular, it can help in creating  */
 	/* a graphviz dot format of the AST ...    */
 	/*******************************************/
+	public int line;
 	public int SerialNumber;
 	
 	/***********************************************/
@@ -17,13 +18,5 @@ public abstract class AST_Node
 	public void PrintMe()
 	{
 		System.out.print("AST NODE UNKNOWN\n");
-	}
-
-	/*****************************************/
-	/* The default IR action for an AST node */
-	/*****************************************/
-	public TEMP IRme()
-	{
-		return null;
 	}
 }

@@ -1,137 +1,126 @@
 package AST;
-
 import TYPES.*;
 import SYMBOL_TABLE.*;
-import TEMP.*;
-import IR.*;
-import MIPS.*;
 
 public class AST_DEC_FUNC extends AST_DEC
 {
-	/****************/
-	/* DATA MEMBERS */
-	/****************/
-	public String returnTypeName;
+	/***************/
+	/*  var := exp */
+	/***************/
+	public AST_TYPE type;
 	public String name;
-	public AST_TYPE_NAME_LIST params;
-	public AST_STMT_LIST body;
-	
-	/******************/
-	/* CONSTRUCTOR(S) */
-	/******************/
-	public AST_DEC_FUNC(
-		String returnTypeName,
-		String name,
-		AST_TYPE_NAME_LIST params,
-		AST_STMT_LIST body)
+	public AST_STMT_LIST sl;
+	public AST_ARG_LIST al;
+
+	/*******************/
+	/*  CONSTRUCTOR(S) */
+	/*******************/
+	public AST_DEC_FUNC(int line, AST_TYPE type, String name, AST_ARG_LIST al, AST_STMT_LIST sl)
 	{
 		/******************************/
 		/* SET A UNIQUE SERIAL NUMBER */
 		/******************************/
 		SerialNumber = AST_Node_Serial_Number.getFresh();
 
-		this.returnTypeName = returnTypeName;
+		/***************************************/
+		/* PRINT CORRESPONDING DERIVATION RULE */
+		/***************************************/
+		System.out.print("====================== funcDec -> type ID(argList){stmtLst}\n");
+
+		/*******************************/
+		/* COPY INPUT DATA NENBERS ... */
+		/*******************************/
+		this.line = ++line;
+		this.type = type;
 		this.name = name;
-		this.params = params;
-		this.body = body;
+		this.sl = sl;
+		this.al = al;
 	}
 
-	public TEMP IRme()
-	{
-		IR.
-		getInstance().
-		Add_IRcommand(new IRcommand_Label("main"));		
-		if (body != null) body.IRme();
-
-		return null;
-	}
-	
-	/************************************************************/
-	/* The printing message for a function declaration AST node */
-	/************************************************************/
+	/*********************************************************/
+	/* The printing message for an assign statement AST node */
+	/*********************************************************/
 	public void PrintMe()
 	{
-		/*************************************************/
-		/* AST NODE TYPE = AST NODE FUNCTION DECLARATION */
-		/*************************************************/
-		System.out.format("FUNC(%s):%s\n",name,returnTypeName);
+		/********************************************/
+		/* AST NODE TYPE = AST ASSIGNMENT STATEMENT */
+		/********************************************/
+		System.out.print("AST NODE DEC FUNC\n");
 
-		/***************************************/
-		/* RECURSIVELY PRINT params + body ... */
-		/***************************************/
-		if (params != null) params.PrintMe();
-		if (body   != null) body.PrintMe();
-		
+		/***********************************/
+		/* RECURSIVELY PRINT VAR + EXP ... */
+		/***********************************/
+		if (name != null) System.out.format("%s\n", name);
+		if (type != null) type.PrintMe();
+		if (sl != null) sl.PrintMe();
+		if (al != null) al.PrintMe();
+
 		/***************************************/
 		/* PRINT Node to AST GRAPHVIZ DOT file */
 		/***************************************/
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
-			String.format("FUNC(%s)\n:%s\n",name,returnTypeName));
+				String.format("DEC\ntype %s(args){stmtLst}",name)
+		);
 		
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		if (params != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,params.SerialNumber);		
-		if (body   != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,body.SerialNumber);		
+		if (al != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,al.SerialNumber);
+		if (sl != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,sl.SerialNumber);
+		if (type != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,type.SerialNumber);
 	}
-
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws SemanticException
 	{
-		TYPE t;
+		TYPE arg_type;
 		TYPE returnType = null;
+		TYPE_LIST reverse_type_list = null;
 		TYPE_LIST type_list = null;
 
 		/*******************/
-		/* [0] return type */
+		/* [0] check return type */
 		/*******************/
-		returnType = SYMBOL_TABLE.getInstance().find(returnTypeName);
-		if (returnType == null)
-		{
-			System.out.format(">> ERROR [%d:%d] non existing return type %s\n",6,6,returnType);				
+		if(type != null) {
+			returnType = type.SemantMe();
 		}
-	
+
+
+		/***************************/
+		/* [2] Semant Input Params */
+		/***************************/
+		for (AST_ARG_LIST it = al; it  != null; it = it.tail)
+		{
+			it.head.SemantMe();
+			arg_type = it.head.type.SemantMe();
+			reverse_type_list = new TYPE_LIST(arg_type,reverse_type_list);
+			SYMBOL_TABLE.getInstance().enter(it.head.name, arg_type);
+		}
+		/* reverse type list to preserve original argument order */
+		for (TYPE_LIST it = reverse_type_list; it  != null; it = it.tail) {type_list = new TYPE_LIST(it.head,type_list);}
+
+		/***************************************************/
+		/* [5] Enter the Function Type to the Symbol Table */
+		/***************************************************/
+		SYMBOL_TABLE.getInstance().enter(name, new TYPE_FUNCTION(returnType, name,type_list));
+
 		/****************************/
 		/* [1] Begin Function Scope */
 		/****************************/
 		SYMBOL_TABLE.getInstance().beginScope();
 
-		/***************************/
-		/* [2] Semant Input Params */
-		/***************************/
-		for (AST_TYPE_NAME_LIST it = params; it  != null; it = it.tail)
-		{
-			t = SYMBOL_TABLE.getInstance().find(it.head.type);
-			if (t == null)
-			{
-				System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,it.head.type);				
-			}
-			else
-			{
-				type_list = new TYPE_LIST(t,type_list);
-				SYMBOL_TABLE.getInstance().enter(it.head.name,t);
-			}
-		}
-
 		/*******************/
 		/* [3] Semant Body */
 		/*******************/
-		body.SemantMe();
+		sl.SemantMe();
 
 		/*****************/
 		/* [4] End Scope */
 		/*****************/
 		SYMBOL_TABLE.getInstance().endScope();
 
-		/***************************************************/
-		/* [5] Enter the Function Type to the Symbol Table */
-		/***************************************************/
-		SYMBOL_TABLE.getInstance().enter(name,new TYPE_FUNCTION(returnType,name,type_list));
-
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */
 		/*********************************************************/
-		return null;		
+		return null;
 	}
-	
 }
