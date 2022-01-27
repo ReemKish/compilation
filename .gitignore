@@ -22,3 +22,5 @@ ex*/output/*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/ex4/FOLDER_5_OUTPUT/
+/ex4/FOLDER_4_INPUT/Input.txt
