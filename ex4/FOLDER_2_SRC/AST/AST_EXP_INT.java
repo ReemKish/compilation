@@ -1,4 +1,6 @@
 package AST;
+import IR.IR;
+import TEMP.TEMP;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -46,4 +48,10 @@ public class AST_EXP_INT extends AST_EXP
 			String.format("INT(%d)",value));
 	}
 	public TYPE SemantMe() { return TYPE_INT.getInstance(); }
+	public TEMP IRme()
+	{
+		TEMP t = TEMP_FACTORY.getInstance().getFreshTEMP();
+		IR.getInstance().Add_IRcommand(new IRcommandConstInt(t,value));
+		return t;
+	}
 }

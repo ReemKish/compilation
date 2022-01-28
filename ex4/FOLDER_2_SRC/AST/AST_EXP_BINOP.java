@@ -1,4 +1,6 @@
 package AST;
+import IR.IR;
+import TEMP.TEMP;
 import TYPES.*;
 
 import java.util.Objects;
@@ -9,6 +11,9 @@ public class AST_EXP_BINOP extends AST_EXP
 	String sOP;
 	public AST_EXP left;
 	public AST_EXP right;
+	TYPE leftType ;
+	TYPE rightType;
+
 	
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -32,6 +37,9 @@ public class AST_EXP_BINOP extends AST_EXP
 		this.left = left;
 		this.right = right;
 		this.OP = OP;
+		this.leftType = null;
+		this.rightType = null;
+
 
 		/*********************************/
 		/* CONVERT OP to a printable sOP */
@@ -80,6 +88,10 @@ public class AST_EXP_BINOP extends AST_EXP
 	{
 		TYPE left_type = left.SemantMe();
 		TYPE right_type = right.SemantMe();
+
+		// for IRme usage
+		leftType = left_type;
+		rightType = right_type;
 		/****************************************/
 		/* Type check for equality testing */
 		/****************************************/
@@ -128,5 +140,74 @@ public class AST_EXP_BINOP extends AST_EXP
 			}
 		}
 		return TYPE_INT.getInstance();
+	}
+	public TEMP IRme()
+	{
+		TEMP t1 = null;
+		TEMP t2 = null;
+		TEMP dst = TEMP_FACTORY.getInstance().getFreshTEMP();
+
+		if (left  != null) t1 = left.IRme();
+		if (right != null) t2 = right.IRme();
+
+		if (OP == 0)
+		{
+			if (leftType.isInstanceOf(TYPE_STRING.getInstance()) && rightType.isInstanceOf(TYPE_STRING.getInstance())){
+
+				IR.
+						getInstance().
+						Add_IRcommand(new IRcommand_Binop_Concate_Strings(dst,t1,t2));
+			}
+			else{
+				IR.
+						getInstance().
+						Add_IRcommand(new IRcommand_Binop_Add_Integers(dst,t1,t2));
+			}
+
+		}
+		if (OP == 1)
+		{
+			IR.
+					getInstance().
+					Add_IRcommand(new IR.IRcommand_Binop_Sub_Integers(dst,t1,t2));
+		}
+		if (OP == 2)
+		{
+			IR.
+					getInstance().
+					Add_IRcommand(new IRcommand_Binop_Mul_Integers(dst,t1,t2));
+		}
+		if (OP == 3)
+		{
+			IR.
+					getInstance().
+					Add_IRcommand(new IR.IRcommand_Binop_Div_Integers(dst,t1,t2));
+		}
+		if (OP == 4)
+		{
+			IR.
+					getInstance().
+					Add_IRcommand(new IRcommand_Binop_LT_Integers(dst,t1,t2));
+		}
+		if (OP == 5)
+		{
+			IR.
+					getInstance().
+					Add_IRcommand(new IRcommand_Binop_GT_Integers(dst,t1,t2));
+		}
+		if (OP == 6) {
+			if (leftType.isInstanceOf(TYPE_STRING.getInstance()) && rightType.isInstanceOf(TYPE_STRING.getInstance())) {
+
+				IR.
+						getInstance().
+						Add_IRcommand(new IRcommand_Binop_EQ_Strings(dst, t1, t2));
+			} else {
+				IR.
+						getInstance().
+						Add_IRcommand(new IRcommand_Binop_EQ_Integers(dst, t1, t2));
+			}
+		}
+
+		return dst;
 	}
 }
