@@ -1,4 +1,5 @@
 package AST;
+import TEMP.TEMP;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -18,5 +19,9 @@ public abstract class AST_Node
 	public void PrintMe()
 	{
 		System.out.print("AST NODE UNKNOWN\n");
+	}
+	public TEMP IRme()
+	{
+		return null;
 	}
 }

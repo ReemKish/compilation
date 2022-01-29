@@ -1,4 +1,5 @@
 package AST;
+import TEMP.TEMP;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -38,6 +39,14 @@ public class AST_PROGRAM extends AST_Node
 	{
 		if (head != null) head.SemantMe();
 		if (tail != null) tail.SemantMe();
+
+		return null;
+	}
+
+	public TEMP IRme()
+	{
+		if (head != null) head.IRme();
+		if (tail != null) tail.IRme();
 
 		return null;
 	}

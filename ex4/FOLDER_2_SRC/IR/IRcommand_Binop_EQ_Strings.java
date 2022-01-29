@@ -3,7 +3,7 @@ package IR;
 import TEMP.*;
 import MIPS.*;
 
-public class IRcommand_Binop_EQ_Strings {
+public class IRcommand_Binop_EQ_Strings extends IRcommand{
     public TEMP t1;
     public TEMP t2;
     public TEMP dst;

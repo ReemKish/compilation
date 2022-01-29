@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -101,5 +103,11 @@ public class AST_DEC_VAR extends AST_DEC
 		/* [4] Return value is irrelevant for class declarations */
 		/*********************************************************/
 		return null;
+	}
+	public TEMP IRme()
+	{
+		TEMP t = exp.IRme();
+		IR.getInstance().Add_IRcommand(new IRcommand_Store(name, t));
+		return t;
 	}
 }

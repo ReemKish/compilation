@@ -1,6 +1,6 @@
 package AST;
 import IR.*;
-import TEMP.TEMP;
+import TEMP.*;
 import TYPES.*;
 
 import java.util.Objects;
@@ -153,10 +153,10 @@ public class AST_EXP_BINOP extends AST_EXP
 		if (OP == 0)
 		{
 			if (leftType.isInstanceOf(TYPE_STRING.getInstance()) && rightType.isInstanceOf(TYPE_STRING.getInstance())){
-
+/*
 				IR.
 						getInstance().
-						Add_IRcommand(new IRcommand_Binop_Concatenate_Strings(dst,t1,t2));
+						Add_IRcommand(new IRcommand_Binop_Concatenate_Strings(dst,t1,t2));*/
 			}
 			else{
 				IR.

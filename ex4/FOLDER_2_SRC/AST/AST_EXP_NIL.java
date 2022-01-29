@@ -1,9 +1,8 @@
 package AST;
 
-import IR.IR;
-import TEMP.TEMP;
-import TYPES.TYPE;
-import TYPES.TYPE_NIL;
+import IR.*;
+import TEMP.*;
+import TYPES.*;
 
 public class AST_EXP_NIL extends AST_EXP
 {

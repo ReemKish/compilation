@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -90,6 +92,15 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		/*********************************************************/
 		/* [4] Return value is irrelevant for class declarations */
 		/*********************************************************/
+		return null;
+	}
+	public TEMP IRme()
+	{
+		TEMP src = exp.IRme();
+		IR.
+				getInstance().
+				Add_IRcommand(new IRcommand_Store(((AST_VAR_SIMPLE) var).name,src));
+
 		return null;
 	}
 }

@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.TEMP;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -78,5 +80,12 @@ public class AST_STMT_LIST extends AST_Node
 		};
 
 		return new TYPE_LIST(returnType, prevReturnTypes);
+	}
+	public TEMP IRme()
+	{
+		if (head != null) head.IRme();
+		if (tail != null) tail.IRme();
+
+		return null;
 	}
 }

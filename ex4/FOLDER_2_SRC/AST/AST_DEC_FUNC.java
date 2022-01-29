@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -121,6 +123,13 @@ public class AST_DEC_FUNC extends AST_DEC
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */
 		/*********************************************************/
+		return null;
+	}
+	public TEMP IRme()
+	{
+		IR.getInstance().Add_IRcommand(new IRcommand_Label(name));
+		// TODO handle args
+		sl.IRme();
 		return null;
 	}
 }
