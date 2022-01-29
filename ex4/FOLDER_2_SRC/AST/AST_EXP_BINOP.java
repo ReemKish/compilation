@@ -1,5 +1,5 @@
 package AST;
-import IR.IR;
+import IR.*;
 import TEMP.TEMP;
 import TYPES.*;
 
