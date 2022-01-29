@@ -106,8 +106,11 @@ public class AST_DEC_VAR extends AST_DEC
 	}
 	public TEMP IRme()
 	{
-		TEMP t = exp.IRme();
-		IR.getInstance().Add_IRcommand(new IRcommand_Store(name, t));
-		return t;
+		if(exp != null) {
+			TEMP t = exp.IRme();
+			IR.getInstance().Add_IRcommand(new IRcommand_Store(name, t));
+			return t;
+		}
+		return null;
 	}
 }
