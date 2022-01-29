@@ -70,6 +70,19 @@ public class sir_MIPS_a_lot
 		int idx=t.getSerialNumber();
 		fileWriter.format("\tli Temp_%d,%d\n",idx,value);
 	}
+	public void la(TEMP dst, TEMP src)
+	{
+		int idxDst=dst.getSerialNumber();
+		int idxSrc=src.getSerialNumber();
+
+		fileWriter.format("\tla Temp_%d,0(Temp_%d)\n",idxDst,idxSrc);
+	}
+	public void lb(TEMP dst,TEMP src)
+	{
+		int idxdst=dst.getSerialNumber();
+		int idxsrc=src.getSerialNumber();
+		fileWriter.format("\tlb Temp_%d,0(Temp_%d)\n",idxdst,idxsrc);
+	}
 	public void add(TEMP dst,TEMP oprnd1,TEMP oprnd2)
 	{
 		int i1 =oprnd1.getSerialNumber();
@@ -101,6 +114,13 @@ public class sir_MIPS_a_lot
 		int dstidx=dst.getSerialNumber();
 
 		fileWriter.format("\tdiv Temp_%d,Temp_%d,Temp_%d\n",dstidx,i1,i2);
+	}
+
+	public void addi(TEMP dst,TEMP oprnd1,int value)
+	{
+		int i1 =oprnd1.getSerialNumber();
+		int dstidx=dst.getSerialNumber();
+		fileWriter.format("\taddi Temp_%d,Temp_%d,%d\n",dstidx,i1,value);
 	}
 
 	public void label(String inlabel)
@@ -150,9 +170,11 @@ public class sir_MIPS_a_lot
 	public void beqz(TEMP oprnd1,String label)
 	{
 		int i1 =oprnd1.getSerialNumber();
-				
-		fileWriter.format("\tbeq Temp_%d,$zero,%s\n",i1,label);				
+
+		fileWriter.format("\tbeq Temp_%d,$zero,%s\n",i1,label);
 	}
+
+
 	
 	/**************************************/
 	/* USUAL SINGLETON IMPLEMENTATION ... */

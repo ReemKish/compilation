@@ -156,7 +156,7 @@ public class AST_EXP_BINOP extends AST_EXP
 
 				IR.
 						getInstance().
-						Add_IRcommand(new IRcommand_Binop_Concate_Strings(dst,t1,t2));
+						Add_IRcommand(new IRcommand_Binop_Concatenate_Strings(dst,t1,t2));
 			}
 			else{
 				IR.
@@ -169,7 +169,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		{
 			IR.
 					getInstance().
-					Add_IRcommand(new IR.IRcommand_Binop_Sub_Integers(dst,t1,t2));
+					Add_IRcommand(new IRcommand_Binop_Sub_Integers(dst,t1,t2));
 		}
 		if (OP == 2)
 		{
@@ -181,7 +181,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		{
 			IR.
 					getInstance().
-					Add_IRcommand(new IR.IRcommand_Binop_Div_Integers(dst,t1,t2));
+					Add_IRcommand(new IRcommand_Binop_Div_Integers(dst,t1,t2));
 		}
 		if (OP == 4)
 		{
