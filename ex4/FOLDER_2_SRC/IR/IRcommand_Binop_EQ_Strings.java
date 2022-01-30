@@ -22,10 +22,10 @@ public class IRcommand_Binop_EQ_Strings extends IRcommand{
         /*******************************/
         /* [1] Allocate 2 fresh labels */
         /*******************************/
-        String label_end        = getFreshLabel("end");
-        String label_AssignOne  = getFreshLabel("AssignOne");
-        String label_AssignZero = getFreshLabel("AssignZero");
-        String label_StringsCmp = getFreshLabel("StringsCmp");
+        String label_end        = getFreshLabel("EQend");
+        String label_AssignOne  = getFreshLabel("EQAssignOne");
+        String label_AssignZero = getFreshLabel("EQAssignZero");
+        String label_StringsCmp = getFreshLabel("EQStringsCmp");
 
         /**********************************************************/
         /*  Allocate a fresh temporary  for the concatenation */

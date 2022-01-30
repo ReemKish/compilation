@@ -34,9 +34,9 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 		/*******************************/
 		/* [1] Allocate 2 fresh labels */
 		/*******************************/
-		String label_end        = getFreshLabel("end");
-		String label_AssignOne  = getFreshLabel("AssignOne");
-		String label_AssignZero = getFreshLabel("AssignZero");
+		String label_end        = getFreshLabel("LTend");
+		String label_AssignOne  = getFreshLabel("LTAssignOne");
+		String label_AssignZero = getFreshLabel("LTAssignZero");
 		
 		/******************************************/
 		/* [2] if (t1< t2) goto label_AssignOne;  */
