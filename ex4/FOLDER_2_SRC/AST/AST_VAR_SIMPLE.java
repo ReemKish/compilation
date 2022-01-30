@@ -1,4 +1,6 @@
 package AST;
+import TEMP.*;
+import IR.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -61,5 +63,11 @@ public class AST_VAR_SIMPLE extends AST_VAR
 			throw new SemanticException(this.line);
 		}
 		return prevDec.type;
+	}
+
+	public TEMP IRme() {
+		TEMP dest = TEMP_FACTORY.getInstance().getFreshTEMP();
+		IR.getInstance().Add_IRcommand(new IRcommand_Load(dest, name));
+		return dest;
 	}
 }

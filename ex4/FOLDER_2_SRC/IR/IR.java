@@ -15,6 +15,7 @@ public class IR
 {
 	private IRcommand head=null;
 	private IRcommandList tail=null;
+	private int labelCounter = 0;
 
 	/******************/
 	/* Add IR command */
@@ -39,12 +40,18 @@ public class IR
 			it.tail = new IRcommandList(cmd,null);
 		}
 	}
+
+	public int getLabelIndex(){
+		labelCounter++;
+		return labelCounter;
+	}
 	
 	/***************/
 	/* MIPS me !!! */
 	/***************/
 	public void MIPSme()
 	{
+
 		if (head != null) head.MIPSme();
 		if (tail != null) tail.MIPSme();
 	}

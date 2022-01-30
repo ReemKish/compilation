@@ -4,6 +4,8 @@ import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
+import java.util.Objects;
+
 public class AST_DEC_FUNC extends AST_DEC
 {
 	/***************/
@@ -130,6 +132,9 @@ public class AST_DEC_FUNC extends AST_DEC
 		IR.getInstance().Add_IRcommand(new IRcommand_Label(name));
 		// TODO handle args
 		sl.IRme();
+		if(Objects.equals(name, "main")){
+			IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label("end_program"));
+		}
 		return null;
 	}
 }
