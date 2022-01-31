@@ -85,7 +85,7 @@ public class AST_DEC_ARRAY_TYPEDEF extends AST_DEC
 		/* [2] Enter the Array Type to the Symbol Table */
 		/***************************************************/
 		SYMBOL_TABLE.getInstance().enter(name, at);
-
+		this.semanticLabel = at;
 		return at;
 	}
 }

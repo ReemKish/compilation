@@ -61,16 +61,17 @@ public class AST_VAR_FIELD extends AST_VAR
 		if (var != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
 	}
 	public TYPE SemantMe() throws SemanticException {
-		/* TODO: add a dedicated AST node for class types*/
 		TYPE_CLASS parent_type = (TYPE_CLASS) var.SemantMe();
 		while(parent_type != null) {
 			for (TYPE_CLASS_VAR_DEC_LIST field = parent_type.data_members; field != null; field = field.tail) {
 				if (Objects.equals(field.head.name, fieldName)) {
+					this.semanticLabel = field.head.t;
 					return field.head.t;
 				}
 			}
 			parent_type = parent_type.father;
 		}
+		this.semanticLabel = null;
 		return null;
 	}
 }

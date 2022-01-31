@@ -92,6 +92,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		// for IRme usage
 		leftType = left_type;
 		rightType = right_type;
+		this.semanticLabel = TYPE_INT.getInstance();
 		/****************************************/
 		/* Type check for equality testing */
 		/****************************************/
@@ -112,12 +113,14 @@ public class AST_EXP_BINOP extends AST_EXP
 				System.out.format(">> ERROR [%d:%d] cannot perform operation on types %s %s %s\n",2,2,left_type.name, sOP, right_type.name);
 				throw new SemanticException(this.line);
 			}
+			if(left_type.isInstanceOf(TYPE_STRING.getInstance()) && right_type.isInstanceOf(TYPE_STRING.getInstance())){
+				this.semanticLabel = TYPE_STRING.getInstance();
+			}
 		}
 		/****************************************/
 		/* Type check for all other BINOPs */
 		/****************************************/
 		else{
-
 			if(left_type == null){
 				System.out.print("");
 			}
@@ -139,7 +142,7 @@ public class AST_EXP_BINOP extends AST_EXP
 				}
 			}
 		}
-		return TYPE_INT.getInstance();
+		return this.semanticLabel;
 	}
 	public TEMP IRme()
 	{

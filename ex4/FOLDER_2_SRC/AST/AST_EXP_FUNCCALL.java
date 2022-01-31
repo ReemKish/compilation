@@ -112,6 +112,7 @@ public class AST_EXP_FUNCCALL extends AST_EXP
 			System.out.format(">> ERROR [%d:%d] function %s expect more arguments\n",2,2, fName);
 			throw new SemanticException(this.line);
 		}
+		this.semanticLabel = returnType;
 		return returnType;
 	}
 	public TEMP IRme() {

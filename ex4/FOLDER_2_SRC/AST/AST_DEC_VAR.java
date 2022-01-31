@@ -102,7 +102,9 @@ public class AST_DEC_VAR extends AST_DEC
 		/*********************************************************/
 		/* [4] Return value is irrelevant for class declarations */
 		/*********************************************************/
-		return null;
+
+		this.semanticLabel = t;
+		return t;
 	}
 	public TEMP IRme()
 	{

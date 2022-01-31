@@ -97,6 +97,7 @@ public class AST_CFIELD_DEC_VAR extends AST_CFIELD
 		/*********************************************************/
 		/* [4] Return value is irrelevant for class declarations */
 		/*********************************************************/
+		this.semanticLabel = t;
 		return t;
 	}
 }

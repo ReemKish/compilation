@@ -70,6 +70,7 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 			System.out.format(">> ERROR [%d:%d] can't cast %s to int\n", 2, 2, exp_type.name);
 			throw new SemanticException(line);
 		}
-		return ((TYPE_ARRAY)arr_type).arrayType;
+		this.semanticLabel =  ((TYPE_ARRAY)arr_type).arrayType;
+		return this.semanticLabel;
 	}
 }

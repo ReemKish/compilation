@@ -60,6 +60,7 @@ public class AST_PAREN_EXP extends AST_EXP
 		if (e  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,e.SerialNumber);
 	}
 	public TYPE SemantMe() throws SemanticException {
-		return e.SemantMe();
+		this.semanticLabel = e.SemantMe();
+		return this.semanticLabel;
 	}
 }

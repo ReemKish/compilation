@@ -45,5 +45,8 @@ public class AST_EXP_STRING extends AST_EXP
 			SerialNumber,
 			String.format("STRING(\\\"%s\\\")",value));
 	}
-	public TYPE SemantMe() { return TYPE_STRING.getInstance(); }
+	public TYPE SemantMe() {
+		this.semanticLabel = TYPE_STRING.getInstance();
+		return this.semanticLabel;
+	}
 }

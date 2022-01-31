@@ -67,6 +67,7 @@ public class AST_ARG_LIST extends AST_Node
 	public TYPE SemantMe() throws SemanticException {
 		if (head != null) head.SemantMe();
 		if (tail != null) tail.SemantMe();
+		this.semanticLabel = null;
 
 		return null;
 	}

@@ -43,7 +43,10 @@ public class AST_EXP_NIL extends AST_EXP
 
 	}
 
-	public TYPE SemantMe() { return TYPE_NIL.getInstance(); }
+	public TYPE SemantMe() {
+		this.semanticLabel = TYPE_NIL.getInstance();
+		return this.semanticLabel;
+	}
 	public TEMP IRme()
 	{
 		TEMP null_pointer= TEMP_FACTORY.getInstance().getFreshTEMP();

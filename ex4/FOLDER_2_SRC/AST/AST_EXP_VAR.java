@@ -57,7 +57,10 @@ public class AST_EXP_VAR extends AST_EXP
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws SemanticException { return var.SemantMe(); }
+	public TYPE SemantMe() throws SemanticException {
+		this.semanticLabel = var.SemantMe();
+		return this.semanticLabel;
+	}
 
 	@Override
 	public TEMP IRme() {

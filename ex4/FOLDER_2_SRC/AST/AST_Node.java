@@ -12,6 +12,7 @@ public abstract class AST_Node
 	/*******************************************/
 	public int line;
 	public int SerialNumber;
+	public TYPE semanticLabel = null;
 	
 	/***********************************************/
 	/* The default message for an unknown AST node */

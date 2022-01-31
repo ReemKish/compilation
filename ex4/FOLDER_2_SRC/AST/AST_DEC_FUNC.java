@@ -80,6 +80,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		TYPE returnType = null;
 		TYPE_LIST reverse_type_list = null;
 		TYPE_LIST type_list = null;
+		TYPE_FUNCTION func_type = null;
 
 		/*******************/
 		/* [0] check return type */
@@ -125,7 +126,9 @@ public class AST_DEC_FUNC extends AST_DEC
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */
 		/*********************************************************/
-		return null;
+		func_type = new TYPE_FUNCTION(returnType, name, type_list);
+		this.semanticLabel = func_type;
+		return func_type;
 	}
 	public TEMP IRme()
 	{

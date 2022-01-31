@@ -62,7 +62,8 @@ public class AST_VAR_SIMPLE extends AST_VAR
 			System.out.format(">> ERROR [%d:%d] variable %s does not exist in scope\n", 2, 2, name);
 			throw new SemanticException(this.line);
 		}
-		return prevDec.type;
+		this.semanticLabel = prevDec.type;
+		return this.semanticLabel;
 	}
 
 	public TEMP IRme() {

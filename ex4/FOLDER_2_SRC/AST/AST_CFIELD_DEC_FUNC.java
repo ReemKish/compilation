@@ -119,6 +119,7 @@ public class AST_CFIELD_DEC_FUNC extends AST_CFIELD
 		/*********************************************************/
 		/* [6] Return value is irrelevant for class declarations */
 		/*********************************************************/
-		return new TYPE_FUNCTION(returnType, name, type_list);
+		this.semanticLabel = new TYPE_FUNCTION(returnType, name, type_list);
+		return this.semanticLabel;
 	}
 }

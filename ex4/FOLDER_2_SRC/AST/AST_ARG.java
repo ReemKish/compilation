@@ -33,6 +33,7 @@ public class AST_ARG extends AST_Node
 	public TYPE SemantMe() throws SemanticException {
 		SYMBOL_TABLE.getInstance().enter(name, type.SemantMe());
 		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		this.semanticLabel = null;
 		return null;
 	}
 

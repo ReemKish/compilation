@@ -47,7 +47,10 @@ public class AST_EXP_INT extends AST_EXP
 			SerialNumber,
 			String.format("INT(%d)",value));
 	}
-	public TYPE SemantMe() { return TYPE_INT.getInstance(); }
+	public TYPE SemantMe() {
+		this.semanticLabel = TYPE_INT.getInstance();
+		return this.semanticLabel;
+	}
 	public TEMP IRme()
 	{
 		TEMP t = TEMP_FACTORY.getInstance().getFreshTEMP();

@@ -15,19 +15,17 @@ import TYPES.*;
 import MIPS.sir_MIPS_a_lot;
 /* TODO - copy-pasted from another IRcommand, adjustments required */
 
-public class IRcommand_New_Array extends IRcommand
+public class IRcommand_New_Class extends IRcommand
 {
-	TEMP pointer;
-	TEMP len;
 	String className;
+	TEMP pointer;
 
-	public IRcommand_New_Array(TEMP pointer, String className,  TEMP len)
+	public IRcommand_New_Class(TEMP pointer, String className)
 	{
 		this.pointer = pointer;
-		this.len = len;
 		this.className = className;
 	}
-
+	
 	/***************/
 	/* MIPS me !!! */
 	/***************/

@@ -1,6 +1,8 @@
 package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
+import TEMP.*;
+import IR.*;
 
 public class AST_NEW_EXP extends AST_EXP
 {
@@ -51,10 +53,23 @@ public class AST_NEW_EXP extends AST_EXP
 
 	public TYPE SemantMe() throws SemanticException {
 		if(e == null) {
-			return t.SemantMe();
+			this.semanticLabel = t.SemantMe();
+			return this.semanticLabel;
 		}
 		else{
-			return new TYPE_ARRAY(t.SemantMe());
+			this.semanticLabel =  new TYPE_ARRAY(t.SemantMe());
+			return this.semanticLabel;
 		}
+	}
+
+	public TEMP IRme(){
+		TEMP dest = TEMP_FACTORY.getInstance().getFreshTEMP();
+		if(e == null) {
+			IR.getInstance().Add_IRcommand(new IRcommand_New_Class(dest, t.typeName));
+		}
+		else{
+			IR.getInstance().Add_IRcommand(new IRcommand_New_Array(dest, t.typeName, e.IRme()));
+		}
+		return dest;
 	}
 }
