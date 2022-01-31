@@ -2,6 +2,7 @@
 /* PACKAGE */
 /***********/
 package IR;
+import TEMP.*;
 
 /*******************/
 /* GENERAL IMPORTS */
@@ -16,11 +17,11 @@ import MIPS.sir_MIPS_a_lot;
 
 public class IRcommand_Return extends IRcommand
 {
-	String label_name;
+	TEMP val;
 
-	public IRcommand_Return(String label_name)
+	public IRcommand_Return(TEMP val)
 	{
-		this.label_name = label_name;
+		this.val = val;
 	}
 	
 	/***************/
@@ -28,6 +29,6 @@ public class IRcommand_Return extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().label(label_name);
+		sir_MIPS_a_lot.getInstance().ret(val);
 	}
 }

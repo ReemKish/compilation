@@ -173,6 +173,11 @@ public class sir_MIPS_a_lot
 
 		fileWriter.format("\tbeq Temp_%d,$zero,%s\n",i1,label);
 	}
+	public void ret(TEMP res)
+	{
+		int i1 = res.getSerialNumber();
+		fileWriter.format("\tret Temp_%d\n",i1);
+	}
 
 
 	

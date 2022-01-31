@@ -1,4 +1,6 @@
 package AST;
+import TEMP.*;
+import IR.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -37,5 +39,13 @@ public class AST_STMT_RETURN extends AST_STMT
 				String.format("Return\nstatement"));
 		if (val != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,val.SerialNumber);
 
+	}
+	public TEMP IRme(){
+		TEMP res = null;
+		if(val!=null){
+			res = val.IRme();
+		}
+		IR.getInstance().Add_IRcommand(new IRcommand_Return(res));
+		return res;
 	}
 }
