@@ -1,5 +1,7 @@
 package AST;
 import TYPES.*;
+import TEMP.*;
+import IR.*;
 import SYMBOL_TABLE.*;
 
 public class AST_VAR_SUBSCRIPT extends AST_VAR
@@ -72,5 +74,12 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		}
 		this.semanticLabel =  ((TYPE_ARRAY)arr_type).arrayType;
 		return this.semanticLabel;
+	}
+	public TEMP IRme(){
+		TEMP base = var.IRme();
+		TEMP index = subscript.IRme();
+		TEMP storeTo = TEMP_FACTORY.getInstance().getFreshTEMP();
+		IR.getInstance().Add_IRcommand(new IRcommand_Array_Access(storeTo, base, index));
+		return storeTo;
 	}
 }

@@ -18,12 +18,14 @@ import TEMP.TEMP;
 public class IRcommand_Field_Access extends IRcommand
 {
 	TEMP dst;
-	String var_name;
+	TEMP base;
+	String fieldName;
 
-	public IRcommand_Field_Access(TEMP dst, String var_name)
+	public IRcommand_Field_Access(TEMP dst, TEMP base, String fieldName)
 	{
 		this.dst      = dst;
-		this.var_name = var_name;
+		this.base      = base;
+		this.fieldName = fieldName;
 	}
 	
 	/***************/
@@ -31,6 +33,6 @@ public class IRcommand_Field_Access extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().load(dst,var_name);
+		// TODO: implement me!
 	}
 }

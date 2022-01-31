@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -73,5 +75,12 @@ public class AST_VAR_FIELD extends AST_VAR
 		}
 		this.semanticLabel = null;
 		return null;
+	}
+
+	public TEMP IRme() {
+		TEMP base = var.IRme();
+		TEMP storeTo = TEMP_FACTORY.getInstance().getFreshTEMP();
+		IR.getInstance().Add_IRcommand(new IRcommand_Field_Access(storeTo, base, fieldName));
+		return storeTo;
 	}
 }

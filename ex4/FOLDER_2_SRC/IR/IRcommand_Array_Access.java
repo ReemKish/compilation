@@ -18,12 +18,14 @@ import TEMP.TEMP;
 public class IRcommand_Array_Access extends IRcommand
 {
 	TEMP dst;
-	String var_name;
+	TEMP arr;
+	TEMP offset;
 
-	public IRcommand_Array_Access(TEMP dst, String var_name)
+	public IRcommand_Array_Access(TEMP dst, TEMP arr, TEMP offset)
 	{
-		this.dst      = dst;
-		this.var_name = var_name;
+		this.dst = dst;
+		this.arr = arr;
+		this.offset = offset;
 	}
 	
 	/***************/
@@ -31,6 +33,6 @@ public class IRcommand_Array_Access extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().load(dst,var_name);
+		//TODO: implement me!
 	}
 }
