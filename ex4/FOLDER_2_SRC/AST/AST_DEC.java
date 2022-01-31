@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import TEMP.*;
 import SYMBOL_TABLE.*;
 
 public abstract class AST_DEC extends AST_Node
@@ -12,4 +13,5 @@ public abstract class AST_DEC extends AST_Node
 		System.out.print("UNKNOWN AST DEC NODE");
 	}
 	public TYPE SemantMe() throws SemanticException {return null;}
+	public TEMP IRme(){return null;}
 }

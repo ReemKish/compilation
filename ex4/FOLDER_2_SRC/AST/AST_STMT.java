@@ -1,4 +1,5 @@
 package AST;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -12,4 +13,5 @@ public abstract class AST_STMT extends AST_Node
 	{
 		System.out.print("UNKNOWN AST STATEMENT NODE\n");
 	}
+	public TEMP IRme(){return null;}
 }
