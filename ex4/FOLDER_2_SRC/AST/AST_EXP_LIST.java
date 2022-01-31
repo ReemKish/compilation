@@ -1,4 +1,7 @@
 package AST;
+import IR.IR;
+import TEMP.TEMP;
+import TEMP.TEMP_LIST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -69,5 +72,12 @@ public class AST_EXP_LIST extends AST_Node
 		if (tail != null) tail.SemantMe();
 
 		return null;
+	}
+	public TEMP_LIST IRme(){
+		TEMP_LIST arg_temps = new TEMP_LIST();
+		for (AST_EXP_LIST it=this; it != null; it=it.tail) {
+			arg_temps.append(it.head.IRme());
+		}
+		return arg_temps;
 	}
 }

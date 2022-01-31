@@ -20,8 +20,4 @@ public abstract class AST_Node
 	{
 		System.out.print("AST NODE UNKNOWN\n");
 	}
-	public TEMP IRme()
-	{
-		return null;
-	}
 }

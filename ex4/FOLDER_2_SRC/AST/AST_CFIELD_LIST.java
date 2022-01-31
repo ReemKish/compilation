@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -83,5 +85,13 @@ public class AST_CFIELD_LIST extends AST_Node
 		}
 
 		return type_list;
+	}
+
+	public TEMP_LIST IRme(){
+		TEMP_LIST field_temps = new TEMP_LIST();
+		for (AST_CFIELD_LIST it=this; it != null; it=it.tail) {
+			field_temps.append(it.head.IRme());
+		}
+		return field_temps;
 	}
 }

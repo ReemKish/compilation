@@ -1,4 +1,6 @@
 package AST;
+import IR.*;
+import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -111,5 +113,14 @@ public class AST_EXP_FUNCCALL extends AST_EXP
 			throw new SemanticException(this.line);
 		}
 		return returnType;
+	}
+	public TEMP IRme() {
+		if(objName != null){
+			objName.IRme();
+		}
+		TEMP_LIST arg_temps = el.IRme();
+		TEMP resReg = TEMP_FACTORY.getInstance().getFreshTEMP();
+		IR.getInstance().Add_IRcommand(new IRcommand_Func_Call(resReg, fName, arg_temps));
+		return resReg;
 	}
 }
