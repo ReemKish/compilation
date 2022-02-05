@@ -26,4 +26,7 @@ public abstract class IRcommand
 	/* MIPS me !!! */
 	/***************/
 	public abstract void MIPSme();
+	public void printMe(){
+		System.out.println(this.getClass().getSimpleName());
+	}
 }
