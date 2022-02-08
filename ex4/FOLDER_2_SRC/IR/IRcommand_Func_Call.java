@@ -31,6 +31,7 @@ public class IRcommand_Func_Call extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
+	/*TODO: use TYPE_FUNC's isSysCall to determine if this is a system call (if so, use sysCallNum to determine its type)*/
 	public void MIPSme()
 	{
 		sir_MIPS_a_lot.getInstance().jump(label_name);

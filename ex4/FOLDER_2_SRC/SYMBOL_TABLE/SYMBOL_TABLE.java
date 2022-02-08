@@ -272,31 +272,59 @@ public class SYMBOL_TABLE
 
 
 			/***************************************/
-			/* [3] Enter library function PrintInt */
+			/* [3.1] Enter library function PrintInt */
 			/***************************************/
 			instance.enter(
 				"PrintInt",
 				new TYPE_FUNCTION(
 					TYPE_VOID.getInstance(),
 					"PrintInt",
+					1,
 					new TYPE_LIST(
 						TYPE_INT.getInstance(),
 						null)));
 
 			/***************************************/
-			/* [4] Enter library function PrintString */
+			/* [3.2] Enter library function Malloc */
+			/***************************************/
+			instance.enter(
+					"Malloc",
+					new TYPE_FUNCTION(
+							TYPE_VOID.getInstance(),
+							"Malloc",
+							9,
+							new TYPE_LIST(
+									TYPE_INT.getInstance(),
+									null)));
+
+			/***************************************/
+			/* [3.3] Enter library function PrintString */
 			/***************************************/
 			instance.enter(
 				"PrintString",
 				new TYPE_FUNCTION(
 					TYPE_VOID.getInstance(),
 					"PrintString",
+					4,
 					new TYPE_LIST(
 						TYPE_STRING.getInstance(),
 						null)));
 
 			/***************************************/
-			/* [5] Enter library function PrintTrace */
+			/* [3.4] Enter library function Exit */
+			/***************************************/
+			instance.enter(
+					"Exit",
+					new TYPE_FUNCTION(
+							TYPE_VOID.getInstance(),
+							"Exit",
+							10,
+							new TYPE_LIST(
+									TYPE_INT.getInstance(),
+									null)));
+
+			/***************************************/
+			/* [3.5] Enter library function PrintTrace */
 			/***************************************/
 			instance.enter(
 				"PrintTrace",
