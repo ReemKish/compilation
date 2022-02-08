@@ -24,4 +24,6 @@ public class TEMP
 	{
 		return serial;
 	}
+
+	public String toString() {return "t" + String.valueOf(serial); }
 }

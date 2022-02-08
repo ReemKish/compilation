@@ -118,65 +118,8 @@ compile:
 	@echo "*                                                         *"
 	@echo "***********************************************************"
 	jar cfm COMPILER ${MANIFEST_FILE} -C ${BIN_DIR} .
-	
-everything:
-	clear
-	@echo "******************************"
-	@echo "*                            *"
-	@echo "*                            *"
-	@echo "* [0] Remove COMPIER program *"
-	@echo "*                            *"
-	@echo "*                            *"
-	@echo "******************************"
-	rm -rf COMPILER
-	@echo "\n"
-	@echo "************************************************************"
-	@echo "*                                                          *"
-	@echo "*                                                          *"
-	@echo "* [1] Remove *.class files and JFlex-CUP generated files:  *"
-	@echo "*                                                          *"
-	@echo "*     Lexer.java                                           *"
-	@echo "*     Parser.java                                          *"
-	@echo "*     TokenNames.java                                      *"
-	@echo "*                                                          *"
-	@echo "************************************************************"
-	rm -rf ${JFlex_CUP_GENERATED_FILES} ${BIN_DIR}/*.class ${BIN_DIR}/AST/*.class
-	@echo "\n"
-	@echo "************************************************************"
-	@echo "*                                                          *"
-	@echo "*                                                          *"
-	@echo "* [2] Use JFlex to synthesize Lexer.java from LEX_FILE.lex *"
-	@echo "*                                                          *"
-	@echo "*                                                          *"
-	@echo "************************************************************"
-	$(JFlex_PROGRAM) ${JFlex_FLAGS} -d ${JFlex_DEST_DIR} ${JFlex_FILE}
-	@echo "\n"
-	@echo "*******************************************************************************"
-	@echo "*                                                                             *"
-	@echo "*                                                                             *"
-	@echo "* [3] Use CUP to synthesize Parser.java and TokenNames.java from CUP_FILE.cup *"
-	@echo "*                                                                             *"
-	@echo "*                                                                             *"
-	@echo "*******************************************************************************"
-	$(CUP_PROGRAM) ${CUP_FLAGS} -destdir ${SRC_DIR} ${CUP_FILE}
-	@echo "\n"
-	@echo "********************************************************"
-	@echo "*                                                      *"
-	@echo "*                                                      *"
-	@echo "* [4] Create *.class files from *.java files + CUP JAR *"
-	@echo "*                                                      *"
-	@echo "*                                                      *"
-	@echo "********************************************************"
-	javac -cp ${EXTERNAL_JAR_FILES} -d ${BIN_DIR} ${SRC_FILES}
-	@echo "\n"
-	@echo "***********************************************************"
-	@echo "*                                                         *"
-	@echo "*                                                         *"
-	@echo "* [5] Create a JAR file from from *.class files + CUP JAR *"
-	@echo "*                                                         *"
-	@echo "*                                                         *"
-	@echo "***********************************************************"
-	jar cfm COMPILER ${MANIFEST_FILE} -C ${BIN_DIR} .
+
+run: compile
 	@echo "\n"
 	@echo "*****************************"
 	@echo "*                           *"
@@ -186,6 +129,9 @@ everything:
 	@echo "*                           *"
 	@echo "*****************************"
 	java -jar COMPILER ${INPUT} ${OUTPUT}
+
+everything: run
+	clear
 	@echo "\n"
 	@echo "***************************************"
 	@echo "*                                     *"
@@ -203,7 +149,7 @@ everything:
 	@echo "*                                              *"
 	@echo "*                                              *"
 	@echo "************************************************"
-	#eog ${OUTPUT_DIR}/AST.jpeg &
+	eog ${OUTPUT_DIR}/AST.jpeg &
 	@echo "\n"
 	@echo "***********************************************************"
 	@echo "*                                                         *"

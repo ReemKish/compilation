@@ -168,7 +168,7 @@ public class SYMBOL_TABLE
 	{
 		int i=0;
 		int j=0;
-		String dirname="./ex4/FOLDER_5_OUTPUT/";
+		String dirname="./FOLDER_5_OUTPUT/";
 		String filename=String.format("SYMBOL_TABLE_%d_IN_GRAPHVIZ_DOT_FORMAT.txt",n++);
 
 		try
