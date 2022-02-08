@@ -208,7 +208,7 @@ public class sir_MIPS_a_lot
 				/*********************************************************************************/
 				/* [1] Open the MIPS text file and write data section with error message strings */
 				/*********************************************************************************/
-				String dirname="./ex4/FOLDER_5_OUTPUT/";
+				String dirname="./FOLDER_5_OUTPUT/";
 				String filename=String.format("MIPS.txt");
 
 				/***************************************/
