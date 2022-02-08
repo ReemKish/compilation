@@ -2,7 +2,7 @@
 /* PACKAGE */
 /***********/
 package IR;
-
+import TEMP.*;
 /*******************/
 /* GENERAL IMPORTS */
 /*******************/
@@ -16,6 +16,10 @@ public class IR
 	private IRcommand head=null;
 	private IRcommandList tail=null;
 	private int labelCounter = 0;
+	private static final int MAX_INT = 32767;
+	private static final int MIN_INT = -32768;
+	public TEMP maxIntTemp;
+	public TEMP minIntTemp;
 
 	/******************/
 	/* Add IR command */
@@ -80,6 +84,10 @@ public class IR
 			/* [0] The instance itself ... */
 			/*******************************/
 			instance = new IR();
+			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.Add_IRcommand(new IRcommandConstInt(instance.maxIntTemp, MAX_INT));
+			instance.Add_IRcommand(new IRcommandConstInt(instance.minIntTemp, MIN_INT));
 		}
 		return instance;
 	}
