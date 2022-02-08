@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 /*******************/
 /* PROJECT IMPORTS */
 /*******************/
+import IR.IR;
 import TEMP.*;
 
 public class sir_MIPS_a_lot
@@ -30,6 +31,9 @@ public class sir_MIPS_a_lot
 		fileWriter.print("\tsyscall\n");
 		fileWriter.close();
 	}
+	/* TODO: there shouldn't be a dedicated print_int function.
+	*   instead, we should have a generic syscall function that
+	*   receives the syscall type as an argument*/
 	public void print_int(TEMP t)
 	{
 		int idx=t.getSerialNumber();
@@ -76,6 +80,13 @@ public class sir_MIPS_a_lot
 		int idxSrc=src.getSerialNumber();
 
 		fileWriter.format("\tla Temp_%d,0(Temp_%d)\n",idxDst,idxSrc);
+	}
+	public void move(TEMP dst, TEMP src)
+	{
+		int idxDst=dst.getSerialNumber();
+		int idxSrc=src.getSerialNumber();
+
+		fileWriter.format("\tmove Temp_%d, Temp_%d\n",idxDst,idxSrc);
 	}
 	public void lb(TEMP dst,TEMP src)
 	{
@@ -164,8 +175,15 @@ public class sir_MIPS_a_lot
 	{
 		int i1 =oprnd1.getSerialNumber();
 		int i2 =oprnd2.getSerialNumber();
-		
-		fileWriter.format("\tbeq Temp_%d,Temp_%d,%s\n",i1,i2,label);				
+
+		fileWriter.format("\tbeq Temp_%d,Temp_%d,%s\n",i1,i2,label);
+	}
+	public void ble(TEMP oprnd1, TEMP oprnd2, String label)
+	{
+		int i1 =oprnd1.getSerialNumber();
+		int i2 =oprnd2.getSerialNumber();
+
+		fileWriter.format("\tble Temp_%d,Temp_%d,%s\n",i1,i2,label);
 	}
 	public void beqz(TEMP oprnd1,String label)
 	{
