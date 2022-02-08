@@ -32,5 +32,6 @@ public class IRcommand_Binop_Sub_Integers extends IRcommand
 	public void MIPSme()
 	{
 		sir_MIPS_a_lot.getInstance().sub(dst,t1,t2);
+		IR.getInstance().truncate_int(dst);
 	}
 }
