@@ -71,7 +71,7 @@ public class AST_STMT_IF extends AST_STMT
 	public TEMP IRme()
 	{
 		int labelCounter = IR.getInstance().getLabelIndex();
-		String endIfLabel = "end_if_"+labelCounter;
+		String endIfLabel = "IF_FALSE"+labelCounter;
 		TEMP t1 = cond.IRme();
 		IR.getInstance().Add_IRcommand(new IRcommand_Jump_If_Eq_To_Zero(t1, endIfLabel));
 		body.IRme();
