@@ -30,4 +30,5 @@ public class IRcommand_Class_Dec extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().allocate(var_name);
 	}
+
 }

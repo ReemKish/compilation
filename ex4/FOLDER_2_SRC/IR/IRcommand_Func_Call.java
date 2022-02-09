@@ -36,4 +36,6 @@ public class IRcommand_Func_Call extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().jump(label_name);
 	}
+
+	public void printMe() { super.printLine(); System.out.println(resReg + " = call " + label_name + " " + (args != null ? args : "")); }
 }

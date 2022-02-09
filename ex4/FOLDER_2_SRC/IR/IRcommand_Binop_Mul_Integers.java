@@ -33,4 +33,6 @@ public class IRcommand_Binop_Mul_Integers extends IRcommand
 		sir_MIPS_a_lot.getInstance().mul(dst,t1,t2);
 		IR.getInstance().truncate_int(dst);
 	}
+
+	public void printMe() { super.printLine(); System.out.println(dst + " = mul " + t1 + ", " + t2); }
 }

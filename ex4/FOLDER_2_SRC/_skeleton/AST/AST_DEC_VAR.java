@@ -2,7 +2,6 @@ package AST;
 
 import IR.*;
 import TEMP.*;
-import MIPS.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -71,7 +70,7 @@ public class AST_DEC_VAR extends AST_DEC
 		
 		if (initialValue != null)
 		{
-			IR.getInstance().Add_IRcommand(new IRcommand_Store(name,initialValue.IRme()));
+			IR.getInstance().Add_IRcommand(new IRcommand_Store_Temp(name,initialValue.IRme()));
 		}
 		return null;
 	}

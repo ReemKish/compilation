@@ -29,4 +29,6 @@ public class IRcommand_Allocate extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().allocate(var_name);
 	}
+
+	public void printMe() { super.printLine(); System.out.println("alloc " + var_name); }
 }

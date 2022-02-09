@@ -34,4 +34,6 @@ public class IRcommand_Binop_Sub_Integers extends IRcommand
 		sir_MIPS_a_lot.getInstance().sub(dst,t1,t2);
 		IR.getInstance().truncate_int(dst);
 	}
+
+	public void printMe() { super.printLine(); System.out.println(dst + " = sub " + t1 + ", " + t2); }
 }

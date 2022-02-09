@@ -30,4 +30,8 @@ public class IRcommand_Virtual_Call extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().jump(label_name);
 	}
+
+	/* TODO
+	public void printMe() { super.printLine(); System.out.println(); }
+	*/
 }

@@ -29,4 +29,6 @@ public class IRcommand_PrintInt extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().print_int(t);
 	}
+
+	public void printMe() { super.printLine(); System.out.println("PrintInt " + t); }
 }

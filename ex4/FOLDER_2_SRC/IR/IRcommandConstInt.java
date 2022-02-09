@@ -31,4 +31,6 @@ public class IRcommandConstInt extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().li(t,value);
 	}
+
+	public void printMe() { super.printLine(); System.out.println(t + " = " + value); }
 }

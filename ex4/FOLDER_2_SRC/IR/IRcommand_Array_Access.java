@@ -35,4 +35,6 @@ public class IRcommand_Array_Access extends IRcommand
 	{
 		//TODO: implement me!
 	}
+
+	public void printMe() { super.printLine(); System.out.println(dst + " = array_access " + arr + ", " + offset); }
 }

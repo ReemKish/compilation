@@ -31,4 +31,6 @@ public class IRcommand_Load extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().load(dst,var_name);
 	}
+
+	public void printMe() { super.printLine(); System.out.println(dst + " = " + var_name); }
 }

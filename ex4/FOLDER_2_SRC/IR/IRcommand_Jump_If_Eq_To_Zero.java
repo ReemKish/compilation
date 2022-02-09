@@ -31,4 +31,6 @@ public class IRcommand_Jump_If_Eq_To_Zero extends IRcommand
 	{
 		sir_MIPS_a_lot.getInstance().beqz(t,label_name);
 	}
+
+	public void printMe() { super.printLine(); System.out.println("jifz " + t + ", " + label_name); }
 }
