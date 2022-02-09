@@ -18,12 +18,15 @@ import TEMP.TEMP;
 public class IRcommand_Field_Set extends IRcommand
 {
 	TEMP dst;
-	String var_name;
+	String field;
+	TEMP src;
 
-	public IRcommand_Field_Set(TEMP dst, String var_name)
+
+	public IRcommand_Field_Set(TEMP dst, String field, TEMP src)
 	{
 		this.dst      = dst;
-		this.var_name = var_name;
+		this.field = field;
+		this.src = src;
 	}
 	
 	/***************/
@@ -31,6 +34,8 @@ public class IRcommand_Field_Set extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().load(dst,var_name);
+		sir_MIPS_a_lot.getInstance().load(dst, field);
 	}
+
+	public void printMe() { super.printLine(); System.out.println("field_set " + dst + ", " + field + ", " + src); }
 }

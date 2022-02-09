@@ -17,13 +17,15 @@ import TEMP.TEMP;
 
 public class IRcommand_Array_Set extends IRcommand
 {
-	String var_name;
+	TEMP arr;
+	TEMP offset;
 	TEMP src;
 
-	public IRcommand_Array_Set(String var_name, TEMP src)
+	public IRcommand_Array_Set(TEMP arr, TEMP offset, TEMP src)
 	{
-		this.src      = src;
-		this.var_name = var_name;
+		this.src = src;
+		this.arr = arr;
+		this.offset = offset;
 	}
 	
 	/***************/
@@ -33,4 +35,7 @@ public class IRcommand_Array_Set extends IRcommand
 	{
 		//sir_MIPS_a_lot.getInstance().store(var_name,src);
 	}
+
+	/* TODO */
+	public void printMe() { super.printLine(); System.out.println("array_set " + arr + ", " + offset + ", " + src); }
 }

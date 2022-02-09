@@ -72,4 +72,5 @@ public class IRcommand_Binop_EQ_Integers extends IRcommand
 		/******************/
 		sir_MIPS_a_lot.getInstance().label(label_end);
 	}
+
 }
