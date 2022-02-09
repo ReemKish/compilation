@@ -97,9 +97,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	public TEMP IRme()
 	{
 		TEMP src = exp.IRme();
-		IR.
-				getInstance().
-				Add_IRcommand(new IRcommand_Store(((AST_VAR_SIMPLE) var).name,src));
+		IR.getInstance().Add_IRcommand(new IRcommand_Store(((AST_VAR_SIMPLE) var).name,src));
 
 		return null;
 	}

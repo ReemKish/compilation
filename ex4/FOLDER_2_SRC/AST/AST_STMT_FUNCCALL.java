@@ -105,7 +105,7 @@ public class AST_STMT_FUNCCALL extends AST_STMT
 		if(objName != null){
 			objName.IRme();
 		}
-		TEMP_LIST arg_temps = el.IRme();
+		TEMP_LIST arg_temps = (el != null ? el.IRme() : null);
 		TEMP resReg = TEMP_FACTORY.getInstance().getFreshTEMP();
 		IR.getInstance().Add_IRcommand(new IRcommand_Func_Call(resReg, fName, arg_temps));
 		return resReg;

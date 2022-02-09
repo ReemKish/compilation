@@ -106,10 +106,10 @@ public class AST_STMT_DEC_VAR extends AST_STMT
 	}
 	public TEMP IRme()
 	{
-		TEMP src = exp.IRme();
-		IR.
-				getInstance().
-				Add_IRcommand(new IRcommand_Store(name, src));
+		if (exp != null) {
+			TEMP src = exp.IRme();
+			IR.getInstance().Add_IRcommand(new IRcommand_Store(name, src));
+		}
 
 		return null;
 	}
