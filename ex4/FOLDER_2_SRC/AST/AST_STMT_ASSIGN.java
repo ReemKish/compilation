@@ -103,7 +103,13 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		IR.
 				getInstance().
 				Add_IRcommand(new IRcommand_Store(src,dst,0));
-
+		if(var instanceof AST_VAR_SUBSCRIPT){
+			TEMP arr_dst = ((AST_VAR_SUBSCRIPT) var).base;
+			TEMP arr_offset = ((AST_VAR_SUBSCRIPT) var).offset;
+			/*IR.
+					getInstance().
+					Add_IRcommand(new IRcommand_Array_Set(src, arr_dst, 0));*/
+		}
 		return null;
 	}
 }

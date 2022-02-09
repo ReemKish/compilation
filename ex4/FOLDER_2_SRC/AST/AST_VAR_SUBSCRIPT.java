@@ -8,6 +8,8 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 {
 	public AST_VAR var;
 	public AST_EXP subscript;
+	public TEMP base;
+	public TEMP offset;
 	
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -76,10 +78,10 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		return this.semanticLabel;
 	}
 	public TEMP IRme(){
-		TEMP base = var.IRme();
-		TEMP index = subscript.IRme();
+		this.base = var.IRme();
+		this.offset = subscript.IRme();
 		TEMP storeTo = TEMP_FACTORY.getInstance().getFreshTEMP();
-		IR.getInstance().Add_IRcommand(new IRcommand_Array_Access(storeTo, base, index));
+		IR.getInstance().Add_IRcommand(new IRcommand_Array_Access(storeTo, this.base, offset));
 		return storeTo;
 	}
 }

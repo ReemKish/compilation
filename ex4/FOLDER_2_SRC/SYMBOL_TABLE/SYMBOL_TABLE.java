@@ -67,6 +67,9 @@ public class SYMBOL_TABLE
 		if(annotationMode == 2){
 			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getArgOffset();
 		}
+		if(annotationMode == 3){
+			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getFieldOffset();
+		}
 	
 		/**************************************************************************/
 		/* [3] Prepare a new symbol table entry with name, type, next and prevtop */
