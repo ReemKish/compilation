@@ -24,6 +24,9 @@ public class IR
 	public TEMP sp;
 	public TEMP fp;
 	public TEMP ra;
+	public TEMP v0;
+	public TEMP v1;
+	public static String funcLabelPrefix = "FUNC_LABEL";
 
 	/******************/
 	/* Add IR command */
@@ -118,6 +121,8 @@ public class IR
 			instance.sp = TEMP_FACTORY.getInstance().getFreshTEMP();
 			instance.fp = TEMP_FACTORY.getInstance().getFreshTEMP();
 			instance.ra = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.v0 = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.v1 = TEMP_FACTORY.getInstance().getFreshTEMP();
 
 		}
 		return instance;

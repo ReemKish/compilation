@@ -16,7 +16,7 @@ import TEMP.*;
 
 public class sir_MIPS_a_lot
 {
-	private int WORD_SIZE=4;
+	public static final int WORD_SIZE=4;
 	/***********************/
 	/* The file writer ... */
 	/***********************/
@@ -68,7 +68,7 @@ public class sir_MIPS_a_lot
 	{
 		int idxsrc=src.getSerialNumber();
 		int idxdst=dst.getSerialNumber();
-		fileWriter.format("\tsw Temp_%d, %d(Temp_%d)\n", idxsrc, offset, idxdst);
+		fileWriter.format("\tsw Temp_%d, %d(Temp_%d)\n", idxsrc, offset*WORD_SIZE, idxdst);
 	}
 	public void li(TEMP t,int value)
 	{
@@ -150,7 +150,11 @@ public class sir_MIPS_a_lot
 	public void jump(String inlabel)
 	{
 		fileWriter.format("\tj %s\n",inlabel);
-	}	
+	}
+	public void jal(String inlabel)
+	{
+		fileWriter.format("\tjal %s\n",inlabel);
+	}
 	public void blt(TEMP oprnd1,TEMP oprnd2,String label)
 	{
 		int i1 =oprnd1.getSerialNumber();

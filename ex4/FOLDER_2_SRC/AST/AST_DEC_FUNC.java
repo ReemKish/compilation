@@ -133,7 +133,7 @@ public class AST_DEC_FUNC extends AST_DEC
 	}
 	public TEMP IRme()
 	{
-		IR.getInstance().Add_IRcommand(new IRcommand_Label("FUNC_"+name));
+		IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.funcLabelPrefix + name));
 		// TODO prologue
 		sl.IRme();
 		if(Objects.equals(name, "main")){
