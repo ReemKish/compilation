@@ -118,6 +118,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		/*******************/
 		sl.SemantMe();
 
+		int localVarCount = ((TYPE_FOR_SCOPE_BOUNDARIES)SYMBOL_TABLE.getInstance().getScope().type).getVarCount();
 		/*****************/
 		/* [4] End Scope */
 		/*****************/
@@ -133,7 +134,7 @@ public class AST_DEC_FUNC extends AST_DEC
 	public TEMP IRme()
 	{
 		IR.getInstance().Add_IRcommand(new IRcommand_Label("FUNC_"+name));
-		// TODO handle args
+		// TODO prologue
 		sl.IRme();
 		if(Objects.equals(name, "main")){
 			IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label("END_PROG"));

@@ -13,6 +13,7 @@ public class TYPE_FUNCTION extends TYPE
 	public TYPE_LIST params;
 	public int isSysCall = 0;
 	public int sysCallNum = 0;
+	public int localVarCount = 0;
 	
 	/****************/
 	/* CTROR(S) ... */

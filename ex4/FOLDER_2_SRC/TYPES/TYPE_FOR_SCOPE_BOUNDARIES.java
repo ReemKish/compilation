@@ -12,16 +12,30 @@ public class TYPE_FOR_SCOPE_BOUNDARIES extends TYPE
 	{
 		this.name = name;
 	}
-	public int getArgOffset(){
-		arg_offset -=1;
+	public int getArgOffsetInc(){
+		arg_offset +=1;
 		return arg_offset;
 	}
-	public int getVarOffset(){
+	public int getVarOffsetInc(){
 		var_offset +=1;
 		return var_offset;
 	}
-	public int getFieldOffset(){
+	public int getFieldOffsetInc(){
 		field_offset +=1;
 		return field_offset;
+	}
+	public int getArgCount(){
+		return arg_offset;
+	}
+	public int getVarCount(){
+		return var_offset;
+	}
+	public int getFieldCount(){
+		return field_offset;
+	}
+	public void incrementOffsetsFromInnerQuotes(TYPE_FOR_SCOPE_BOUNDARIES inner){
+		arg_offset+=inner.getArgCount();
+		var_offset+=inner.getVarCount();
+		field_offset+=inner.getFieldCount();
 	}
 }
