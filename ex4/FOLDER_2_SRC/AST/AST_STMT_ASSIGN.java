@@ -96,10 +96,13 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	}
 	public TEMP IRme()
 	{
+		TEMP dst = var.IRme();
+		// TODO: store semantic annotations in class, and in particular store the offset
+		// pass the offset to IRcommand_Store instead of 0
 		TEMP src = exp.IRme();
 		IR.
 				getInstance().
-				Add_IRcommand(new IRcommand_Store(((AST_VAR_SIMPLE) var).name,src));
+				Add_IRcommand(new IRcommand_Store(dst,src, 0));
 
 		return null;
 	}

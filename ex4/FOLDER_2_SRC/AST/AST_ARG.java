@@ -7,6 +7,7 @@ public class AST_ARG extends AST_Node
 
 	public String name;
 	AST_TYPE type;
+	int offset = 0;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -31,8 +32,9 @@ public class AST_ARG extends AST_Node
 		this.type = type;
 	}
 	public TYPE SemantMe() throws SemanticException {
-		SYMBOL_TABLE.getInstance().enter(name, type.SemantMe());
+		SYMBOL_TABLE.getInstance().enter(name, type.SemantMe(), 2);
 		SYMBOL_TABLE_ENTRY prevDec = SYMBOL_TABLE.getInstance().find(name);
+		offset = prevDec.offset;
 		this.semanticLabel = null;
 		return null;
 	}
@@ -45,7 +47,7 @@ public class AST_ARG extends AST_Node
 		/*******************************/
 		/* AST NODE TYPE = AST INT EXP */
 		/*******************************/
-		System.out.format("AST ARG %s %s\n", type.type, name);
+		System.out.format("AST ARG %s %s\n", type.typeName, name);
 
 		/*********************************/
 		/* Print to AST GRAPHIZ DOT file */

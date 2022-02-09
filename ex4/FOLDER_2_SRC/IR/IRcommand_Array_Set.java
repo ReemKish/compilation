@@ -31,6 +31,6 @@ public class IRcommand_Array_Set extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().store(var_name,src);
+		//sir_MIPS_a_lot.getInstance().store(var_name,src);
 	}
 }

@@ -12,6 +12,7 @@ public class AST_STMT_DEC_VAR extends AST_STMT
 	public AST_TYPE type;
 	public String name;
 	public AST_EXP exp;
+	private int offset;
 
 	/*******************/
 	/*  CONSTRUCTOR(S) */
@@ -89,7 +90,9 @@ public class AST_STMT_DEC_VAR extends AST_STMT
 		/***************************************************/
 		/* [2] Enter the Function Type to the Symbol Table */
 		/***************************************************/
-		SYMBOL_TABLE.getInstance().enter(name, t);
+		SYMBOL_TABLE.getInstance().enter(name, t, 1);
+		this.offset = SYMBOL_TABLE.getInstance().find(name).offset;
+
 
 		/***************************************************/
 		/* [3] check assigned expression type validity */
@@ -107,9 +110,10 @@ public class AST_STMT_DEC_VAR extends AST_STMT
 	public TEMP IRme()
 	{
 		TEMP src = exp.IRme();
+		TEMP dst = IR.getInstance().sp;
 		IR.
 				getInstance().
-				Add_IRcommand(new IRcommand_Store(name, src));
+				Add_IRcommand(new IRcommand_Store(src, dst, offset));
 
 		return null;
 	}

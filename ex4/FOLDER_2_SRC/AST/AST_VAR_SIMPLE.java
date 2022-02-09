@@ -10,6 +10,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 	/* simple variable name */
 	/************************/
 	public String name;
+	public int offset;
 	
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -63,6 +64,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 			throw new SemanticException(this.line);
 		}
 		this.semanticLabel = prevDec.type;
+		this.offset = prevDec.offset;
 		return this.semanticLabel;
 	}
 

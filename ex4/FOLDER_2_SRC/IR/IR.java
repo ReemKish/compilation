@@ -21,6 +21,9 @@ public class IR
 	private static final int MIN_INT = -32768;
 	public TEMP maxIntTemp;
 	public TEMP minIntTemp;
+	public TEMP sp;
+	public TEMP fp;
+	public TEMP ra;
 
 	/******************/
 	/* Add IR command */
@@ -109,6 +112,13 @@ public class IR
 			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
 			instance.Add_IRcommand(new IRcommandConstInt(instance.maxIntTemp, MAX_INT));
 			instance.Add_IRcommand(new IRcommandConstInt(instance.minIntTemp, MIN_INT));
+
+			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.sp = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.fp = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.ra = TEMP_FACTORY.getInstance().getFreshTEMP();
+
 		}
 		return instance;
 	}

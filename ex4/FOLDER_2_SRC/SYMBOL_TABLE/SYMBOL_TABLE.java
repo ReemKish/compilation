@@ -7,6 +7,7 @@ package SYMBOL_TABLE;
 /* GENERAL IMPORTS */
 /*******************/
 import java.io.PrintWriter;
+import java.util.Objects;
 
 /*******************/
 /* PROJECT IMPORTS */
@@ -42,8 +43,12 @@ public class SYMBOL_TABLE
 	/****************************************************************************/
 	/* Enter a variable, function, class type or array type to the symbol table */
 	/****************************************************************************/
-	public void enter(String name,TYPE t)
+	public void enter(String name, TYPE t){
+		enter(name, t, 0);
+	}
+	public void enter(String name, TYPE t, int annotationMode)
 	{
+		/* annotationMode: 0 = global, 1 = local variable, 2 = argument
 		/*************************************************/
 		/* [1] Compute the hash value for this new entry */
 		/*************************************************/
@@ -54,11 +59,19 @@ public class SYMBOL_TABLE
 		/*     NOTE: this entry can very well be null, but the behaviour is identical */
 		/******************************************************************************/
 		SYMBOL_TABLE_ENTRY next = table[hashValue];
+
+		int offset = 0;
+		if(annotationMode == 1){
+			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getVarOffset();
+		}
+		if(annotationMode == 2){
+			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getArgOffset();
+		}
 	
 		/**************************************************************************/
 		/* [3] Prepare a new symbol table entry with name, type, next and prevtop */
 		/**************************************************************************/
-		SYMBOL_TABLE_ENTRY e = new SYMBOL_TABLE_ENTRY(name,t,hashValue,next,top,top_index++);
+		SYMBOL_TABLE_ENTRY e = new SYMBOL_TABLE_ENTRY(name, t, hashValue, next, top, top_index++, offset);
 
 		/**********************************************/
 		/* [4] Update the top of the symbol table ... */
@@ -122,16 +135,15 @@ public class SYMBOL_TABLE
 	 * @return******************************************************************************/
 	public SYMBOL_TABLE_ENTRY getScope()
 	{
+		SYMBOL_TABLE_ENTRY deepest = top;
 		/**************************************************************************/
 		/* Pop elements from the symbol table stack until a SCOPE-BOUNDARY is hit */
 		/**************************************************************************/
-		while (top != null && top.name != "SCOPE-BOUNDARY")
+		while (deepest != null && !Objects.equals(deepest.name, "SCOPE-BOUNDARY"))
 		{
-			table[top.index] = top.next;
-			top_index = top_index-1;
-			top = top.prevtop;
+			deepest = deepest.prevtop;
 		}
-		return top;
+		return deepest;
 	}
 
 	/********************************************************************************/
@@ -261,7 +273,7 @@ public class SYMBOL_TABLE
 			/* [0] The instance itself ... */
 			/*******************************/
 			instance = new SYMBOL_TABLE();
-
+			instance.beginScope();
 			/*****************************************/
 			/* [1] Enter primitive types int, string */
 			/*****************************************/

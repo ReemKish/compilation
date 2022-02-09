@@ -15,13 +15,15 @@ import MIPS.*;
 
 public class IRcommand_Store extends IRcommand
 {
-	String var_name;
+	TEMP dst;
 	TEMP src;
+	int offset;
 	
-	public IRcommand_Store(String var_name,TEMP src)
+	public IRcommand_Store(TEMP dst, TEMP src, int offset)
 	{
-		this.src      = src;
-		this.var_name = var_name;
+		this.src = src;
+		this.dst = dst;
+		this.offset = offset;
 	}
 	
 	/***************/
@@ -29,6 +31,6 @@ public class IRcommand_Store extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().store(var_name,src);
+		sir_MIPS_a_lot.getInstance().store(dst, src, offset);
 	}
 }

@@ -89,7 +89,6 @@ public class AST_DEC_FUNC extends AST_DEC
 			returnType = type.SemantMe();
 		}
 
-
 		/***************************/
 		/* [2] Semant Input Params */
 		/***************************/
@@ -98,7 +97,7 @@ public class AST_DEC_FUNC extends AST_DEC
 			it.head.SemantMe();
 			arg_type = it.head.type.SemantMe();
 			reverse_type_list = new TYPE_LIST(arg_type,reverse_type_list);
-			SYMBOL_TABLE.getInstance().enter(it.head.name, arg_type);
+			//SYMBOL_TABLE.getInstance().enter(it.head.name, arg_type);
 		}
 		/* reverse type list to preserve original argument order */
 		for (TYPE_LIST it = reverse_type_list; it  != null; it = it.tail) {type_list = new TYPE_LIST(it.head,type_list);}
@@ -106,12 +105,13 @@ public class AST_DEC_FUNC extends AST_DEC
 		/***************************************************/
 		/* [5] Enter the Function Type to the Symbol Table */
 		/***************************************************/
-		SYMBOL_TABLE.getInstance().enter(name, new TYPE_FUNCTION(returnType, name,type_list));
+		SYMBOL_TABLE.getInstance().enter(name, new TYPE_FUNCTION(returnType, name, type_list));
 
 		/****************************/
 		/* [1] Begin Function Scope */
 		/****************************/
 		SYMBOL_TABLE.getInstance().beginScope();
+
 
 		/*******************/
 		/* [3] Semant Body */
