@@ -64,11 +64,11 @@ public class sir_MIPS_a_lot
 		int idxdst=dst.getSerialNumber();
 		fileWriter.format("\tlw Temp_%d,global_%s\n",idxdst,var_name);
 	}
-	public void store(TEMP dst,TEMP src, int offset)
+	public void store(TEMP src, TEMP dst, int offset)
 	{
 		int idxsrc=src.getSerialNumber();
 		int idxdst=dst.getSerialNumber();
-		fileWriter.format("\tsw Temp_%d, %d(Temp_%d)\n", idxdst, offset, idxsrc);
+		fileWriter.format("\tsw Temp_%d, %d(Temp_%d)\n", idxsrc, offset, idxdst);
 	}
 	public void li(TEMP t,int value)
 	{

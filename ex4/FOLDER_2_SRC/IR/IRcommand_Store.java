@@ -19,7 +19,7 @@ public class IRcommand_Store extends IRcommand
 	TEMP src;
 	int offset;
 	
-	public IRcommand_Store(TEMP dst, TEMP src, int offset)
+	public IRcommand_Store(TEMP src, TEMP dst, int offset)
 	{
 		this.src = src;
 		this.dst = dst;
@@ -31,6 +31,6 @@ public class IRcommand_Store extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().store(dst, src, offset);
+		sir_MIPS_a_lot.getInstance().store(src, dst, offset);
 	}
 }
