@@ -91,8 +91,8 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		this.base = src;
 		if(storeInTemp) {
 			IR.getInstance().Add_IRcommand(new IRcommand_Load(dest, src, offset));
-			return null;
+			return dest;
 		}
-		return dest;
+		return null;
 	}
 }

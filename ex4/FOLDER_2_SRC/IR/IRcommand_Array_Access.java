@@ -18,13 +18,13 @@ import TEMP.TEMP;
 public class IRcommand_Array_Access extends IRcommand
 {
 	TEMP dst;
-	TEMP arr;
+	TEMP pointer;
 	TEMP offset;
 
-	public IRcommand_Array_Access(TEMP dst, TEMP arr, TEMP offset)
+	public IRcommand_Array_Access(TEMP dst, TEMP pointer, TEMP offset)
 	{
 		this.dst = dst;
-		this.arr = arr;
+		this.pointer = pointer;
 		this.offset = offset;
 	}
 	
@@ -33,8 +33,26 @@ public class IRcommand_Array_Access extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		//TODO: implement me!
+		//TODO: fix: endProgLabel should be an ABORT
+		TEMP s0 = IR.getInstance().s0;
+		//$t2 = offset, $t1 = pointer, $t0 = dst
+		// bltz $t2, abort (abort if offset < 0)
+		sir_MIPS_a_lot.getInstance().bltz(offset, IR.endProgLabel);
+		// lw $s0, 0($t1)
+		sir_MIPS_a_lot.getInstance().load(s0, pointer, 0);
+		// bge $t2, $s0, abort (abort if offset >= len)
+		sir_MIPS_a_lot.getInstance().bge(offset, s0, IR.endProgLabel);
+		// move $s0, $t2
+		sir_MIPS_a_lot.getInstance().move(s0, offset);
+		// add $s0, $s0, 1
+		sir_MIPS_a_lot.getInstance().addi(s0, s0, 1);
+		// mul $s0, $s0, 4
+		sir_MIPS_a_lot.getInstance().mul(s0, s0, IR.getInstance().wordSizeTemp);
+		// add $s0, $t1, $s0
+		sir_MIPS_a_lot.getInstance().add(s0, pointer,offset);
+		// lw $t0, 0($s0)
+		sir_MIPS_a_lot.getInstance().load(dst, s0, 0);
 	}
 
-	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = array_access " + arr + ", " + offset); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = array_access " + pointer + "[ " + offset + " ]"); }
 }

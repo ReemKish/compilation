@@ -78,6 +78,9 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		return this.semanticLabel;
 	}
 	public TEMP IRme(){
+		return this.IRme(true);
+	}
+	public TEMP IRme(boolean storeInTemp){
 		this.base = var.IRme();
 		this.offset = subscript.IRme();
 		TEMP storeTo = TEMP_FACTORY.getInstance().getFreshTEMP();
