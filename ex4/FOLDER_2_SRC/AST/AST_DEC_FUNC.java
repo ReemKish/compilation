@@ -142,11 +142,11 @@ public class AST_DEC_FUNC extends AST_DEC
 		TEMP fp = IR.getInstance().fp;
 		TEMP ra = IR.getInstance().ra;
 		// addi $sp, $sp, -4
-		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, sir_MIPS_a_lot.WORD_SIZE));
+		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, -sir_MIPS_a_lot.WORD_SIZE));
 		// sw $ra, 0($sp)
 		IR.getInstance().Add_IRcommand(new IRcommand_Store_Temp(ra, sp, 0));
 		// addi $sp, $sp, -4
-		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, sir_MIPS_a_lot.WORD_SIZE));
+		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, -sir_MIPS_a_lot.WORD_SIZE));
 		// sw $fp, 0($sp)
 		IR.getInstance().Add_IRcommand(new IRcommand_Store_Temp(fp, sp, 0));
 		// move $fp $sp

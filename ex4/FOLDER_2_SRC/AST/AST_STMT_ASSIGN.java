@@ -97,12 +97,12 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	{
 		TEMP offset;
 		TEMP src = exp.IRme();
-		TEMP dst = var.IRme();
+		var.IRme(false);
 		/* TODO - IR commands shouldn't use variable names, field names, or immediate subscripts*/
 		if(var instanceof AST_VAR_SIMPLE) {
 			IR.
 					getInstance().
-					Add_IRcommand(new IRcommand_Store_Temp(src, dst, 0));
+					Add_IRcommand(new IRcommand_Store_Temp(src, ((AST_VAR_SIMPLE) var).base, ((AST_VAR_SIMPLE) var).offset));
 		}
 		else if(var instanceof AST_VAR_SUBSCRIPT){
 			TEMP arr_dst = ((AST_VAR_SUBSCRIPT) var).base;

@@ -34,7 +34,7 @@ public class IRcommand_Field_Set extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().load(dst, field);
+		/*TODO: implement*/
 	}
 
 	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("field_set " + dst + ", " + field + ", " + src); }

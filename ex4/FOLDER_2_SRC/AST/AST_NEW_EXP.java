@@ -68,7 +68,7 @@ public class AST_NEW_EXP extends AST_EXP
 			IR.getInstance().Add_IRcommand(new IRcommand_New_Class(dest, semanticLabel));
 		}
 		else{
-			IR.getInstance().Add_IRcommand(new IRcommand_New_Array(dest, semanticLabel, e.IRme()));
+			IR.getInstance().Add_IRcommand(new IRcommand_New_Array(dest, e.IRme()));
 		}
 		return dest;
 	}

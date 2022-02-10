@@ -25,13 +25,19 @@ public class IR
 	private static final int MIN_INT = -32768;
 	public TEMP maxIntTemp;
 	public TEMP minIntTemp;
+	public TEMP wordSizeTemp;
 	public TEMP sp;
 	public TEMP fp;
 	public TEMP ra;
 	public TEMP v0;
 	public TEMP v1;
+	public TEMP a0;
+	public TEMP a1;
+	public TEMP s0;
+	public TEMP s1;
 	public static final String funcLabelPrefix = "FUNC_LABEL_";
 	public static final String endProgLabel = "END_PROGRAM";
+	public static final String  globalVarPrefix = "GLOBAL_VAR_";
 	protected static PrintWriter fileWriter;
 	private static int line_index=1;
 
@@ -201,13 +207,19 @@ public class IR
 			instance = new IR();
 			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MAX_INT");
 			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MIN_INT");
+			instance.wordSizeTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_WORD_SIZE");
 			instance.Add_IRdata(new IRdata_Global_Var(instance.maxIntTemp, "" + MAX_INT));
 			instance.Add_IRdata(new IRdata_Global_Var(instance.minIntTemp, "" + MIN_INT));
+			instance.Add_IRdata(new IRdata_Global_Var(instance.wordSizeTemp, "" + sir_MIPS_a_lot.WORD_SIZE));
 			instance.sp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$sp");
 			instance.fp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$fp");
 			instance.ra = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$ra");
 			instance.v0 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v0");
 			instance.v1 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v1");
+			instance.a0 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$a0");
+			instance.a1 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$a1");
+			instance.s0 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$s0");
+			instance.s1 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$s1");
 			String dirname="./FOLDER_5_OUTPUT/";
 			String filename=String.format("IR.txt");
 			try { instance.fileWriter = new PrintWriter(dirname+filename); }

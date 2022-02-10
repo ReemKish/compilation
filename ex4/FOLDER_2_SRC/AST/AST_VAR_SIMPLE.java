@@ -1,4 +1,5 @@
 package AST;
+import MIPS.sir_MIPS_a_lot;
 import TEMP.*;
 import IR.*;
 import TYPES.*;
@@ -11,6 +12,8 @@ public class AST_VAR_SIMPLE extends AST_VAR
 	/************************/
 	public String name;
 	public int offset;
+	public boolean isGlobal;
+	public TEMP base;
 	
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -65,12 +68,31 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		}
 		this.semanticLabel = prevDec.type;
 		this.offset = prevDec.offset;
+		this.isGlobal = prevDec.isGlobal;
 		return this.semanticLabel;
 	}
-
-	public TEMP IRme() {
-		TEMP dest = TEMP_FACTORY.getInstance().getFreshTEMP();
-		IR.getInstance().Add_IRcommand(new IRcommand_Load(dest, name));
-		return dest;
+	public TEMP IRme(){
+		return this.IRme(true);
+	}
+	public TEMP IRme(boolean storeInTemp) {
+		TEMP dest = null;
+		if(storeInTemp) {
+			dest = TEMP_FACTORY.getInstance().getFreshTEMP();
+		}
+		TEMP src;
+		int offset = 0;
+		if(isGlobal){
+			src = TEMP_FACTORY.getInstance().getFreshNamedTEMP(IR.globalVarPrefix + name);
+		}
+		else{
+			src = IR.getInstance().fp;
+			offset = this.offset * sir_MIPS_a_lot.WORD_SIZE;
+		}
+		this.base = src;
+		if(storeInTemp) {
+			IR.getInstance().Add_IRcommand(new IRcommand_Load(dest, src, offset));
+			return dest;
+		}
+		return null;
 	}
 }

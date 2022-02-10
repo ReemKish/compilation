@@ -61,20 +61,24 @@ public class SYMBOL_TABLE
 		SYMBOL_TABLE_ENTRY next = table[hashValue];
 
 		int offset = 0;
-		if(annotationMode == 1){
+		boolean isGlobal = false;
+		if(annotationMode == 0){
+			isGlobal = true;
+		}
+		else if(annotationMode == 1){
 			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getVarOffsetInc();
 		}
-		if(annotationMode == 2){
+		else if(annotationMode == 2){
 			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getArgOffsetInc();
 		}
-		if(annotationMode == 3){
+		else if(annotationMode == 3){
 			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getFieldOffsetInc();
 		}
 	
 		/**************************************************************************/
 		/* [3] Prepare a new symbol table entry with name, type, next and prevtop */
 		/**************************************************************************/
-		SYMBOL_TABLE_ENTRY e = new SYMBOL_TABLE_ENTRY(name, t, hashValue, next, top, top_index++, offset);
+		SYMBOL_TABLE_ENTRY e = new SYMBOL_TABLE_ENTRY(name, t, hashValue, next, top, top_index++, offset, isGlobal);
 
 		/**********************************************/
 		/* [4] Update the top of the symbol table ... */
