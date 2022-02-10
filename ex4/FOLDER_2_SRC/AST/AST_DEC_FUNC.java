@@ -3,6 +3,7 @@ import IR.*;
 import TEMP.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
+import MIPS.*;
 
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ public class AST_DEC_FUNC extends AST_DEC
 	public String name;
 	public AST_STMT_LIST sl;
 	public AST_ARG_LIST al;
+	private int localVarCount = 0;
 
 	/*******************/
 	/*  CONSTRUCTOR(S) */
@@ -118,7 +120,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		/*******************/
 		sl.SemantMe();
 
-		int localVarCount = ((TYPE_FOR_SCOPE_BOUNDARIES)SYMBOL_TABLE.getInstance().getScope().type).getVarCount();
+		localVarCount = ((TYPE_FOR_SCOPE_BOUNDARIES)SYMBOL_TABLE.getInstance().getScope().type).getVarCount();
 		/*****************/
 		/* [4] End Scope */
 		/*****************/
@@ -133,11 +135,34 @@ public class AST_DEC_FUNC extends AST_DEC
 	}
 	public TEMP IRme()
 	{
+		// label
 		IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.funcLabelPrefix + name));
-		// TODO prologue
+		// prologue
+		TEMP sp = IR.getInstance().sp;
+		TEMP fp = IR.getInstance().fp;
+		TEMP ra = IR.getInstance().ra;
+		// addi $sp, $sp, -4
+		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, sir_MIPS_a_lot.WORD_SIZE));
+		// sw $ra, 0($sp)
+		IR.getInstance().Add_IRcommand(new IRcommand_Store_Temp(ra, sp, 0));
+		// addi $sp, $sp, -4
+		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, sir_MIPS_a_lot.WORD_SIZE));
+		// sw $fp, 0($sp)
+		IR.getInstance().Add_IRcommand(new IRcommand_Store_Temp(fp, sp, 0));
+		// move $fp $sp
+		IR.getInstance().Add_IRcommand(new IRcommand_Move(fp, sp));
+		// addi $sp, $sp, -4 * localVarCount
+		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, sir_MIPS_a_lot.WORD_SIZE * localVarCount));
+
+		// function body
 		sl.IRme();
 		if(Objects.equals(name, "main")){
 			IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label("END_PROG"));
+		}
+		else {
+			// epilogue is built in to return statement.
+			// we return automatically once end of code is reached;
+			IR.getInstance().Add_IRcommand(new IRcommand_Return(TEMP_FACTORY.getInstance().getFreshTEMP()));
 		}
 		return null;
 	}

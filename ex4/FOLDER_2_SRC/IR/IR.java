@@ -118,11 +118,11 @@ public class IR
 
 			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
 			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.sp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.fp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.ra = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.v0 = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.v1 = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.sp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$sp");
+			instance.fp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$fp");
+			instance.ra = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$ra");
+			instance.v0 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v0");
+			instance.v1 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v1");
 
 		}
 		return instance;

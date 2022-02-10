@@ -19,6 +19,11 @@ public class TEMP_FACTORY
 	{
 		return new TEMP(counter++);
 	}
+
+	public TEMP getFreshNamedTEMP(String name)
+	{
+		return new TEMP(name);
+	}
 	
 	/**************************************/
 	/* USUAL SINGLETON IMPLEMENTATION ... */

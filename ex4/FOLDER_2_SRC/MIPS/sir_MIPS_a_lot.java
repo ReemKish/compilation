@@ -132,7 +132,7 @@ public class sir_MIPS_a_lot
 	{
 		int i1 =oprnd1.getSerialNumber();
 		int dstidx=dst.getSerialNumber();
-		fileWriter.format("\taddi Temp_%d,Temp_%d,%d\n",dstidx,i1,value);
+		fileWriter.format("\taddi Temp_%d, Temp_%d, %d\n",dstidx,i1,value);
 	}
 
 	public void label(String inlabel)
@@ -198,8 +198,13 @@ public class sir_MIPS_a_lot
 	}
 	public void ret(TEMP res)
 	{
-		int i1 = res.getSerialNumber();
-		fileWriter.format("\tret Temp_%d\n",i1);
+		// epilogue
+		fileWriter.format("\tmove $v0 %s\n", res);
+		fileWriter.format("\tmove $sp, $fp\n");
+		fileWriter.format("\tlw $fp, 0($sp)\n");
+		fileWriter.format("\tlw $ra, 4($sp)\n");
+		fileWriter.format("\taddi $sp, $sp, 8\n");
+		fileWriter.format("\tjr $ra\n");
 	}
 
 
