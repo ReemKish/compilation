@@ -65,9 +65,9 @@ public class sir_MIPS_a_lot
 		fileWriter.format(".data\n");
 		fileWriter.format("\tglobal_%s: .word 721\n",var_name);
 	}
-	public void load(TEMP dst,String var_name)
+	public void load(TEMP dst, TEMP src, int offset)
 	{
-		fileWriter.format("\tlw %s,global_%s\n",dst.toString(),var_name);
+		fileWriter.format("\tlw %s, %d(%s)\n", dst.toString(), offset, src.toString());
 	}
 	public void store(TEMP src, TEMP dst, int offset)
 	{

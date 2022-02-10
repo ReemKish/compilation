@@ -32,6 +32,7 @@ public class IR
 	public TEMP v1;
 	public static final String funcLabelPrefix = "FUNC_LABEL_";
 	public static final String endProgLabel = "END_PROGRAM";
+	public static final String  globalVarPrefix = "GLOBAL_VAR_";
 	protected static PrintWriter fileWriter;
 	private static int line_index=1;
 

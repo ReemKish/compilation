@@ -16,12 +16,14 @@ import MIPS.*;
 public class IRcommand_Load extends IRcommand
 {
 	TEMP dst;
-	String var_name;
+	TEMP src;
+	int offset;
 	
-	public IRcommand_Load(TEMP dst,String var_name)
+	public IRcommand_Load(TEMP dst, TEMP src, int offset)
 	{
-		this.dst      = dst;
-		this.var_name = var_name;
+		this.dst = dst;
+		this.src = src;
+		this.offset = offset;
 	}
 	
 	/***************/
@@ -29,8 +31,8 @@ public class IRcommand_Load extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().load(dst,var_name);
+		sir_MIPS_a_lot.getInstance().load(dst, src, offset);
 	}
 
-	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = " + var_name); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = " + offset + "(" + src + ")"); }
 }
