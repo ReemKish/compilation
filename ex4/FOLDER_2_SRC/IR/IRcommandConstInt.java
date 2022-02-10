@@ -13,6 +13,9 @@ package IR;
 import TEMP.*;
 import MIPS.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class IRcommandConstInt extends IRcommand
 {
 	TEMP t;
@@ -23,6 +26,8 @@ public class IRcommandConstInt extends IRcommand
 		this.t = t;
 		this.value = value;
 	}
+
+	public TEMP modifiedReg() { return t;}
 	
 	/***************/
 	/* MIPS me !!! */

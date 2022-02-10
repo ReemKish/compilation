@@ -15,6 +15,9 @@ import AST.AST_VAR;
 import MIPS.sir_MIPS_a_lot;
 import TEMP.TEMP;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class IRcommand_Store_Var extends IRcommand
 {
 	String dst_name;
@@ -25,6 +28,12 @@ public class IRcommand_Store_Var extends IRcommand
 	{
 		this.src = src;
 		this.dst_name = dst_name;
+	}
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(src);
+		return used_regs;
 	}
 	
 	/***************/

@@ -5,8 +5,10 @@ package IR;
 import MIPS.sir_MIPS_a_lot;
 import TEMP.*;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Objects;
+import java.util.Map;
 /*******************/
 /* GENERAL IMPORTS */
 /*******************/
@@ -46,8 +48,10 @@ public class IR
 	public static final String  exitOnAccessViolation = "EXIT_ACCESS_VIOLATION";
 	public static final String  exitOnZeroDiv = "EXIT_ZERO_DIV";
 	public static final String  exitOnInvalidPointer = "EXIT_INVALID_POINTER";
-	protected static PrintWriter fileWriter;
+	public static PrintWriter fileWriter;
+//	public static PrintStream fileWriter = System.out;
 	private static int line_index=1;
+	public Map<TEMP, Integer> regAlloc;
 
 	/******************/
 	/* Add IR command */
@@ -75,13 +79,14 @@ public class IR
 
 	public void finalizeFile()
 	{
-		fileWriter.format("%s:\n", endProgLabel);
+
+
 		fileWriter.print("\tsyscall\n");
 		fileWriter.close();
 	}
 
 	public void fileNewLine() {fileNewLine(true); fileWriter.print("\t"); }
-	public void fileNewLine(boolean notab) { if(notab) {System.out.print(line_index++ + ".");} else fileNewLine(); }
+	public void fileNewLine(boolean notab) { if(notab) {fileWriter.print(line_index++ + ".");} else fileNewLine(); }
 	public void filePrintln(String line) { fileWriter.println(line); }
 
 	/******************************************/
@@ -89,7 +94,10 @@ public class IR
 	/******************************************/
 	public void genRegAlloc() {
 		IR_Graph graph = new IR_Graph();
-		graph.PrintMe();
+		graph.analyzeLiveness();
+		graph.genInterference();
+		regAlloc = graph.paintInterference(10);
+		TEMP.tempToReg = regAlloc;
 	}
 
 	/******************/
@@ -254,9 +262,7 @@ public class IR
 			String dirname="./FOLDER_5_OUTPUT/";
 			String filename=String.format("IR.txt");
 			try { instance.fileWriter = new PrintWriter(dirname+filename); }
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			catch (Exception e) { e.printStackTrace(); }
 
 		}
 		return instance;

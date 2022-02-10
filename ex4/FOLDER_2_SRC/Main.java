@@ -55,26 +55,26 @@ public class Main
 			/**************************/
 			AST.SemantMe();
 
+			/**************************************/
+			/* [8] Finalize AST GRAPHIZ DOT file */
+			/**************************************/
+			AST_GRAPHVIZ.getInstance().finalizeFile();
+
 			/**********************/
-			/* [8] IR the AST ... */
+			/* [9] IR the AST ... */
 			/**********************/
 			AST.IRme();
+
+			/***********************/
+			/* [9.5] Print  IR ... */
+			/***********************/
+			IR.getInstance().printMe();
 			IR.getInstance().genRegAlloc();
 
 			/***********************/
-			/* [8.5] Print  IR ... */
-			/***********************/
-			IR.getInstance().printMe();
-
-			/***********************/
-			/* [9] MIPS the IR ... */
+			/* [10] MIPS the IR ... */
 			/***********************/
 			IR.getInstance().MIPSme();
-
-			/**************************************/
-			/* [10] Finalize AST GRAPHIZ DOT file */
-			/**************************************/
-			AST_GRAPHVIZ.getInstance().finalizeFile();
 
 			/***************************/
 			/* [11] Finalize IR file */

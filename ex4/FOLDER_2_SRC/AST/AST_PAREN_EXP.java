@@ -1,5 +1,6 @@
 package AST;
 
+import TEMP.TEMP;
 import TYPES.TYPE;
 import TYPES.TYPE_INT;
 
@@ -62,5 +63,9 @@ public class AST_PAREN_EXP extends AST_EXP
 	public TYPE SemantMe() throws SemanticException {
 		this.semanticLabel = e.SemantMe();
 		return this.semanticLabel;
+	}
+
+	public TEMP IRme() {
+		return e.IRme();
 	}
 }

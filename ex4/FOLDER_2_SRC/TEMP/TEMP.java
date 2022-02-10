@@ -9,6 +9,10 @@ package TEMP;
 
 /*******************/
 /* PROJECT IMPORTS */
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*******************/
 
 public class TEMP
@@ -16,6 +20,7 @@ public class TEMP
 	private final int serial;
 	private final boolean serialized;
 	private final String name;
+	public static Map<TEMP, Integer> tempToReg = new HashMap<>();  /* TEMP serial number to MIPS register (t0,...,t9) */
 	
 	public TEMP(int serial)
 	{
@@ -37,7 +42,9 @@ public class TEMP
 	}
 
 	public String toString() {
-		if (this.serialized) {
+		if(tempToReg.containsKey(this)) {
+			return "$t" + tempToReg.get(this);
+		} else if (this.serialized) {
 			return this.name + String.valueOf(serial);
 		}
 		return this.name;

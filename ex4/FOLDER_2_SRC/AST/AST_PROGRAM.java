@@ -1,4 +1,6 @@
 package AST;
+import IR.IR;
+import IR.IRcommand_Label;
 import TEMP.TEMP;
 import TYPES.*;
 import SYMBOL_TABLE.*;
@@ -47,6 +49,7 @@ public class AST_PROGRAM extends AST_Node
 	{
 		if (head != null) head.IRme();
 		if (tail != null) tail.IRme();
+		IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.endProgLabel));
 
 		return null;
 	}

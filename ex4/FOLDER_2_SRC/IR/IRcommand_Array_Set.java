@@ -13,6 +13,9 @@ package IR;
 
 import MIPS.sir_MIPS_a_lot;
 import TEMP.TEMP;
+
+import java.util.HashSet;
+import java.util.Set;
 /* TODO - copy-pasted from another IRcommand, adjustments required */
 
 public class IRcommand_Array_Set extends IRcommand
@@ -26,6 +29,14 @@ public class IRcommand_Array_Set extends IRcommand
 		this.src = src;
 		this.pointer = pointer;
 		this.offset = offset;
+	}
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(pointer);
+		used_regs.add(offset);
+		used_regs.add(src);
+		return used_regs;
 	}
 	
 	/***************/

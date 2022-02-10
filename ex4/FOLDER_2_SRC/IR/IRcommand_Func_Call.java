@@ -11,24 +11,36 @@ package IR;
 /* PROJECT IMPORTS */
 /*******************/
 
-import AST.AST_EXP_LIST;
 import MIPS.sir_MIPS_a_lot;
 import TEMP.*;
 import TYPES.TYPE_FUNCTION;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class IRcommand_Func_Call extends IRcommand
 {
 	/* TODO - copy-pasted from another IRcommand, adjustments required */
 	TYPE_FUNCTION func;
 	TEMP_LIST args;
-	TEMP resReg;
+	TEMP dst;
 
-	public IRcommand_Func_Call(TEMP resReg, TYPE_FUNCTION func, TEMP_LIST args)
+	public IRcommand_Func_Call(TEMP dst, TYPE_FUNCTION func, TEMP_LIST args)
 	{
 		this.func = func;
 		this.args = args;
-		this.resReg = resReg;
+		this.dst = dst;
 	}
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		TEMP_LIST curr = args;
+		while(curr != null && curr.head != null) {
+			used_regs.add(curr.head);
+			curr = curr.tail;
+		}
+		return used_regs;
+	}
+	public TEMP modifiedReg() { return dst;}
 	
 	/***************/
 	/* MIPS me !!! */
@@ -62,9 +74,9 @@ public class IRcommand_Func_Call extends IRcommand
 		}
 		sir_MIPS_a_lot.getInstance().jal(IR.funcLabelPrefix + func.name);
 		sir_MIPS_a_lot.getInstance().addi(sp, sp, sir_MIPS_a_lot.WORD_SIZE * argCount);
-		sir_MIPS_a_lot.getInstance().move(resReg, IR.getInstance().v0);
+		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().v0);
 
 	}
 
-	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(resReg + " = call " + func.name + " " + (args != null ? args : "")); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = call " + func.name + " " + (args != null ? args : "")); }
 }

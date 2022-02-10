@@ -13,6 +13,9 @@ import TYPES.*;
 /*******************/
 
 import MIPS.sir_MIPS_a_lot;
+
+import java.util.HashSet;
+import java.util.Set;
 /* TODO - copy-pasted from another IRcommand, adjustments required */
 
 public class IRcommand_New_Array extends IRcommand
@@ -25,6 +28,13 @@ public class IRcommand_New_Array extends IRcommand
 		this.pointer = pointer;
 		this.len = len;
 	}
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(len);
+		return used_regs;
+	}
+	public TEMP modifiedReg() { return pointer;}
 
 	/***************/
 	/* MIPS me !!! */
@@ -49,5 +59,5 @@ public class IRcommand_New_Array extends IRcommand
 		sir_MIPS_a_lot.getInstance().store(len, pointer, 0);
 	}
 
-	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(pointer + " = new_array, " + len); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(pointer + " = new_array " + len); }
 }

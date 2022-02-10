@@ -13,6 +13,9 @@ package IR;
 import TEMP.*;
 import MIPS.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class IRcommand_Jump_If_Eq_To_Zero extends IRcommand
 {
 	TEMP t;
@@ -22,6 +25,12 @@ public class IRcommand_Jump_If_Eq_To_Zero extends IRcommand
 	{
 		this.t          = t;
 		this.label_name = label_name;
+	}
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(t);
+		return used_regs;
 	}
 	
 	/***************/

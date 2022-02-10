@@ -14,6 +14,9 @@ package IR;
 import MIPS.sir_MIPS_a_lot;
 import TEMP.TEMP;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class IRcommand_Move extends IRcommand
 {
 	public TEMP dst;
@@ -24,6 +27,12 @@ public class IRcommand_Move extends IRcommand
 		this.dst = dst;
 		this.src = src;
 	}
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(src);
+		return used_regs;
+	}
+	public TEMP modifiedReg() { return dst;}
 	/***************/
 	/* MIPS me !!! */
 	/***************/

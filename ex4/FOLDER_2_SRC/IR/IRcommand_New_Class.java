@@ -13,6 +13,9 @@ import TYPES.*;
 /*******************/
 
 import MIPS.sir_MIPS_a_lot;
+
+import java.util.HashSet;
+import java.util.Set;
 /* TODO - copy-pasted from another IRcommand, adjustments required */
 
 public class IRcommand_New_Class extends IRcommand
@@ -25,6 +28,8 @@ public class IRcommand_New_Class extends IRcommand
 		this.pointer = pointer;
 		this.className = className;
 	}
+
+	public TEMP modifiedReg() { return pointer;}
 	
 	/***************/
 	/* MIPS me !!! */

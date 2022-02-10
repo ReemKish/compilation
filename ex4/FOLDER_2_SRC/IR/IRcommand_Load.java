@@ -13,6 +13,9 @@ package IR;
 import TEMP.*;
 import MIPS.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class IRcommand_Load extends IRcommand
 {
 	TEMP dst;
@@ -25,6 +28,13 @@ public class IRcommand_Load extends IRcommand
 		this.src = src;
 		this.offset = offset;
 	}
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(src);
+		return used_regs;
+	}
+	public TEMP modifiedReg() { return dst;}
 	
 	/***************/
 	/* MIPS me !!! */

@@ -13,7 +13,10 @@ import TEMP.*;
 /*******************/
 
 import MIPS.sir_MIPS_a_lot;
-/* TODO - copy-pasted from another IRcommand, adjustments required */
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class IRcommand_Return extends IRcommand
 {
@@ -22,6 +25,12 @@ public class IRcommand_Return extends IRcommand
 	public IRcommand_Return(TEMP val)
 	{
 		this.val = val;
+	}
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(val);
+		return used_regs;
 	}
 	
 	/***************/
@@ -32,5 +41,5 @@ public class IRcommand_Return extends IRcommand
 		sir_MIPS_a_lot.getInstance().ret(val);
 	}
 
-	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("return " + val); }
+	public void printMe() {IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("return " + val); }
 }

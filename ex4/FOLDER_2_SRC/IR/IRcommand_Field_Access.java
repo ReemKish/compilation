@@ -13,6 +13,9 @@ package IR;
 
 import MIPS.sir_MIPS_a_lot;
 import TEMP.TEMP;
+
+import java.util.HashSet;
+import java.util.Set;
 /* TODO - copy-pasted from another IRcommand, adjustments required */
 
 public class IRcommand_Field_Access extends IRcommand
@@ -27,7 +30,15 @@ public class IRcommand_Field_Access extends IRcommand
 		this.base      = base;
 		this.fieldName = fieldName;
 	}
-	
+
+	public Set<TEMP> usedRegs() {
+		Set<TEMP> used_regs = new HashSet<TEMP>();
+		used_regs.add(base);
+		return used_regs;
+	}
+	public TEMP modifiedReg() { return dst;}
+
+
 	/***************/
 	/* MIPS me !!! */
 	/***************/
