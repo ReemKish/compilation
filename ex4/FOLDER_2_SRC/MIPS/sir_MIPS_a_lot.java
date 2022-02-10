@@ -27,8 +27,6 @@ public class sir_MIPS_a_lot
 	/***********************/
 	public void finalizeFile()
 	{
-		fileWriter.format("%s:\n", IR.endProgLabel);
-		fileWriter.print("\tsyscall\n");
 		fileWriter.close();
 	}
 	/* TODO: there shouldn't be a dedicated print_int function.
@@ -36,13 +34,30 @@ public class sir_MIPS_a_lot
 	*   receives the syscall type as an argument*/
 	public void print_int(TEMP t)
 	{
-		int idx=t.getSerialNumber();
-		// fileWriter.format("\taddi $a0,%s,0\n",idx);
-		fileWriter.format("\tmove $a0,%s\n",t.toString());
-		fileWriter.format("\tli $v0,1\n");
+		// li $a0, t
+		fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
+		// li $v0, 1
+		fileWriter.format("\tmove %s, %s\n",IR.getInstance().v0, 1);
+		// syscall
 		fileWriter.format("\tsyscall\n");
-		fileWriter.format("\tli $a0,32\n");
-		fileWriter.format("\tli $v0,11\n");
+	}
+	public void print_string(TEMP t)
+	{
+		// li $a0, t
+		fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
+		// li $v0, 4
+		fileWriter.format("\tmove %s, %s\n",IR.getInstance().v0, 4);
+		// syscall
+		fileWriter.format("\tsyscall\n");
+	}
+	public void print_trace(TEMP t)
+	{
+	}
+	public void exit()
+	{
+		// li $v0, 10
+		fileWriter.format("\tmove %s, %s\n",IR.getInstance().v0, 10);
+		// syscall
 		fileWriter.format("\tsyscall\n");
 	}
 	public void syscall(){
@@ -61,7 +76,7 @@ public class sir_MIPS_a_lot
 		fileWriter.format("\t%s: .word %s\n", label, word);
 	}
 	public void storeString(TEMP label, String str){
-		fileWriter.format("\t%s: .asciiz %s\n", label, str);
+		fileWriter.format("\t%s: .asciiz \"%s\"\n", label, str);
 	}
 	public void allocate(String var_name)
 	{
@@ -210,14 +225,6 @@ public class sir_MIPS_a_lot
 			{
 				e.printStackTrace();
 			}
-
-			/*****************************************************/
-			/* [3] Print data section with error message strings */
-			/*****************************************************/
-			instance.fileWriter.print(".data\n");
-			instance.fileWriter.print("string_access_violation: .asciiz \"Access Violation\"\n");
-			instance.fileWriter.print("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"\n");
-			instance.fileWriter.print("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"\n");
 		}
 		return instance;
 	}

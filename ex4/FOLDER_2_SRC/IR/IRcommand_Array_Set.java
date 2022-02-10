@@ -33,15 +33,14 @@ public class IRcommand_Array_Set extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		//TODO: fix: endProgLabel should be an ABORT
 		TEMP s0 = IR.getInstance().s0;
 		//$t2 = offset, $t1 = pointer, $t0 = dst
 		// bltz $t2, abort (abort if offset < 0)
-		sir_MIPS_a_lot.getInstance().bltz(offset, IR.endProgLabel);
+		sir_MIPS_a_lot.getInstance().bltz(offset, IR.exitOnAccessViolation);
 		// lw $s0, 0($t1)
 		sir_MIPS_a_lot.getInstance().load(s0, pointer, 0);
 		// bge $t2, $s0, abort (abort if offset >= len)
-		sir_MIPS_a_lot.getInstance().bge(offset, s0, IR.endProgLabel);
+		sir_MIPS_a_lot.getInstance().bge(offset, s0, IR.exitOnAccessViolation);
 		// move $s0, $t2
 		sir_MIPS_a_lot.getInstance().move(s0, offset);
 		// add $s0, $s0, 1

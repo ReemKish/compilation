@@ -312,20 +312,7 @@ public class SYMBOL_TABLE
 						null)));
 
 			/***************************************/
-			/* [3.2] Enter library function Malloc */
-			/***************************************/
-			instance.enter(
-					"Malloc",
-					new TYPE_FUNCTION(
-							TYPE_VOID.getInstance(),
-							"Malloc",
-							9,
-							new TYPE_LIST(
-									TYPE_INT.getInstance(),
-									null)));
-
-			/***************************************/
-			/* [3.3] Enter library function PrintString */
+			/* [3.2] Enter library function PrintString */
 			/***************************************/
 			instance.enter(
 				"PrintString",
@@ -338,7 +325,7 @@ public class SYMBOL_TABLE
 						null)));
 
 			/***************************************/
-			/* [3.4] Enter library function Exit */
+			/* [3.3] Enter library function Exit */
 			/***************************************/
 			instance.enter(
 					"Exit",

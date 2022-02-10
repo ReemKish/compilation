@@ -52,7 +52,7 @@ public class AST_EXP_STRING extends AST_EXP
 		return this.semanticLabel;
 	}
 	public TEMP IRme(){
-		TEMP dataStorage = TEMP_FACTORY.getInstance().getFreshNamedTEMP("DATA_STR_" + IR.getInstance().getLabelIndex());
+		TEMP dataStorage = TEMP_FACTORY.getInstance().getFreshNamedTEMP(IR.strPrefix + IR.getInstance().getLabelIndex());
 		IR.getInstance().Add_IRdata(new IRdata_Constant_String(dataStorage, value));
 		return dataStorage;
 	}

@@ -31,6 +31,8 @@ public class IRcommand_Binop_Div_Integers extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
+		// check for division by zero
+		sir_MIPS_a_lot.getInstance().beqz(t2, IR.exitOnZeroDiv);
 		sir_MIPS_a_lot.getInstance().div(dst,t1,t2);
 		IR.getInstance().truncate_int(dst);
 	}

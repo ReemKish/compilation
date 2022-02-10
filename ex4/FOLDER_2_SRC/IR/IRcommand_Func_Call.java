@@ -38,9 +38,18 @@ public class IRcommand_Func_Call extends IRcommand
 		TEMP sp = IR.getInstance().sp;
 		if(func.isSysCall){
 			int sysCallNum = func.sysCallNum;
-			// TODO: implement system call
-			// hint - use codegen1.pptx presentation (tirgul 10), slide 15 for reference
-			// sysCallNum should already contain the correct Syscall number
+			switch (sysCallNum){
+				case 1:
+					sir_MIPS_a_lot.getInstance().print_int(args.head);
+					break;
+				case 4:
+					sir_MIPS_a_lot.getInstance().print_string(args.head);
+					break;
+				case 10:
+					sir_MIPS_a_lot.getInstance().exit();
+					break;
+			}
+			return;
 		}
 		/*TODO: possibly need to reverse list before printing MIPs*/
 		int argCount = 0;
