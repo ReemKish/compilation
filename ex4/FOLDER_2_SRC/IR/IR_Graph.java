@@ -24,11 +24,20 @@ public class IR_Graph {
             nextCmds.add(next);
         } else if(cmd instanceof IRcommand_Jump_Label) {
             nextCmds.add(IR.getInstance().findCmdAtLabel(((IRcommand_Jump_Label) cmd).label_name));
-        } else {
+        } else if(cmd instanceof IRcommand_Label) {
+            return;
+        }else {
             nextCmds.add(next);
         }
 
         graph.put(cmd, nextCmds);
+    }
+
+    public void PrintMe() {
+        System.out.println("Graph:");
+        for (Map.Entry<IRcommand,List<IRcommand>> entry : graph.entrySet())
+            System.out.println("Key = " + entry.getKey() +
+                    ", Value = " + entry.getValue());
     }
 
 

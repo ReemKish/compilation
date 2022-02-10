@@ -81,6 +81,7 @@ public class IR
 	/******************************************/
 	public void genRegAlloc() {
 		IR_Graph graph = new IR_Graph();
+		graph.PrintMe();
 	}
 
 	/******************/
@@ -111,32 +112,17 @@ public class IR
 	* Returns the first command after a label
 	*/
 	public IRcommand findCmdAtLabel(String label) {
-		if ((head == null) && (tail == null))
+		IRcommand curr = head;
+		IRcommandList next = tail;
+		while ((curr != null) && (next != null))
 		{
-			return null;
-		}
-		else if ((head != null) && (tail == null))
-		{
-			if (head instanceof IRcommand_Label) {
-				if (((IRcommand_Label) head).label_name.equals(label)) {
-					return  head;
+			if (curr instanceof IRcommand_Label) {
+				if (((IRcommand_Label) curr).label_name.equals(label)) {
+					return next.head;
 				}
 			}
-		}
-		else
-		{
-			IRcommand curr = head;
-			IRcommandList next = tail;
-			while ((curr != null) && (next != null))
-			{
-				if (curr instanceof IRcommand_Label) {
-					if (((IRcommand_Label) curr).label_name.equals(label)) {
-						return curr;
-					}
-				}
-				curr = next.head;
-				next = next.tail;
-			}
+			curr = next.head;
+			next = next.tail;
 		}
 		return null;
 	}
