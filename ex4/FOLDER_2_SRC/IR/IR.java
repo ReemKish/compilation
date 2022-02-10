@@ -165,10 +165,10 @@ public class IR
 	/***************/
 	public void MIPSme()
 	{
-		new IRcommand_Label("data").MIPSme();
+		sir_MIPS_a_lot.getInstance().dataSection();
 		if (dataHead != null) dataHead.MIPSme();
 		if (dataTail != null) dataTail.MIPSme();
-		new IRcommand_Label("text").MIPSme();
+		sir_MIPS_a_lot.getInstance().textSection();
 		new IRcommand_Jump_Label("main").MIPSme();
 		if (head != null) head.MIPSme();
 		if (tail != null) tail.MIPSme();

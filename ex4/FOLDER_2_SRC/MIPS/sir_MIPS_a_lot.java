@@ -63,15 +63,16 @@ public class sir_MIPS_a_lot
 	public void syscall(){
 		fileWriter.format("\tsyscall\n");
 	}
-	//public TEMP addressLocalVar(int serialLocalVarNum)
-	//{
-	//	TEMP t  = TEMP_FACTORY.getInstance().getFreshTEMP();
-	//	int idx = t.getSerialNumber();
-	//
-	//	fileWriter.format("\taddi %s,$fp,%d\n",idx,-serialLocalVarNum*WORD_SIZE);
-	//	
-	//	return t;
-	//}
+	/***********************/
+	/* Sections */
+	/***********************/
+	public void dataSection()
+	{
+		fileWriter.format(".data\n");
+	}
+	public void textSection(){
+		fileWriter.format(".text\n");
+	}
 	public void storeGlobalVariable(TEMP label, String word){
 		fileWriter.format("\t%s: .word %s\n", label, word);
 	}
@@ -80,16 +81,25 @@ public class sir_MIPS_a_lot
 	}
 	public void allocate(String var_name)
 	{
-		fileWriter.format(".data\n");
 		fileWriter.format("\tglobal_%s: .word 721\n",var_name);
 	}
 	public void load(TEMP dst, TEMP src, int offset)
 	{
-		fileWriter.format("\tlw %s, %d(%s)\n", dst.toString(), offset, src.toString());
+		if(src.toString().contains("$")) {
+			fileWriter.format("\tlw %s, %d(%s)\n", dst.toString(), offset, src.toString());
+		}
+		else{
+			fileWriter.format("\tlw %s, %s + d\n", dst.toString(), src.toString(), offset);
+		}
 	}
 	public void store(TEMP src, TEMP dst, int offset)
 	{
-		fileWriter.format("\tsw %s, %d(%s)\n", src.toString(), offset*WORD_SIZE, dst.toString());
+		if(dst.toString().contains("$")) {
+			fileWriter.format("\tsw %s, %d(%s)\n", src.toString(), offset, dst.toString());
+		}
+		else{
+			fileWriter.format("\tsw %s, %s + %d\n", src.toString(), dst.toString(), offset);
+		}
 	}
 	public void li(TEMP t,int value)
 	{
@@ -131,10 +141,6 @@ public class sir_MIPS_a_lot
 
 	public void label(String inlabel)
 	{
-		if (inlabel.equals("main"))
-		{
-			fileWriter.format(".text\n");
-		}
 		fileWriter.format("%s:\n",inlabel);
 	}	
 	public void jump(String inlabel)
