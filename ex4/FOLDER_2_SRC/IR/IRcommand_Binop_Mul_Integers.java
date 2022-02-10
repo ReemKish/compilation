@@ -34,5 +34,5 @@ public class IRcommand_Binop_Mul_Integers extends IRcommand
 		IR.getInstance().truncate_int(dst);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst + " = mul " + t1 + ", " + t2); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = mul " + t1 + ", " + t2); }
 }

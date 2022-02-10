@@ -30,5 +30,5 @@ public class IRcommand_Allocate extends IRcommand
 		sir_MIPS_a_lot.getInstance().allocate(var_name);
 	}
 
-	public void printMe() { super.printLine(); System.out.println("alloc " + var_name); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("alloc " + var_name); }
 }

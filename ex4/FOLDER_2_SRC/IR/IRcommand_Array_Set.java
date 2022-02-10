@@ -37,5 +37,5 @@ public class IRcommand_Array_Set extends IRcommand
 	}
 
 	/* TODO */
-	public void printMe() { super.printLine(); System.out.println("array_set " + arr + ", " + offset + ", " + src); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("array_set " + arr + ", " + offset + ", " + src); }
 }

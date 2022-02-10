@@ -32,5 +32,5 @@ public class IRdata_Global_Var extends IRdata
 		sir_MIPS_a_lot.getInstance().storeGlobalVariable(label, word);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(label.toString() + " : " + word ); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(label.toString() + " : " + word ); }
 }

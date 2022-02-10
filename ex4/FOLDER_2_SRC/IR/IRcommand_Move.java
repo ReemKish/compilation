@@ -32,5 +32,5 @@ public class IRcommand_Move extends IRcommand
 		sir_MIPS_a_lot.getInstance().move(dst, src);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst + " = move " + src ); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = move " + src ); }
 }

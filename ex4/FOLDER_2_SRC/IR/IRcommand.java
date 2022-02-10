@@ -9,6 +9,9 @@ package IR;
 
 /*******************/
 /* PROJECT IMPORTS */
+
+import java.io.PrintWriter;
+
 /*******************/
 
 public abstract class IRcommand
@@ -16,7 +19,6 @@ public abstract class IRcommand
 	/*****************/
 	/* Label Factory */
 	/*****************/
-	private static int line_index=1;
 	protected static int label_counter=0;
 	public    static String getFreshLabel(String msg)
 	{
@@ -29,7 +31,4 @@ public abstract class IRcommand
 	public abstract void MIPSme();
 
 	public void printMe() { System.out.println(this.getClass().getSimpleName()); }
-
-	public void printLine() {System.out.print(line_index++ + ".\t"); }
-	public void printLine(boolean notab) { if(notab) {System.out.print(line_index++ + ".");} else printLine(); }
 }

@@ -30,5 +30,5 @@ public class IRcommand_Jump_Label extends IRcommand
 		sir_MIPS_a_lot.getInstance().jump(label_name);
 	}
 
-	public void printMe() { super.printLine(); System.out.println("jmp " + label_name); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("jmp " + label_name); }
 }

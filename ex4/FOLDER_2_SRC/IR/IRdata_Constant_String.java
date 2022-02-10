@@ -32,5 +32,5 @@ public class IRdata_Constant_String extends IRdata
 		sir_MIPS_a_lot.getInstance().storeString(label, str);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(label.toString() + " : " + str ); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(label.toString() + " : " + str ); }
 }

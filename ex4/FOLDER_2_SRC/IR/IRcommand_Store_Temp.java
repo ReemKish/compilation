@@ -34,5 +34,5 @@ public class IRcommand_Store_Temp extends IRcommand
 		sir_MIPS_a_lot.getInstance().store(dst, src, offset);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst + " = " + src); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = " + src); }
 }

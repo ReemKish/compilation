@@ -36,5 +36,5 @@ public class IRcommand_Store_Var extends IRcommand
 		//sir_MIPS_a_lot.getInstance().store(dst_name, src, offset);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst_name + " = " + src); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst_name + " = " + src); }
 }

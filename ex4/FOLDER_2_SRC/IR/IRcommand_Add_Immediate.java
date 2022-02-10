@@ -34,5 +34,5 @@ public class IRcommand_Add_Immediate extends IRcommand
 		sir_MIPS_a_lot.getInstance().addi(dst, src, immediate);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst + " = addi " + src + ", " + immediate); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = addi " + src + ", " + immediate); }
 }

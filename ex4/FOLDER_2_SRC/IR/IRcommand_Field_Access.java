@@ -36,5 +36,5 @@ public class IRcommand_Field_Access extends IRcommand
 		// TODO: implement me!
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst + " = field_access " + base + ", " + fieldName); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = field_access " + base + ", " + fieldName); }
 }

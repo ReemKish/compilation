@@ -36,5 +36,5 @@ public class IRcommand_New_Array extends IRcommand
 		//TODO: implement MIPSme
 	}
 
-	public void printMe() { super.printLine(); System.out.println(pointer + " = new_array " + className + ", " + len); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(pointer + " = new_array " + className + ", " + len); }
 }

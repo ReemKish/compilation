@@ -63,7 +63,6 @@ public class Main
 			/***********************/
 			/* [8.5] Print  IR ... */
 			/***********************/
-			System.out.println("Printing IR");
 			IR.getInstance().printMe();
 
 			/***********************/
@@ -74,15 +73,20 @@ public class Main
 			/**************************************/
 			/* [10] Finalize AST GRAPHIZ DOT file */
 			/**************************************/
-			AST_GRAPHVIZ.getInstance().finalizeFile();			
+			AST_GRAPHVIZ.getInstance().finalizeFile();
 
 			/***************************/
-			/* [11] Finalize MIPS file */
+			/* [11] Finalize IR file */
+			/***************************/
+			IR.getInstance().finalizeFile();
+
+			/***************************/
+			/* [12] Finalize MIPS file */
 			/***************************/
 			sir_MIPS_a_lot.getInstance().finalizeFile();			
 
 			/**************************/
-			/* [12] Close output file */
+			/* [13] Close output file */
 			/**************************/
 			file_writer.close();
     	}

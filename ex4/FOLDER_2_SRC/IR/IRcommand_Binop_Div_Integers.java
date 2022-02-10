@@ -35,5 +35,5 @@ public class IRcommand_Binop_Div_Integers extends IRcommand
 		IR.getInstance().truncate_int(dst);
 	}
 
-	public void printMe() { super.printLine(); System.out.println(dst + " = div " + t1 + ", " + t2); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = div " + t1 + ", " + t2); }
 }

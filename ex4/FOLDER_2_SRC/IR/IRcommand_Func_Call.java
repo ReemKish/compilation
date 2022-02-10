@@ -57,5 +57,5 @@ public class IRcommand_Func_Call extends IRcommand
 
 	}
 
-	public void printMe() { super.printLine(); System.out.println(resReg + " = call " + func.name + " " + (args != null ? args : "")); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(resReg + " = call " + func.name + " " + (args != null ? args : "")); }
 }

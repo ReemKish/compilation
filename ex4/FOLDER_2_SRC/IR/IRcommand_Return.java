@@ -32,5 +32,5 @@ public class IRcommand_Return extends IRcommand
 		sir_MIPS_a_lot.getInstance().ret(val);
 	}
 
-	public void printMe() { super.printLine(); System.out.println("return " + val); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("return " + val); }
 }

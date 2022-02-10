@@ -34,5 +34,5 @@ public class IRcommand_New_Class extends IRcommand
 		//TODO: implement MIPSme
 	}
 
-	public void printMe() { super.printLine(); System.out.println(pointer + " = new_class " + className); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(pointer + " = new_class " + className); }
 }

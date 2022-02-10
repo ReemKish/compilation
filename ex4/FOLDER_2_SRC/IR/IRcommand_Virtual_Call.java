@@ -32,6 +32,6 @@ public class IRcommand_Virtual_Call extends IRcommand
 	}
 
 	/* TODO
-	public void printMe() { super.printLine(); System.out.println(); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(); }
 	*/
 }

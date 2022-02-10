@@ -4,6 +4,8 @@
 package IR;
 import MIPS.sir_MIPS_a_lot;
 import TEMP.*;
+
+import java.io.PrintWriter;
 /*******************/
 /* GENERAL IMPORTS */
 /*******************/
@@ -30,6 +32,8 @@ public class IR
 	public TEMP v1;
 	public static final String funcLabelPrefix = "FUNC_LABEL_";
 	public static final String endProgLabel = "END_PROGRAM";
+	protected static PrintWriter fileWriter;
+	private static int line_index=1;
 
 	/******************/
 	/* Add IR command */
@@ -54,6 +58,17 @@ public class IR
 			it.tail = new IRcommandList(cmd,null);
 		}
 	}
+
+	public void finalizeFile()
+	{
+		fileWriter.format("%s:\n", endProgLabel);
+		fileWriter.print("\tsyscall\n");
+		fileWriter.close();
+	}
+
+	public void fileNewLine() {fileNewLine(true); fileWriter.print("\t"); }
+	public void fileNewLine(boolean notab) { if(notab) {System.out.print(line_index++ + ".");} else fileNewLine(); }
+	public void filePrintln(String line) { fileWriter.println(line); }
 
 	/******************/
 	/* Add IR command */
@@ -152,6 +167,12 @@ public class IR
 			instance.ra = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$ra");
 			instance.v0 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v0");
 			instance.v1 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v1");
+			String dirname="./FOLDER_5_OUTPUT/";
+			String filename=String.format("IR.txt");
+			try { instance.fileWriter = new PrintWriter(dirname+filename); }
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 		return instance;
