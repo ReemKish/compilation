@@ -17,8 +17,8 @@ import java.util.Objects;
 
 public class IR
 {
-	private IRcommand head=null;
-	private IRcommandList tail=null;
+	public IRcommand head=null;
+	public IRcommandList tail=null;
 	private IRdata dataHead=null;
 	private IRdataList dataTail=null;
 	private int labelCounter = 0;
@@ -84,6 +84,14 @@ public class IR
 	public void fileNewLine(boolean notab) { if(notab) {System.out.print(line_index++ + ".");} else fileNewLine(); }
 	public void filePrintln(String line) { fileWriter.println(line); }
 
+	/******************************************/
+	/* Generate the register allocation table */
+	/******************************************/
+	public void genRegAlloc() {
+		IR_Graph graph = new IR_Graph();
+		graph.PrintMe();
+	}
+
 	/******************/
 	/* Add IR command */
 	/******************/
@@ -106,6 +114,25 @@ public class IR
 			}
 			it.tail = new IRdataList(data,null);
 		}
+	}
+
+	/*
+	* Returns the first command after a label
+	*/
+	public IRcommand findCmdAtLabel(String label) {
+		IRcommand curr = head;
+		IRcommandList next = tail;
+		while ((curr != null) && (next != null))
+		{
+			if (curr instanceof IRcommand_Label) {
+				if (((IRcommand_Label) curr).label_name.equals(label)) {
+					return next.head;
+				}
+			}
+			curr = next.head;
+			next = next.tail;
+		}
+		return null;
 	}
 
 	public void truncate_int(TEMP dst){

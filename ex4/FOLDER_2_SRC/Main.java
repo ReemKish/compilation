@@ -59,6 +59,7 @@ public class Main
 			/* [8] IR the AST ... */
 			/**********************/
 			AST.IRme();
+			IR.getInstance().genRegAlloc();
 
 			/***********************/
 			/* [8.5] Print  IR ... */
