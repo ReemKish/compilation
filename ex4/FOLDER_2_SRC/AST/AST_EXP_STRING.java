@@ -1,4 +1,6 @@
 package AST;
+import TEMP.*;
+import IR.*;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -48,5 +50,10 @@ public class AST_EXP_STRING extends AST_EXP
 	public TYPE SemantMe() {
 		this.semanticLabel = TYPE_STRING.getInstance();
 		return this.semanticLabel;
+	}
+	public TEMP IRme(){
+		TEMP dataStorage = TEMP_FACTORY.getInstance().getFreshNamedTEMP("DATA_STR_" + IR.getInstance().getLabelIndex());
+		IR.getInstance().Add_IRdata(new IRdata_Constant_String(dataStorage, value));
+		return dataStorage;
 	}
 }

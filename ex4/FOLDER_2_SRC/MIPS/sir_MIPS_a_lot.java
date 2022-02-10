@@ -54,6 +54,12 @@ public class sir_MIPS_a_lot
 	//	
 	//	return t;
 	//}
+	public void storeGlobalVariable(TEMP label, String word){
+		fileWriter.format("\t%s: .word %s\n", label, word);
+	}
+	public void storeString(TEMP label, String str){
+		fileWriter.format("\t%s: .asciiz %s\n", label, str);
+	}
 	public void allocate(String var_name)
 	{
 		fileWriter.format(".data\n");
@@ -256,7 +262,6 @@ public class sir_MIPS_a_lot
 			instance.fileWriter.print("string_access_violation: .asciiz \"Access Violation\"\n");
 			instance.fileWriter.print("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"\n");
 			instance.fileWriter.print("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"\n");
-			instance.fileWriter.print("\tj main\n");
 		}
 		return instance;
 	}
