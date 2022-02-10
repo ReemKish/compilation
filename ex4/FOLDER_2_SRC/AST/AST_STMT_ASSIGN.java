@@ -1,5 +1,6 @@
 package AST;
 import IR.*;
+import MIPS.sir_MIPS_a_lot;
 import TEMP.*;
 import TYPES.*;
 
@@ -102,7 +103,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		if(var instanceof AST_VAR_SIMPLE) {
 			IR.
 					getInstance().
-					Add_IRcommand(new IRcommand_Store_Temp(src, ((AST_VAR_SIMPLE) var).base, ((AST_VAR_SIMPLE) var).offset));
+					Add_IRcommand(new IRcommand_Store_Temp(src, ((AST_VAR_SIMPLE) var).base, ((AST_VAR_SIMPLE) var).offset * sir_MIPS_a_lot.WORD_SIZE));
 		}
 		else if(var instanceof AST_VAR_SUBSCRIPT){
 			TEMP arr_dst = ((AST_VAR_SUBSCRIPT) var).base;

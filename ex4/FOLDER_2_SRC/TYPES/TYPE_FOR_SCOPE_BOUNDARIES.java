@@ -13,15 +13,15 @@ public class TYPE_FOR_SCOPE_BOUNDARIES extends TYPE
 		this.name = name;
 	}
 	public int getArgOffsetInc(){
-		arg_offset -=1;
+		arg_offset +=1;
 		return arg_offset;
 	}
 	public int getVarOffsetInc(){
-		var_offset +=1;
+		var_offset -=1;
 		return var_offset;
 	}
 	public int getFieldOffsetInc(){
-		field_offset +=1;
+		field_offset -=1;
 		return field_offset;
 	}
 	public int getArgCount(){
