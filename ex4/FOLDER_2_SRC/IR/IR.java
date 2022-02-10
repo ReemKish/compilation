@@ -179,15 +179,15 @@ public class IR
 		new IRcommand_Exit().MIPSme();
 		// exit on access violation
 		new IRcommand_Label(exitOnAccessViolation).MIPSme();
-		new IRcommand_Print_String(IR.getInstance().accessViolation);
+		new IRcommand_Print_String(IR.getInstance().accessViolation).MIPSme();
 		new IRcommand_Exit().MIPSme();
 		// exit on zero division
 		new IRcommand_Label(exitOnZeroDiv).MIPSme();
-		new IRcommand_Print_String(IR.getInstance().zeroDiv);
+		new IRcommand_Print_String(IR.getInstance().zeroDiv).MIPSme();
 		new IRcommand_Exit().MIPSme();
 		// exit on invalid pointer
 		new IRcommand_Label(exitOnInvalidPointer).MIPSme();
-		new IRcommand_Print_String(IR.getInstance().invalidPtr);
+		new IRcommand_Print_String(IR.getInstance().invalidPtr).MIPSme();
 		new IRcommand_Exit().MIPSme();
 	}
 	public void printMe(){
