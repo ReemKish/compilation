@@ -35,18 +35,28 @@ public class sir_MIPS_a_lot
 	public void print_int(TEMP t)
 	{
 		// li $a0, t
-		fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
+		if(t.toString().contains("$")) {
+			fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
+		}
+		else {
+			fileWriter.format("\tla %s, %s\n", IR.getInstance().a0, t);
+		}
 		// li $v0, 1
-		fileWriter.format("\tmove %s, %s\n",IR.getInstance().v0, 1);
+		fileWriter.format("\tli %s, %s\n",IR.getInstance().v0, 1);
 		// syscall
 		fileWriter.format("\tsyscall\n");
 	}
 	public void print_string(TEMP t)
 	{
 		// li $a0, t
-		fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
+		if(t.toString().contains("$")) {
+			fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
+		}
+		else {
+			fileWriter.format("\tla %s, %s\n", IR.getInstance().a0, t);
+		}
 		// li $v0, 4
-		fileWriter.format("\tmove %s, %s\n",IR.getInstance().v0, 4);
+		fileWriter.format("\tli %s, %s\n",IR.getInstance().v0, 4);
 		// syscall
 		fileWriter.format("\tsyscall\n");
 	}
@@ -56,7 +66,7 @@ public class sir_MIPS_a_lot
 	public void exit()
 	{
 		// li $v0, 10
-		fileWriter.format("\tmove %s, %s\n",IR.getInstance().v0, 10);
+		fileWriter.format("\tli %s, %d\n",IR.getInstance().v0, 10);
 		// syscall
 		fileWriter.format("\tsyscall\n");
 	}
@@ -89,7 +99,11 @@ public class sir_MIPS_a_lot
 			fileWriter.format("\tlw %s, %d(%s)\n", dst.toString(), offset, src.toString());
 		}
 		else{
-			fileWriter.format("\tlw %s, %s + d\n", dst.toString(), src.toString(), offset);
+			if(!dst.toString().contains("$")) {
+				fileWriter.format("\tla %s, %s\n", IR.getInstance().s0, dst.toString());
+				dst = IR.getInstance().s0;
+			}
+			fileWriter.format("\tlw %s, %s+%d\n", dst.toString(), src.toString(), offset);
 		}
 	}
 	public void store(TEMP src, TEMP dst, int offset)
@@ -98,7 +112,11 @@ public class sir_MIPS_a_lot
 			fileWriter.format("\tsw %s, %d(%s)\n", src.toString(), offset, dst.toString());
 		}
 		else{
-			fileWriter.format("\tsw %s, %s + %d\n", src.toString(), dst.toString(), offset);
+			if(!src.toString().contains("$")) {
+				fileWriter.format("\tla %s, %s\n", IR.getInstance().s0, src.toString());
+				src = IR.getInstance().s0;
+			}
+			fileWriter.format("\tsw %s, %s+%d\n", src.toString(), dst.toString(), offset);
 		}
 	}
 	public void li(TEMP t,int value)

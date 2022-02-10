@@ -152,7 +152,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		// move $fp $sp
 		IR.getInstance().Add_IRcommand(new IRcommand_Move(fp, sp));
 		// addi $sp, $sp, -4 * localVarCount
-		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, sir_MIPS_a_lot.WORD_SIZE * localVarCount));
+		IR.getInstance().Add_IRcommand(new IRcommand_Add_Immediate(sp, sp, -sir_MIPS_a_lot.WORD_SIZE * localVarCount));
 
 		// function body
 		sl.IRme();
