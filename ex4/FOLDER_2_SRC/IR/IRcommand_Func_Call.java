@@ -33,10 +33,15 @@ public class IRcommand_Func_Call extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
-	/*TODO: use TYPE_FUNC's isSysCall to determine if this is a system call (if so, use sysCallNum to determine its type)*/
 	public void MIPSme()
 	{
 		TEMP sp = IR.getInstance().sp;
+		if(func.isSysCall){
+			int sysCallNum = func.sysCallNum;
+			// TODO: implement system call
+			// hint - use codegen1.pptx presentation (tirgul 10), slide 15 for reference
+			// sysCallNum should already contain the correct Syscall number
+		}
 		/*TODO: possibly need to reverse list before printing MIPs*/
 		int argCount = 0;
 		for (TEMP_LIST a = args; a != null; a=a.tail)

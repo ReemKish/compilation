@@ -11,7 +11,7 @@ public class TYPE_FUNCTION extends TYPE
 	/* types of input params */
 	/*************************/
 	public TYPE_LIST params;
-	public int isSysCall = 0;
+	public boolean isSysCall = false;
 	public int sysCallNum = 0;
 	public int localVarCount = 0;
 	
@@ -29,7 +29,7 @@ public class TYPE_FUNCTION extends TYPE
 		this.name = name;
 		this.returnType = returnType;
 		this.params = params;
-		this.isSysCall = 1;
+		this.isSysCall = true;
 		this.sysCallNum = sysCallNum;
 	}
 }
