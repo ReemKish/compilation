@@ -28,7 +28,8 @@ public class IR
 	public TEMP ra;
 	public TEMP v0;
 	public TEMP v1;
-	public static String funcLabelPrefix = "FUNC_LABEL_";
+	public static final String funcLabelPrefix = "FUNC_LABEL_";
+	public static final String endProgLabel = "END_PROGRAM";
 
 	/******************/
 	/* Add IR command */

@@ -157,7 +157,7 @@ public class AST_DEC_FUNC extends AST_DEC
 		// function body
 		sl.IRme();
 		if(Objects.equals(name, "main")){
-			IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label("END_PROG"));
+			IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label(IR.endProgLabel));
 		}
 		else {
 			// epilogue is built in to return statement.
