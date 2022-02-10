@@ -11,6 +11,7 @@ public class AST_EXP_FUNCCALL extends AST_EXP
 	public String fName;
 	public AST_VAR objName;
 	public AST_EXP_LIST el;
+	public TYPE_FUNCTION functionType;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -91,6 +92,7 @@ public class AST_EXP_FUNCCALL extends AST_EXP
 			System.out.format(">> ERROR [%d:%d] can't find function %s\n",2,2, fName);
 			throw new SemanticException(this.line);
 		}
+		functionType = (TYPE_FUNCTION) func;
 		TYPE returnType =  ((TYPE_FUNCTION) func).returnType;
 		TYPE_LIST expectedParams = ((TYPE_FUNCTION) func).params;
 		for (AST_EXP_LIST it=el; it != null; it=it.tail)
@@ -121,7 +123,7 @@ public class AST_EXP_FUNCCALL extends AST_EXP
 		}
 		TEMP_LIST arg_temps = (el != null ? el.IRme() : null);
 		TEMP resReg = TEMP_FACTORY.getInstance().getFreshTEMP();
-		IR.getInstance().Add_IRcommand(new IRcommand_Func_Call(resReg, fName, arg_temps));
+		IR.getInstance().Add_IRcommand(new IRcommand_Func_Call(resReg, functionType, arg_temps));
 		return resReg;
 	}
 }

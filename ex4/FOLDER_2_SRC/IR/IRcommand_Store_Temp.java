@@ -19,7 +19,7 @@ public class IRcommand_Store_Temp extends IRcommand
 	TEMP src;
 	int offset;
 	
-	public IRcommand_Store_Temp(TEMP dst, TEMP src, int offset)
+	public IRcommand_Store_Temp(TEMP src, TEMP dst, int offset)
 	{
 		this.src = src;
 		this.dst = dst;

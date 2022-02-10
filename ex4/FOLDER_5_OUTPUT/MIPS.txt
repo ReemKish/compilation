@@ -2,16 +2,67 @@
 string_access_violation: .asciiz "Access Violation"
 string_illegal_div_by_0: .asciiz "Illegal Division By Zero"
 string_invalid_ptr_dref: .asciiz "Invalid Pointer Dereference"
-	j main
-	li Temp_0,32767
-	li Temp_1,-32768
-FUNC_SetSimpleVar:
-	li Temp_7,5
-FUNC_SetArray:
-	li Temp_9,7
-FUNC_SetField:
-	li Temp_11,20
-	lw Temp_12,global_person
-	lw Temp_12,global_age
-	end_program:
+	CONST_MAX_INT: .word 32767
+	CONST_MIN_INT: .word -32768
+	GLOBAL_VAR_a: .word 5
+	GLOBAL_VAR_b: .word 5
+	GLOBAL_VAR_c: .word 5
+	j FUNC_LABEL_main
+	li $t0,5
+	li $t1,5
+	li $t2,5
+FUNC_LABEL_func:
+	addi $sp, $sp, 4
+	sw $sp, 0($ra)
+	addi $sp, $sp, 4
+	sw $sp, 0($fp)
+	move $fp, $sp
+	addi $sp, $sp, 4
+	li $t3,1
+	lw $t4,global_loc1
+	move $v0 $t4
+	move $sp, $fp
+	lw $fp, 0($sp)
+	lw $ra, 4($sp)
+	addi $sp, $sp, 8
+	jr $ra
+	move $v0 $t5
+	move $sp, $fp
+	lw $fp, 0($sp)
+	lw $ra, 4($sp)
+	addi $sp, $sp, 8
+	jr $ra
+FUNC_LABEL_main:
+	addi $sp, $sp, 4
+	sw $sp, 0($ra)
+	addi $sp, $sp, 4
+	sw $sp, 0($fp)
+	move $fp, $sp
+	addi $sp, $sp, 12
+	li $t7,7
+	li $t8,1
+	lw $t10,global_loc2
+	li $t11,1
+	beq $t10,$t11,Label_1_EQAssignOne
+	bne $t10,$t11,Label_2_EQAssignZero
+Label_1_EQAssignOne:
+	li $t9,1
+	j Label_0_EQend
+Label_2_EQAssignZero:
+	li $t9,0
+	j Label_0_EQend
+Label_0_EQend:
+	beq $t9,$zero,IF_FALSE1
+	li $t12,5
+	addi $sp, $sp, -4
+	sw $t12, 0($sp)
+	jal FUNC_LABEL_func
+	addi $sp, $sp, 4
+	move $t13, $v0
+IF_FALSE1:
+	li $t14,34
+	lw $t15,global_arr
+	li $t16,0
+	j END_PROGRAM
+END_PROGRAM:
 	syscall

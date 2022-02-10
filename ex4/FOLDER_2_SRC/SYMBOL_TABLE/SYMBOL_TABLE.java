@@ -62,13 +62,13 @@ public class SYMBOL_TABLE
 
 		int offset = 0;
 		if(annotationMode == 1){
-			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getVarOffset();
+			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getVarOffsetInc();
 		}
 		if(annotationMode == 2){
-			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getArgOffset();
+			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getArgOffsetInc();
 		}
 		if(annotationMode == 3){
-			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getFieldOffset();
+			offset = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type).getFieldOffsetInc();
 		}
 	
 		/**************************************************************************/
@@ -169,7 +169,15 @@ public class SYMBOL_TABLE
 		/**************************************/
 		table[top.index] = top.next;
 		top_index = top_index-1;
+		/**************************************/
+		/* add counters from inner scope to outerscope
+		e.g. the local variable count in a function should include variables
+		 declares inside a while{} or if{} block*/
+		/**************************************/
+		TYPE_FOR_SCOPE_BOUNDARIES closedScope = (TYPE_FOR_SCOPE_BOUNDARIES)top.type;
 		top = top.prevtop;
+		TYPE_FOR_SCOPE_BOUNDARIES currScope = ((TYPE_FOR_SCOPE_BOUNDARIES) getScope().type);
+		currScope.incrementOffsetsFromInnerQuotes(closedScope);
 
 		/*********************************************/
 		/* Print the symbol table after every change */		

@@ -13,11 +13,22 @@ package TEMP;
 
 public class TEMP
 {
-	private int serial=0;
+	private final int serial;
+	private final boolean serialized;
+	private final String name;
 	
 	public TEMP(int serial)
 	{
+		this.serialized = true;
+		this.name = "$t";
 		this.serial = serial;
+	}
+
+	public TEMP(String label)
+	{
+		this.serialized = false;
+		this.name = label;
+		this.serial = 0;
 	}
 	
 	public int getSerialNumber()
@@ -25,5 +36,10 @@ public class TEMP
 		return serial;
 	}
 
-	public String toString() {return "t" + String.valueOf(serial); }
+	public String toString() {
+		if (this.serialized) {
+			return this.name + String.valueOf(serial);
+		}
+		return this.name;
+	}
 }

@@ -95,32 +95,25 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	}
 	public TEMP IRme()
 	{
-		TEMP dst, offset;
+		TEMP offset;
 		TEMP src = exp.IRme();
-		if (var instanceof AST_VAR_SIMPLE) {
-			AST_VAR_SIMPLE var_simple = (AST_VAR_SIMPLE) var;
-			IR.getInstance().Add_IRcommand(new IRcommand_Store_Var(var_simple.name,src));
-		} else if (var instanceof AST_VAR_FIELD) {
-			AST_VAR_FIELD var_field = (AST_VAR_FIELD) var;
-			AST_VAR_SIMPLE var_simple = (AST_VAR_SIMPLE) var_field.var;
-			dst = var_simple.IRme();
-			IR.getInstance().Add_IRcommand(new IRcommand_Field_Set(dst, var_field.fieldName, src));
-
-
-		} else if (var instanceof AST_VAR_SUBSCRIPT) {
-			AST_VAR_SUBSCRIPT var_subscript = (AST_VAR_SUBSCRIPT) var;
-			AST_VAR_SIMPLE var_simple = (AST_VAR_SIMPLE) var_subscript.var;
-			AST_EXP var_offset = (AST_EXP) var_subscript.subscript;
-			dst = var_simple.IRme();
-			offset = var_offset.IRme();
-			IR.getInstance().Add_IRcommand(new IRcommand_Array_Set(dst, offset, src));
-
+		TEMP dst = var.IRme();
+		/* TODO - IR commands shouldn't use variable names, field names, or immediate subscripts*/
+		if(var instanceof AST_VAR_SIMPLE) {
+			IR.
+					getInstance().
+					Add_IRcommand(new IRcommand_Store_Temp(src, dst, 0));
 		}
-		// TODO: store semantic annotations in class, and in particular store the offset
-		// pass the offset to IRcommand_Store instead of 0
-
-
-
+		else if(var instanceof AST_VAR_SUBSCRIPT){
+			TEMP arr_dst = ((AST_VAR_SUBSCRIPT) var).base;
+			TEMP arr_offset = ((AST_VAR_SUBSCRIPT) var).offset;
+			IR.
+					getInstance().
+					Add_IRcommand(new IRcommand_Array_Set(arr_dst, arr_offset, src));
+		}
+		else if (var instanceof AST_VAR_FIELD) {
+			/* TODO: implement field_set, mostly requires copy paste from array set*/
+		}
 		return null;
 	}
 }

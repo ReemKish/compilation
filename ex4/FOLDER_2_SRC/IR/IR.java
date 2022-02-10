@@ -16,6 +16,8 @@ public class IR
 {
 	private IRcommand head=null;
 	private IRcommandList tail=null;
+	private IRdata dataHead=null;
+	private IRdataList dataTail=null;
 	private int labelCounter = 0;
 	private static final int MAX_INT = 32767;
 	private static final int MIN_INT = -32768;
@@ -24,6 +26,10 @@ public class IR
 	public TEMP sp;
 	public TEMP fp;
 	public TEMP ra;
+	public TEMP v0;
+	public TEMP v1;
+	public static final String funcLabelPrefix = "FUNC_LABEL_";
+	public static final String endProgLabel = "END_PROGRAM";
 
 	/******************/
 	/* Add IR command */
@@ -46,6 +52,30 @@ public class IR
 				it = it.tail;
 			}
 			it.tail = new IRcommandList(cmd,null);
+		}
+	}
+
+	/******************/
+	/* Add IR command */
+	/******************/
+	public void Add_IRdata(IRdata data)
+	{
+		if ((dataHead == null) && (dataTail == null))
+		{
+			this.dataHead = data;
+		}
+		else if ((dataHead != null) && (dataTail == null))
+		{
+			this.dataTail = new IRdataList(data,null);
+		}
+		else
+		{
+			IRdataList it = dataTail;
+			while ((it != null) && (it.tail != null))
+			{
+				it = it.tail;
+			}
+			it.tail = new IRdataList(data,null);
 		}
 	}
 
@@ -79,10 +109,15 @@ public class IR
 	/***************/
 	public void MIPSme()
 	{
+		if (dataHead != null) dataHead.MIPSme();
+		if (dataTail != null) dataTail.MIPSme();
+		new IRcommand_Jump_Label(funcLabelPrefix + "main").MIPSme();
 		if (head != null) head.MIPSme();
 		if (tail != null) tail.MIPSme();
 	}
 	public void printMe(){
+		if (dataHead != null) dataHead.printMe();
+		if (dataTail != null) dataTail.printMe();
 		if (head != null) head.printMe();
 		if (tail != null) tail.printMe();
 	}
@@ -108,16 +143,15 @@ public class IR
 			/* [0] The instance itself ... */
 			/*******************************/
 			instance = new IR();
-			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.Add_IRcommand(new IRcommandConstInt(instance.maxIntTemp, MAX_INT));
-			instance.Add_IRcommand(new IRcommandConstInt(instance.minIntTemp, MIN_INT));
-
-			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.sp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.fp = TEMP_FACTORY.getInstance().getFreshTEMP();
-			instance.ra = TEMP_FACTORY.getInstance().getFreshTEMP();
+			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MAX_INT");
+			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MIN_INT");
+			instance.Add_IRdata(new IRdata_Global_Var(instance.maxIntTemp, "" + MAX_INT));
+			instance.Add_IRdata(new IRdata_Global_Var(instance.minIntTemp, "" + MIN_INT));
+			instance.sp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$sp");
+			instance.fp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$fp");
+			instance.ra = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$ra");
+			instance.v0 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v0");
+			instance.v1 = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$v1");
 
 		}
 		return instance;

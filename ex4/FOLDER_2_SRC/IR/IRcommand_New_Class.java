@@ -17,10 +17,10 @@ import MIPS.sir_MIPS_a_lot;
 
 public class IRcommand_New_Class extends IRcommand
 {
-	String className;
+	TYPE className;
 	TEMP pointer;
 
-	public IRcommand_New_Class(TEMP pointer, String className)
+	public IRcommand_New_Class(TEMP pointer, TYPE className)
 	{
 		this.pointer = pointer;
 		this.className = className;

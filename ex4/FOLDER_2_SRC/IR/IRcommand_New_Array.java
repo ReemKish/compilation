@@ -19,9 +19,9 @@ public class IRcommand_New_Array extends IRcommand
 {
 	TEMP pointer;
 	TEMP len;
-	String className;
+	TYPE className;
 
-	public IRcommand_New_Array(TEMP pointer, String className,  TEMP len)
+	public IRcommand_New_Array(TEMP pointer, TYPE className,  TEMP len)
 	{
 		this.pointer = pointer;
 		this.len = len;
