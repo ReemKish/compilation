@@ -40,6 +40,13 @@ public class AST_STMT_RETURN extends AST_STMT
 		if (val != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,val.SerialNumber);
 
 	}
+	public TYPE SemantMe() throws SemanticException
+	{
+		if(val != null){
+			val.SemantMe();
+		}
+		return null;
+	}
 	public TEMP IRme(){
 		TEMP res = null;
 		if(val!=null){
