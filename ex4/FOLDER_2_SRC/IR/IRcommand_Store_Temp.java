@@ -16,6 +16,8 @@ import MIPS.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static MIPS.sir_MIPS_a_lot.WORD_SIZE;
+
 public class IRcommand_Store_Temp extends IRcommand
 {
 	TEMP dst;
@@ -44,5 +46,5 @@ public class IRcommand_Store_Temp extends IRcommand
 		sir_MIPS_a_lot.getInstance().store(src, dst, offset);
 	}
 
-	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = " + src); }
+	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("" + offset * WORD_SIZE + "(" +dst + ") = " + src); }
 }
