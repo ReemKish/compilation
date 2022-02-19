@@ -144,6 +144,7 @@ public class IR
 	}
 
 	public void truncate_int(TEMP dst){
+		/*
 		String over_max_label = "over_max_"+IR.getInstance().getLabelIndex();
 		String after_max_label = "after_max_fix_"+IR.getInstance().getLabelIndex();
 		String under_min_label = "under_min"+IR.getInstance().getLabelIndex();
@@ -161,6 +162,7 @@ public class IR
 		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().minIntTemp);
 		sir_MIPS_a_lot.getInstance().label(after_min_label);
 		// done!;
+		 */
 	}
 
 	public int getLabelIndex(){
