@@ -1,9 +1,10 @@
 package AST;
 import IR.IR;
+import IR.IRcommand_Jump_Label;
+import IR.IRcommand_Jump_And_Link;
 import IR.IRcommand_Label;
 import TEMP.TEMP;
 import TYPES.*;
-import SYMBOL_TABLE.*;
 
 public class AST_PROGRAM extends AST_Node
 {
@@ -12,7 +13,7 @@ public class AST_PROGRAM extends AST_Node
 	/****************/
 	public AST_DEC head;
 	public AST_PROGRAM tail;
-	static boolean root = true;
+	static public boolean root = true;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -47,11 +48,23 @@ public class AST_PROGRAM extends AST_Node
 
 	public TEMP IRme()
 	{
+		boolean imRoot = false;
+		if(root) {
+			imRoot = true;
+			root = false;
+		}
+		/* IR Prefix */
+		if(imRoot) {
+			IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label("main"));
+		}
+		/* IR Body */
 		if (head != null) head.IRme();
 		if (tail != null) tail.IRme();
-		if (root) {
-			root = false;
-			IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.endProgLabel));
+
+		/* IR Suffix */
+		if(imRoot) {
+			IR.getInstance().Add_IRcommand(new IRcommand_Label("main"));
+			IR.getInstance().Add_IRcommand(new IRcommand_Jump_And_Link(IR.funcLabelPrefix + "main"));
 		}
 		return null;
 	}

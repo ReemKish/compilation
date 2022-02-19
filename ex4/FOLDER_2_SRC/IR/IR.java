@@ -24,8 +24,6 @@ public class IR
 	private IRdata dataHead=null;
 	private IRdataList dataTail=null;
 	private int labelCounter = 0;
-	private static final int MAX_INT = 32767;
-	private static final int MIN_INT = -32768;
 	public TEMP accessViolation;
 	public TEMP zeroDiv;
 	public TEMP invalidPtr = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_WORD_SIZE");
@@ -79,9 +77,6 @@ public class IR
 
 	public void finalizeFile()
 	{
-
-
-		fileWriter.print("\tsyscall\n");
 		fileWriter.close();
 	}
 
@@ -179,26 +174,9 @@ public class IR
 		if (dataHead != null) dataHead.MIPSme();
 		if (dataTail != null) dataTail.MIPSme();
 		sir_MIPS_a_lot.getInstance().textSection();
-		new IRcommand_Jump_Label("main").MIPSme();
 		if (head != null) head.MIPSme();
 		if (tail != null) tail.MIPSme();
-		new IRcommand_Label("main").MIPSme();
-		new IRcommand_Jump_And_Link(funcLabelPrefix + "main").MIPSme();
-		// exit gracefully
-		new IRcommand_Label(endProgLabel).MIPSme();
-		new IRcommand_Exit().MIPSme();
-		// exit on access violation
-		new IRcommand_Label(exitOnAccessViolation).MIPSme();
-		new IRcommand_Print_String(IR.getInstance().accessViolation).MIPSme();
-		new IRcommand_Exit().MIPSme();
-		// exit on zero division
-		new IRcommand_Label(exitOnZeroDiv).MIPSme();
-		new IRcommand_Print_String(IR.getInstance().zeroDiv).MIPSme();
-		new IRcommand_Exit().MIPSme();
-		// exit on invalid pointer
-		new IRcommand_Label(exitOnInvalidPointer).MIPSme();
-		new IRcommand_Print_String(IR.getInstance().invalidPtr).MIPSme();
-		new IRcommand_Exit().MIPSme();
+		sir_MIPS_a_lot.getInstance().finalizeTextSection();
 	}
 	public void printMe(){
 		if (dataHead != null) dataHead.printMe();
@@ -228,26 +206,7 @@ public class IR
 			/* [0] The instance itself ... */
 			/*******************************/
 			instance = new IR();
-			// number constants
-			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MAX_INT");
-			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MIN_INT");
-			instance.wordSizeTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_WORD_SIZE");
-			instance.Add_IRdata(new IRdata_Global_Var(instance.maxIntTemp, "" + MAX_INT));
-			instance.Add_IRdata(new IRdata_Global_Var(instance.minIntTemp, "" + MIN_INT));
-			instance.Add_IRdata(new IRdata_Global_Var(instance.wordSizeTemp, "" + sir_MIPS_a_lot.WORD_SIZE));
-			// string constants
-			TEMP accessViolationData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_ACCESS_VIOLATION");
-			TEMP zeroDivData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_ZERO_DIV");
-			TEMP invalidPtrData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_INVALID_POINTER");
-			instance.Add_IRdata(new IRdata_Constant_String(accessViolationData, "Access Violation"));
-			instance.Add_IRdata(new IRdata_Constant_String(zeroDivData, "Illegal Division By Zero"));
-			instance.Add_IRdata(new IRdata_Constant_String(invalidPtrData, "Invalid Pointer Dereference"));
-			instance.accessViolation = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_ACCESS_VIOLATION");
-			instance.zeroDiv = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_ZERO_DIV");
-			instance.invalidPtr = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_INVALID_POINTER");
-			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.accessViolation, accessViolationData.toString()));
-			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.zeroDiv, zeroDivData.toString()));
-			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.invalidPtr, invalidPtrData.toString()));
+
 
 			// unique registers
 			instance.sp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$sp");

@@ -105,7 +105,7 @@ all: run
 	@sed -i 's/\bTemp_39\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	@echo "\n"
 	@echo "* [11] ============================== Print Input | IR | MIPS side by side ============================== *\n"
-	@pr -mtw 120 ${INPUT} ${OUTPUT_DIR}/IR.txt ${OUTPUT_DIR}/MIPS.txt
+	@pr -mtw 140 ${INPUT} ${OUTPUT_DIR}/IR.txt ${OUTPUT_DIR}/MIPS.txt
 	@echo "* [12] Run spim and redirect its output *"
 	spim -f ${OUTPUT_DIR}/MIPS.txt > ${OUTPUT_DIR}/MIPS_OUTPUT.txt
 

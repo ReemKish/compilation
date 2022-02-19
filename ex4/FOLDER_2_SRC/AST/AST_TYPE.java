@@ -27,6 +27,17 @@ public class AST_TYPE extends AST_Node
 		/*******************************/
 		this.line = ++line;
 		this.typeName = typeName;
+		switch (typeName) {
+			case "void":
+				this.type = TYPE_VOID.getInstance();
+				break;
+			case "int":
+				this.type = TYPE_INT.getInstance();
+				break;
+			case "string":
+				this.type = TYPE_STRING.getInstance();
+				break;
+		}
 	}
 
 	/*************************************************/

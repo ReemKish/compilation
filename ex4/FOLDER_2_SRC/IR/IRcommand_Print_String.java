@@ -26,7 +26,8 @@ public class IRcommand_Print_String extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().print_string(str);
+		System.out.println(str + "KIKIKIKK");
+		//sir_MIPS_a_lot.getInstance().print_string(str);
 	}
 
 	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln("printString(%s)" + str.toString()); }
