@@ -49,10 +49,6 @@ public class AST_PROGRAM extends AST_Node
 	{
 		if (head != null) head.IRme();
 		if (tail != null) tail.IRme();
-		if (root) {
-			root = false;
-			IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.endProgLabel));
-		}
 		return null;
 	}
 

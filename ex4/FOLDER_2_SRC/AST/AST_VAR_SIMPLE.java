@@ -86,7 +86,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		}
 		else{
 			src = IR.getInstance().fp;
-			offset = this.offset * sir_MIPS_a_lot.WORD_SIZE;
+			offset = this.offset;
 		}
 		this.base = src;
 		if(storeInTemp) {

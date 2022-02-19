@@ -96,27 +96,27 @@ public class sir_MIPS_a_lot
 	public void load(TEMP dst, TEMP src, int offset)
 	{
 		if(src.toString().contains("$")) {
-			fileWriter.format("\tlw %s, %d(%s)\n", dst.toString(), offset, src.toString());
+			fileWriter.format("\tlw %s, %d(%s)\n", dst.toString(), offset * WORD_SIZE, src.toString());
 		}
 		else{
 			if(!dst.toString().contains("$")) {
 				fileWriter.format("\tla %s, %s\n", IR.getInstance().s0, dst.toString());
 				dst = IR.getInstance().s0;
 			}
-			fileWriter.format("\tlw %s, %s+%d\n", dst.toString(), src.toString(), offset);
+			fileWriter.format("\tlw %s, %s+%d\n", dst.toString(), src.toString(), offset * WORD_SIZE);
 		}
 	}
 	public void store(TEMP src, TEMP dst, int offset)
 	{
 		if(dst.toString().contains("$")) {
-			fileWriter.format("\tsw %s, %d(%s)\n", src.toString(), offset, dst.toString());
+			fileWriter.format("\tsw %s, %d(%s)\n", src.toString(), offset * WORD_SIZE, dst.toString());
 		}
 		else{
 			if(!src.toString().contains("$")) {
 				fileWriter.format("\tla %s, %s\n", IR.getInstance().s0, src.toString());
 				src = IR.getInstance().s0;
 			}
-			fileWriter.format("\tsw %s, %s+%d\n", src.toString(), dst.toString(), offset);
+			fileWriter.format("\tsw %s, %s+%d\n", src.toString(), dst.toString(), offset * WORD_SIZE);
 		}
 	}
 	public void li(TEMP t,int value)
