@@ -12,6 +12,7 @@ public class AST_PROGRAM extends AST_Node
 	/****************/
 	public AST_DEC head;
 	public AST_PROGRAM tail;
+	static boolean root = true;
 
 	/******************/
 	/* CONSTRUCTOR(S) */
@@ -41,7 +42,6 @@ public class AST_PROGRAM extends AST_Node
 	{
 		if (head != null) head.SemantMe();
 		if (tail != null) tail.SemantMe();
-
 		return null;
 	}
 
@@ -49,8 +49,10 @@ public class AST_PROGRAM extends AST_Node
 	{
 		if (head != null) head.IRme();
 		if (tail != null) tail.IRme();
-		IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.endProgLabel));
-
+		if (root) {
+			root = false;
+			IR.getInstance().Add_IRcommand(new IRcommand_Label(IR.endProgLabel));
+		}
 		return null;
 	}
 

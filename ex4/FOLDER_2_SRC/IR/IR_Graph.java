@@ -57,7 +57,9 @@ public class IR_Graph {
                 oldRegIn = cmd.regIn;
                 nextCmds = graph.get(cmd);
                 for (int j = 0; j < nextCmds.size(); j++) {
-                    cmd.regOut.addAll(nextCmds.get(j).regIn);
+                    if(nextCmds.get(j) != null) {
+                        cmd.regOut.addAll(nextCmds.get(j).regIn);
+                    }
                 }
                 cmd.regIn = cmd.usedRegs();
                 cmd.regIn.addAll(cmd.regOut);
