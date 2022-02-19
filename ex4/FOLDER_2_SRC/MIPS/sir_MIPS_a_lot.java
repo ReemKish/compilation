@@ -165,7 +165,7 @@ public class sir_MIPS_a_lot
 	}
 	public void move(TEMP dst, TEMP src)
 	{
-		fileWriter.format("\tmove %s, %s\n",dst.toString(),src.toString());
+		fileWriter.format("\tmove %s, %s\n",dst.toString(), src.toString());
 	}
 	public void lb(TEMP dst,TEMP src)
 	{
@@ -236,7 +236,9 @@ public class sir_MIPS_a_lot
 	public void ret(TEMP res)
 	{
 		// epilogue
-		fileWriter.format("\tmove $v0 %s\n", res);
+		if(res != null) {
+			fileWriter.format("\tmove $v0 %s\n", res);
+		}
 		fileWriter.format("\tmove $sp, $fp\n");
 		fileWriter.format("\tlw $fp, 0($sp)\n");
 		fileWriter.format("\tlw $ra, 4($sp)\n");
