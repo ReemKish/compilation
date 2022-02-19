@@ -17,6 +17,23 @@ import TEMP.*;
 public class sir_MIPS_a_lot
 {
 	public static final int WORD_SIZE=4;
+	private static final int MAX_INT = 32767;
+	private static final int MIN_INT = -32768;
+	public static final String funcLabelPrefix = "FUNC_LABEL_";
+	public static final String endProgLabel = "END_PROGRAM";
+	public static final String  globalVarPrefix = "GLOBAL_VAR_";
+	public static final String  strPrefix = "DATA_STR_";
+	public static final String  EXIT_AccessViolation = "EXIT_ACCESS_VIOLATION";
+	public static final String	ERR_AccessViolation = "ERR_ACCESS_VIOLATION";
+	public static final String	MSG_AccessViolation = "\"Access Violation\"";
+
+	public static final String  EXIT_ZeroDiv = "EXIT_ZERO_DIV";
+	public static final String  ERR_ZeroDiv = "ERR_ZERO_DIV";
+	public static final String  MSG_ZeroDiv = "\"Illegal Division By Zero\"";
+
+	public static final String  EXIT_InvalidPointer = "EXIT_INVALID_POINTER";
+	public static final String  ERR_InvalidPointer = "ERR_INVALID_POINTER";
+	public static final String  MSG_InvalidPointer = "\"Invalid Pointer Dereference\"";
 	/***********************/
 	/* The file writer ... */
 	/***********************/
@@ -78,10 +95,29 @@ public class sir_MIPS_a_lot
 	/***********************/
 	public void dataSection()
 	{
-		fileWriter.format(".data\n");
+		fileWriter.println(".data");
+		// number constants
+		fileWriter.println("CONST_MAX_INT: .word " + MAX_INT);
+		fileWriter.println("CONST_MIN_INT: .word " + MIN_INT);
+		fileWriter.println("CONST_WORD_SIZE: .word " + WORD_SIZE);
+
+		// string constants
+		fileWriter.println(strPrefix + ERR_AccessViolation + ": .asciiz " + MSG_AccessViolation);
+		fileWriter.println(strPrefix + ERR_ZeroDiv + ": .asciiz " + MSG_ZeroDiv);
+		fileWriter.println(strPrefix + ERR_InvalidPointer + ": .asciiz " + MSG_InvalidPointer);
 	}
 	public void textSection(){
 		fileWriter.format(".text\n");
+	}
+	public void finalizeTextSection(){
+		// exit gracefully
+		fileWriter.println(endProgLabel + ":\n\tli $v0, 10\n\tsyscall");
+		// exit on access violation
+		fileWriter.println(EXIT_AccessViolation + ":\n\tla $a0, " + ERR_AccessViolation + "\n\tli $v0, 4\n\tsyscall\n\tli $v0, 10\n\tsyscall");
+		// exit on zero division
+		fileWriter.println(EXIT_ZeroDiv + ":\n\tla $a0, " + ERR_ZeroDiv + "\n\tli $v0, 4\n\tsyscall\n\tli $v0, 10\n\tsyscall");
+		// exit on invalid pointer
+		fileWriter.println(EXIT_InvalidPointer + ":\n\tla $a0, " + ERR_InvalidPointer + "\n\tli $v0, 4\n\tsyscall\n\tli $v0, 10\n\tsyscall");
 	}
 	public void storeGlobalVariable(TEMP label, String word){
 		fileWriter.format("\t%s: .word %s\n", label, word);

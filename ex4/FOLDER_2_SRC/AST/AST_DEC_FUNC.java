@@ -158,7 +158,9 @@ public class AST_DEC_FUNC extends AST_DEC
 		sl.IRme();
 		// epilogue is built in to return statement.
 		// we return automatically once end of code is reached;
-		IR.getInstance().Add_IRcommand(new IRcommand_Return(TEMP_FACTORY.getInstance().getFreshTEMP()));
+
+		//if(name.equals("main")) IR.getInstance().Add_IRcommand(new IRcommand_Exit());
+		if(type.typeName.equals("void")) IR.getInstance().Add_IRcommand(new IRcommand_Return(null));
 
 		return null;
 	}

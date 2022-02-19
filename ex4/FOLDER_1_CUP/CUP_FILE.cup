@@ -147,7 +147,7 @@ dec	::=
 		;
 
 type ::=
-			TYPE_INT 		{: RESULT = new AST_TYPE("int"); :}
+		  TYPE_INT 		{: RESULT = new AST_TYPE("int"); :}
 		| TYPE_STRING {: RESULT = new AST_TYPE("string"); :}
 		| TYPE_VOID 	{: RESULT = new AST_TYPE("void"); :}
 		| ID:t 				{: RESULT = new AST_TYPE(t); :}
