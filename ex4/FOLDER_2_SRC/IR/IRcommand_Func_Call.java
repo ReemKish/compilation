@@ -74,7 +74,9 @@ public class IRcommand_Func_Call extends IRcommand
 		}
 		sir_MIPS_a_lot.getInstance().jal(IR.funcLabelPrefix + func.name);
 		sir_MIPS_a_lot.getInstance().addi(sp, sp, sir_MIPS_a_lot.WORD_SIZE * argCount);
-		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().v0);
+		if(dst != null) {
+			sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().v0);
+		}
 
 	}
 
