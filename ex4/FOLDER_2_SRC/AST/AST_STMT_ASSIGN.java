@@ -96,21 +96,16 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	}
 	public TEMP IRme()
 	{
-		TEMP offset;
 		TEMP src = exp.IRme();
 		var.IRme(false);
 		/* TODO - IR commands shouldn't use variable names, field names, or immediate subscripts*/
 		if(var instanceof AST_VAR_SIMPLE) {
-			IR.
-					getInstance().
-					Add_IRcommand(new IRcommand_Store_Temp(src, ((AST_VAR_SIMPLE) var).base, ((AST_VAR_SIMPLE) var).offset));
+			IR.getInstance().Add_IRcommand(new IRcommand_Store_Temp(src, ((AST_VAR_SIMPLE) var).base, ((AST_VAR_SIMPLE) var).offset));
 		}
 		else if(var instanceof AST_VAR_SUBSCRIPT){
 			TEMP arr_dst = ((AST_VAR_SUBSCRIPT) var).base;
 			TEMP arr_offset = ((AST_VAR_SUBSCRIPT) var).offset;
-			IR.
-					getInstance().
-					Add_IRcommand(new IRcommand_Array_Set(arr_dst, arr_offset, src));
+			IR.getInstance().Add_IRcommand(new IRcommand_Array_Set(arr_dst, arr_offset, src));
 		}
 		else if (var instanceof AST_VAR_FIELD) {
 			/* TODO: implement field_set, mostly requires copy paste from array set*/
