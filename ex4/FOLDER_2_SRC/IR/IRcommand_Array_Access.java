@@ -59,7 +59,7 @@ public class IRcommand_Array_Access extends IRcommand
 		// mul $s0, $s0, 4
 		sir_MIPS_a_lot.getInstance().mul(s0, s0, IR.getInstance().wordSizeTemp);
 		// add $s0, $t1, $s0
-		sir_MIPS_a_lot.getInstance().add(s0, pointer,offset);
+		sir_MIPS_a_lot.getInstance().add(s0, pointer, s0);
 		// lw $t0, 0($s0)
 		sir_MIPS_a_lot.getInstance().load(dst, s0, 0);
 	}
