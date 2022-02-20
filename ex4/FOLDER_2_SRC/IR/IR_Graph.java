@@ -64,6 +64,10 @@ public class IR_Graph {
                 cmd.regIn = cmd.usedRegs();
                 cmd.regIn.addAll(cmd.regOut);
                 cmd.regIn.remove(cmd.modifiedReg());
+//                if(cmd.modifiedReg() == null)
+                if(cmd.modifiedReg() != null && cmd.modifiedReg().toString().equals("$t25")) {
+                    System.out.println("===== " + cmd.getClass());
+                }
                 if(!oldRegOut.equals(cmd.regOut) || !oldRegIn.equals(cmd.regIn)) {
                     finish = false;
                 }
@@ -75,7 +79,7 @@ public class IR_Graph {
         interference = new HashMap<TEMP, Set<TEMP>>();
         Set<TEMP> allTemps = new HashSet<TEMP>();
         Set<TEMP> temps;
-        for (IRcommand cmd : graph.keySet()) { allTemps.addAll(cmd.regIn); }
+        for (IRcommand cmd : graph.keySet()) { allTemps.addAll(cmd.usedRegs()); allTemps.add(cmd.modifiedReg()); }
         for (TEMP temp : allTemps) {
             temps = new HashSet<TEMP>();
             for (IRcommand cmd : graph.keySet()) {

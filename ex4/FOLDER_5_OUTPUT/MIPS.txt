@@ -1,68 +1,182 @@
 .data
-string_access_violation: .asciiz "Access Violation"
-string_illegal_div_by_0: .asciiz "Illegal Division By Zero"
-string_invalid_ptr_dref: .asciiz "Invalid Pointer Dereference"
 	CONST_MAX_INT: .word 32767
 	CONST_MIN_INT: .word -32768
-	GLOBAL_VAR_a: .word 5
-	GLOBAL_VAR_b: .word 5
-	GLOBAL_VAR_c: .word 5
-	j FUNC_LABEL_main
-	li $t0,5
-	li $t1,5
-	li $t2,5
-FUNC_LABEL_func:
-	addi $sp, $sp, 4
-	sw $sp, 0($ra)
-	addi $sp, $sp, 4
-	sw $sp, 0($fp)
+	DATA_STR_ERR_ACCESS_VIOLATION: .asciiz "Access Violation"
+	DATA_STR_ERR_ZERO_DIV: .asciiz "Illegal Division By Zero"
+	DATA_STR_ERR_INVALID_POINTER: .asciiz "Invalid Pointer Dereference"
+	ERR_ACCESS_VIOLATION: .word DATA_STR_ERR_ACCESS_VIOLATION
+	ERR_ZERO_DIV: .word DATA_STR_ERR_ZERO_DIV
+	ERR_INVALID_POINTER: .word DATA_STR_ERR_INVALID_POINTER
+.text
+	j main
+FUNC_LABEL_IsPrime:
+	addi $sp, $sp, -4
+	sw $ra, 0($sp)
+	addi $sp, $sp, -4
+	sw $fp, 0($sp)
 	move $fp, $sp
-	addi $sp, $sp, 4
+	addi $sp, $sp, -8
+	li $t0,2
+	sw $t0, -4($fp)
+	li $t0,2
+	sw $t0, -8($fp)
+WHILE_TRUE1:
+	lw $t0, -4($fp)
+	lw $t0, 8($fp)
+	blt $t0,$t0,Label_1_LTAssignOne
+	bge $t0,$t0,Label_2_LTAssignZero
+Label_1_LTAssignOne:
+	li $t0,1
+	j Label_0_LTend
+Label_2_LTAssignZero:
+	li $t0,0
+	j Label_0_LTend
+Label_0_LTend:
+	beq $t0,$zero,WHILE_FALSE1
+	li $t0,2
+	sw $t0, -8($fp)
+WHILE_TRUE2:
+	lw $t0, -8($fp)
+	lw $t0, 8($fp)
+	blt $t0,$t0,Label_4_LTAssignOne
+	bge $t0,$t0,Label_5_LTAssignZero
+Label_4_LTAssignOne:
+	li $t4,1
+	j Label_3_LTend
+Label_5_LTAssignZero:
+	li $t4,0
+	j Label_3_LTend
+Label_3_LTend:
+	beq $t4,$zero,WHILE_FALSE2
+	lw $t1, -4($fp)
+	lw $t0, -8($fp)
+	lw $t0, 8($fp)
+	beq $t0,$t0,Label_7_EQAssignOne
+	bne $t0,$t0,Label_8_EQAssignZero
+Label_7_EQAssignOne:
 	li $t3,1
-	lw $t4,global_loc1
-	move $v0 $t4
+	j Label_6_EQend
+Label_8_EQAssignZero:
+	li $t3,0
+	j Label_6_EQend
+Label_6_EQend:
+	mul $t1,$t1,$t3
+	beq $t1,$zero,IF_FALSE3
+	li $t0,0
+	move $v0 $t0
 	move $sp, $fp
 	lw $fp, 0($sp)
 	lw $ra, 4($sp)
 	addi $sp, $sp, 8
 	jr $ra
-	move $v0 $t5
+IF_FALSE3:
+	lw $t1, -8($fp)
+	li $t2,1
+	add $t1,$t1,$t2
+	sw $t1, -8($fp)
+	j WHILE_TRUE2
+WHILE_FALSE2:
+	lw $t1, -4($fp)
+	li $t2,1
+	add $t1,$t1,$t2
+	sw $t1, -4($fp)
+	j WHILE_TRUE1
+WHILE_FALSE1:
+	li $t0,1
+	move $v0 $t0
+	move $sp, $fp
+	lw $fp, 0($sp)
+	lw $ra, 4($sp)
+	addi $sp, $sp, 8
+	jr $ra
+FUNC_LABEL_PrintPrimes:
+	addi $sp, $sp, -4
+	sw $ra, 0($sp)
+	addi $sp, $sp, -4
+	sw $fp, 0($sp)
+	move $fp, $sp
+	addi $sp, $sp, -4
+	lw $t0, 28($fp)
+	sw $t0, -4($fp)
+WHILE_TRUE4:
+	lw $t0, -4($fp)
+	lw $t0, 32($fp)
+	li $t2,1
+	add $t0,$t0,$t2
+	blt $t0,$t0,Label_10_LTAssignOne
+	bge $t0,$t0,Label_11_LTAssignZero
+Label_10_LTAssignOne:
+	li $t1,1
+	j Label_9_LTend
+Label_11_LTAssignZero:
+	li $t1,0
+	j Label_9_LTend
+Label_9_LTend:
+	beq $t1,$zero,WHILE_FALSE4
+	lw $t0, -4($fp)
+	addi $sp, $sp, -4
+	sw $t0, 0($sp)
+	jal FUNC_LABEL_IsPrime
+	addi $sp, $sp, 4
+	move $t0, $v0
+	beq $t0,$zero,IF_FALSE5
+	lw $t0, -4($fp)
+	move $a0, $t0
+	li $v0, 1
+	syscall
+IF_FALSE5:
+	lw $t0, -4($fp)
+	li $t2,1
+	add $t0,$t0,$t2
+	sw $t0, -4($fp)
+	j WHILE_TRUE4
+WHILE_FALSE4:
 	move $sp, $fp
 	lw $fp, 0($sp)
 	lw $ra, 4($sp)
 	addi $sp, $sp, 8
 	jr $ra
 FUNC_LABEL_main:
-	addi $sp, $sp, 4
-	sw $sp, 0($ra)
-	addi $sp, $sp, 4
-	sw $sp, 0($fp)
-	move $fp, $sp
-	addi $sp, $sp, 12
-	li $t7,7
-	li $t8,1
-	lw $t10,global_loc2
-	li $t11,1
-	beq $t10,$t11,Label_1_EQAssignOne
-	bne $t10,$t11,Label_2_EQAssignZero
-Label_1_EQAssignOne:
-	li $t9,1
-	j Label_0_EQend
-Label_2_EQAssignZero:
-	li $t9,0
-	j Label_0_EQend
-Label_0_EQend:
-	beq $t9,$zero,IF_FALSE1
-	li $t12,5
 	addi $sp, $sp, -4
-	sw $t12, 0($sp)
-	jal FUNC_LABEL_func
-	addi $sp, $sp, 4
-	move $t13, $v0
-IF_FALSE1:
-	li $t14,34
-	lw $t15,global_arr
-	li $t16,0
-	j END_PROGRAM
+	sw $ra, 0($sp)
+	addi $sp, $sp, -4
+	sw $fp, 0($sp)
+	move $fp, $sp
+	addi $sp, $sp, 0
+	li $t0,2
+	li $t1,100
+	addi $sp, $sp, -4
+	sw $t1, 0($sp)
+	addi $sp, $sp, -4
+	sw $t0, 0($sp)
+	jal FUNC_LABEL_PrintPrimes
+	addi $sp, $sp, 8
+	move $t0, $v0
+	move $sp, $fp
+	lw $fp, 0($sp)
+	lw $ra, 4($sp)
+	addi $sp, $sp, 8
+	jr $ra
+main:
+	jal FUNC_LABEL_main
 END_PROGRAM:
+	li $v0, 10
+	syscall
+EXIT_ACCESS_VIOLATION:
+	la $a0, ERR_ACCESS_VIOLATION
+	li $v0, 4
+	syscall
+	li $v0, 10
+	syscall
+EXIT_ZERO_DIV:
+	la $a0, ERR_ZERO_DIV
+	li $v0, 4
+	syscall
+	li $v0, 10
+	syscall
+EXIT_INVALID_POINTER:
+	la $a0, ERR_INVALID_POINTER
+	li $v0, 4
+	syscall
+	li $v0, 10
 	syscall
