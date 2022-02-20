@@ -70,7 +70,7 @@ public class sir_MIPS_a_lot
 			fileWriter.format("\tmove %s, %s\n",IR.getInstance().a0, t);
 		}
 		else {
-			fileWriter.format("\tla %s, %s\n", IR.getInstance().a0, t);
+			fileWriter.format("\tlw %s, %s\n", IR.getInstance().a0, t);
 		}
 		// li $v0, 4
 		fileWriter.format("\tli %s, %s\n",IR.getInstance().v0, 4);

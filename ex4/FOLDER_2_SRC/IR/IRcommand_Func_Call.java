@@ -54,6 +54,7 @@ public class IRcommand_Func_Call extends IRcommand
 			switch (sysCallNum){
 				case 1:
 					sir_MIPS_a_lot.getInstance().print_int(args.head);
+					sir_MIPS_a_lot.getInstance().print_string(IR.getInstance().spaceTemp);
 					break;
 				case 4:
 					sir_MIPS_a_lot.getInstance().print_string(args.head);

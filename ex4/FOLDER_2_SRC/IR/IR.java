@@ -31,6 +31,7 @@ public class IR
 	public TEMP invalidPtr = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_WORD_SIZE");
 	public TEMP maxIntTemp;
 	public TEMP minIntTemp;
+	public TEMP spaceTemp;
 	public TEMP wordSizeTemp = new TEMP(sir_MIPS_a_lot.WORD_SIZE, true);
 	public TEMP sp;
 	public TEMP fp;
@@ -41,6 +42,7 @@ public class IR
 	public TEMP a1;
 	public TEMP s0;
 	public TEMP s1;
+	public static final String strSpace = " ";
 	public static final String funcLabelPrefix = "FUNC_LABEL_";
 	public static final String endProgLabel = "END_PROGRAM";
 	public static final String  globalVarPrefix = "GLOBAL_VAR_";
@@ -213,15 +215,19 @@ public class IR
 			instance.Add_IRdata(new IRdata_Global_Var(instance.maxIntTemp, "" + MAX_INT));
 			instance.Add_IRdata(new IRdata_Global_Var(instance.minIntTemp, "" + MIN_INT));
 			// string constants
+			TEMP spaceData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "CONST_SPACE");
 			TEMP accessViolationData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_ACCESS_VIOLATION");
 			TEMP zeroDivData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_ZERO_DIV");
 			TEMP invalidPtrData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_INVALID_POINTER");
+			instance.Add_IRdata(new IRdata_Constant_String(spaceData, strSpace));
 			instance.Add_IRdata(new IRdata_Constant_String(accessViolationData, "Access Violation"));
 			instance.Add_IRdata(new IRdata_Constant_String(zeroDivData, "Illegal Division By Zero"));
 			instance.Add_IRdata(new IRdata_Constant_String(invalidPtrData, "Invalid Pointer Dereference"));
+			instance.spaceTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_SPACE");
 			instance.accessViolation = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_ACCESS_VIOLATION");
 			instance.zeroDiv = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_ZERO_DIV");
 			instance.invalidPtr = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_INVALID_POINTER");
+			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.spaceTemp, spaceData.toString()));
 			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.accessViolation, accessViolationData.toString()));
 			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.zeroDiv, zeroDivData.toString()));
 			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.invalidPtr, invalidPtrData.toString()));
