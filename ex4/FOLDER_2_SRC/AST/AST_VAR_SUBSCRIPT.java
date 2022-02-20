@@ -83,8 +83,11 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	public TEMP IRme(boolean storeInTemp){
 		this.base = var.IRme();
 		this.offset = subscript.IRme();
-		TEMP storeTo = TEMP_FACTORY.getInstance().getFreshTEMP();
-		IR.getInstance().Add_IRcommand(new IRcommand_Array_Access(storeTo, this.base, offset));
+		TEMP storeTo = null;
+		if(storeInTemp) {
+			storeTo = TEMP_FACTORY.getInstance().getFreshTEMP();
+			IR.getInstance().Add_IRcommand(new IRcommand_Array_Access(storeTo, this.base, offset));
+		}
 		return storeTo;
 	}
 }
