@@ -25,6 +25,7 @@ public class IR_Graph {
         LinkedList<IRcommand> nextCmds = new LinkedList<IRcommand>();
         if(cmd instanceof IRcommand_Func_Call) {
             nextCmds.add(IR.getInstance().findCmdAtLabel("FUNC_LABEL_" + ((IRcommand_Func_Call) cmd).func.name));
+            nextCmds.add(next);
         } else if(cmd instanceof IRcommand_Jump_If_Eq_To_Zero) {
             nextCmds.add(IR.getInstance().findCmdAtLabel(((IRcommand_Jump_If_Eq_To_Zero) cmd).label_name));
             nextCmds.add(next);

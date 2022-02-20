@@ -17,6 +17,8 @@ import TYPES.TYPE_FUNCTION;
 import TYPES.TYPE_LIST;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class IRcommand_Func_Call extends IRcommand
@@ -48,6 +50,8 @@ public class IRcommand_Func_Call extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
+		List<TEMP> saveRegs = new LinkedList<TEMP>();
+		int saveRegsCnt = 0;
 		TEMP sp = IR.getInstance().sp;
 		if(func.isSysCall){
 			int sysCallNum = func.sysCallNum;
@@ -65,6 +69,19 @@ public class IRcommand_Func_Call extends IRcommand
 			}
 			return;
 		}
+
+		for (TEMP t : this.regIn) {
+			if(t.toString().startsWith("$t")) {
+				saveRegs.add(t);
+			}
+		}
+		saveRegsCnt = saveRegs.size();
+		int i = saveRegsCnt;
+		sir_MIPS_a_lot.getInstance().addi(sp, sp, -sir_MIPS_a_lot.WORD_SIZE*saveRegsCnt);
+		for (TEMP reg : saveRegs) {
+			sir_MIPS_a_lot.getInstance().store(reg, sp, i-1);
+			i -= 1;
+		}
 		int argCount = 0;
 		TEMP_LIST args_reverse = null;
 		// reverse args list
@@ -78,9 +95,16 @@ public class IRcommand_Func_Call extends IRcommand
 		}
 		sir_MIPS_a_lot.getInstance().jal(IR.funcLabelPrefix + func.name);
 		sir_MIPS_a_lot.getInstance().addi(sp, sp, sir_MIPS_a_lot.WORD_SIZE * argCount);
+		i = saveRegsCnt;
+		for (TEMP reg : saveRegs) {
+			sir_MIPS_a_lot.getInstance().load(reg, sp, i-1);
+			i -= 1;
+		}
+		sir_MIPS_a_lot.getInstance().addi(sp, sp, sir_MIPS_a_lot.WORD_SIZE*saveRegsCnt);
 		if(dst != null) {
 			sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().v0);
 		}
+
 
 	}
 

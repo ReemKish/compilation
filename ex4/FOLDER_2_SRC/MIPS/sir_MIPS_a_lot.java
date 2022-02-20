@@ -130,6 +130,10 @@ public class sir_MIPS_a_lot
 			fileWriter.format("\tlw %s, %s+%d\n", dst.toString(), src.toString(), offset * WORD_SIZE);
 		}
 	}
+	public void load(String dst, TEMP src, int offset)
+	{
+		fileWriter.format("\tlw %s, %d(%s)\n", dst, offset * WORD_SIZE, src.toString());
+	}
 	public void store(TEMP src, TEMP dst, int offset)
 	{
 		if(dst.toString().contains("$")) {
@@ -142,6 +146,10 @@ public class sir_MIPS_a_lot
 			}
 			fileWriter.format("\tsw %s, %s+%d\n", src.toString(), dst.toString(), offset * WORD_SIZE);
 		}
+	}
+	public void store(String src, TEMP dst, int offset)
+	{
+		fileWriter.format("\tsw %s, %d(%s)\n", src, offset * WORD_SIZE, dst.toString());
 	}
 	public void li(TEMP t,int value)
 	{
