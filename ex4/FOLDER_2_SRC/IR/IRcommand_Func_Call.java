@@ -14,6 +14,7 @@ package IR;
 import MIPS.sir_MIPS_a_lot;
 import TEMP.*;
 import TYPES.TYPE_FUNCTION;
+import TYPES.TYPE_LIST;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -63,9 +64,11 @@ public class IRcommand_Func_Call extends IRcommand
 			}
 			return;
 		}
-		/*TODO: possibly need to reverse list before printing MIPs*/
 		int argCount = 0;
-		for (TEMP_LIST a = args; a != null; a=a.tail)
+		TEMP_LIST args_reverse = null;
+		// reverse args list
+		for (TEMP_LIST a = args; a != null; a=a.tail) {args_reverse = new TEMP_LIST(a.head, args_reverse);}
+		for (TEMP_LIST a = args_reverse; a != null; a=a.tail)
 		{
 			argCount++;
 			TEMP arg = a.head;
