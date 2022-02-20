@@ -193,6 +193,10 @@ public class sir_MIPS_a_lot
 	{
 		fileWriter.format("\tjal %s\n",inlabel);
 	}
+	public void slt(TEMP dst,TEMP oprnd1,TEMP oprnd2)
+	{
+		fileWriter.format("\tslt %s,%s,%s\n",dst.toString(),oprnd1.toString(),oprnd2.toString());
+	}
 	public void blt(TEMP oprnd1,TEMP oprnd2,String label)
 	{
 		fileWriter.format("\tblt %s,%s,%s\n",oprnd1.toString(),oprnd2.toString(),label);

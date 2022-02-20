@@ -169,15 +169,13 @@ public class AST_EXP_BINOP extends AST_EXP
 		}
 		if (OP == 1)
 		{
-			IR.
-					getInstance().
-					Add_IRcommand(new IRcommand_Binop_Sub_Integers(dst,t1,t2));
+			IR.getInstance().Add_IRcommand(new IRcommand_Binop_Sub_Integers(dst,t1,t2));
+			IR.getInstance().truncate_int(dst);
 		}
 		if (OP == 2)
 		{
-			IR.
-					getInstance().
-					Add_IRcommand(new IRcommand_Binop_Mul_Integers(dst,t1,t2));
+			IR.getInstance().Add_IRcommand(new IRcommand_Binop_Mul_Integers(dst,t1,t2));
+			IR.getInstance().truncate_int(dst);
 		}
 		if (OP == 3)
 		{

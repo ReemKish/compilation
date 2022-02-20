@@ -42,46 +42,7 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		/*******************************/
-		/* [1] Allocate 2 fresh labels */
-		/*******************************/
-		String label_end        = getFreshLabel("LTend");
-		String label_AssignOne  = getFreshLabel("LTAssignOne");
-		String label_AssignZero = getFreshLabel("LTAssignZero");
-		
-		/******************************************/
-		/* [2] if (t1< t2) goto label_AssignOne;  */
-		/*     if (t1>=t2) goto label_AssignZero; */
-		/******************************************/
-		sir_MIPS_a_lot.getInstance().blt(t1,t2,label_AssignOne);
-		sir_MIPS_a_lot.getInstance().bge(t1,t2,label_AssignZero);
-
-		/************************/
-		/* [3] label_AssignOne: */
-		/*                      */
-		/*         t3 := 1      */
-		/*         goto end;    */
-		/*                      */
-		/************************/
-		sir_MIPS_a_lot.getInstance().label(label_AssignOne);
-		sir_MIPS_a_lot.getInstance().li(dst,1);
-		sir_MIPS_a_lot.getInstance().jump(label_end);
-
-		/*************************/
-		/* [4] label_AssignZero: */
-		/*                       */
-		/*         t3 := 1       */
-		/*         goto end;     */
-		/*                       */
-		/*************************/
-		sir_MIPS_a_lot.getInstance().label(label_AssignZero);
-		sir_MIPS_a_lot.getInstance().li(dst,0);
-		sir_MIPS_a_lot.getInstance().jump(label_end);
-
-		/******************/
-		/* [5] label_end: */
-		/******************/
-		sir_MIPS_a_lot.getInstance().label(label_end);
+		sir_MIPS_a_lot.getInstance().slt(dst, t1,t2);
 	}
 
 	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = lt " + t1 + ", " + t2); }
