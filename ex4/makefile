@@ -60,7 +60,7 @@ OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
 ##########
 # TARGET #
 ##########
-all: run
+all: run test
 	clear
 	@echo "* [10] Allocate registers (just for this running example) *"
 	@sed -i 's/\bTemp_0\b/$$t0/g'  ${OUTPUT_DIR}/MIPS.txt
@@ -108,6 +108,9 @@ all: run
 	@pr -mtw 140 ${INPUT} ${OUTPUT_DIR}/IR.txt ${OUTPUT_DIR}/MIPS.txt
 	@echo "* [12] Run spim and redirect its output *"
 	spim -f ${OUTPUT_DIR}/MIPS.txt > ${OUTPUT_DIR}/MIPS_OUTPUT.txt
+
+test: compile
+	@./test.sh
 
 compile:
 	clear
