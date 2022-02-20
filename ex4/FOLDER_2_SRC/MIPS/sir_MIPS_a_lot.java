@@ -165,7 +165,7 @@ public class sir_MIPS_a_lot
 	}
 	public void sub(TEMP dst,TEMP oprnd1,TEMP oprnd2)
 	{
-		fileWriter.format("\tadd %s,%s,%s\n",dst.toString(),oprnd1.toString(),oprnd2.toString());
+		fileWriter.format("\tsub %s,%s,%s\n",dst.toString(),oprnd1.toString(),oprnd2.toString());
 	}
 	public void mul(TEMP dst,TEMP oprnd1,TEMP oprnd2)
 	{

@@ -22,46 +22,46 @@ FUNC_LABEL_IsPrime:
 	sw $t0, -8($fp)
 WHILE_TRUE1:
 	lw $t0, -4($fp)
-	lw $t0, 8($fp)
-	blt $t0,$t0,Label_1_LTAssignOne
-	bge $t0,$t0,Label_2_LTAssignZero
+	lw $t1, 8($fp)
+	blt $t0,$t1,Label_1_LTAssignOne
+	bge $t0,$t1,Label_2_LTAssignZero
 Label_1_LTAssignOne:
-	li $t2,1
+	li $t0,1
 	j Label_0_LTend
 Label_2_LTAssignZero:
-	li $t2,0
+	li $t0,0
 	j Label_0_LTend
 Label_0_LTend:
-	beq $t2,$zero,WHILE_FALSE1
+	beq $t0,$zero,WHILE_FALSE1
 	li $t0,2
 	sw $t0, -8($fp)
 WHILE_TRUE2:
 	lw $t0, -8($fp)
-	lw $t0, 8($fp)
-	blt $t0,$t0,Label_4_LTAssignOne
-	bge $t0,$t0,Label_5_LTAssignZero
+	lw $t1, 8($fp)
+	blt $t0,$t1,Label_4_LTAssignOne
+	bge $t0,$t1,Label_5_LTAssignZero
 Label_4_LTAssignOne:
-	li $t1,1
+	li $t0,1
 	j Label_3_LTend
 Label_5_LTAssignZero:
-	li $t1,0
+	li $t0,0
 	j Label_3_LTend
 Label_3_LTend:
-	beq $t1,$zero,WHILE_FALSE2
-	lw $t3, -4($fp)
-	lw $t0, -8($fp)
-	mul $t0,$t3,$t0
+	beq $t0,$zero,WHILE_FALSE2
+	lw $t0, -4($fp)
+	lw $t1, -8($fp)
+	mul $t1,$t0,$t1
 	lw $t0, 8($fp)
-	beq $t0,$t0,Label_7_EQAssignOne
-	bne $t0,$t0,Label_8_EQAssignZero
+	beq $t1,$t0,Label_7_EQAssignOne
+	bne $t1,$t0,Label_8_EQAssignZero
 Label_7_EQAssignOne:
-	li $t4,1
+	li $t0,1
 	j Label_6_EQend
 Label_8_EQAssignZero:
-	li $t4,0
+	li $t0,0
 	j Label_6_EQend
 Label_6_EQend:
-	beq $t4,$zero,IF_FALSE3
+	beq $t0,$zero,IF_FALSE3
 	li $t0,0
 	move $v0 $t0
 	move $sp, $fp
@@ -71,8 +71,8 @@ Label_6_EQend:
 	jr $ra
 IF_FALSE3:
 	lw $t0, -8($fp)
-	li $t3,1
-	add $t0,$t0,$t3
+	li $t1,1
+	add $t0,$t0,$t1
 	sw $t0, -8($fp)
 	j WHILE_TRUE2
 WHILE_FALSE2:
@@ -101,18 +101,18 @@ FUNC_LABEL_PrintPrimes:
 WHILE_TRUE4:
 	lw $t0, -4($fp)
 	lw $t2, 32($fp)
-	li $t0,1
-	add $t0,$t2,$t0
-	blt $t0,$t0,Label_10_LTAssignOne
-	bge $t0,$t0,Label_11_LTAssignZero
-Label_10_LTAssignOne:
 	li $t1,1
+	add $t1,$t2,$t1
+	blt $t0,$t1,Label_10_LTAssignOne
+	bge $t0,$t1,Label_11_LTAssignZero
+Label_10_LTAssignOne:
+	li $t0,1
 	j Label_9_LTend
 Label_11_LTAssignZero:
-	li $t1,0
+	li $t0,0
 	j Label_9_LTend
 Label_9_LTend:
-	beq $t1,$zero,WHILE_FALSE4
+	beq $t0,$zero,WHILE_FALSE4
 	lw $t0, -4($fp)
 	addi $sp, $sp, -4
 	sw $t0, 0($sp)
@@ -125,9 +125,9 @@ Label_9_LTend:
 	li $v0, 1
 	syscall
 IF_FALSE5:
-	lw $t2, -4($fp)
+	lw $t1, -4($fp)
 	li $t0,1
-	add $t0,$t2,$t0
+	add $t0,$t1,$t0
 	sw $t0, -4($fp)
 	j WHILE_TRUE4
 WHILE_FALSE4:
