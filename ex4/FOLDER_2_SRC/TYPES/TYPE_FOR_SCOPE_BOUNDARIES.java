@@ -34,7 +34,7 @@ public class TYPE_FOR_SCOPE_BOUNDARIES extends TYPE
 		return field_offset;
 	}
 	public void incrementOffsetsFromInnerQuotes(TYPE_FOR_SCOPE_BOUNDARIES inner){
-		arg_offset+=inner.getArgCount();
+		// arg_offset+=inner.getArgCount();
 		var_offset+=inner.getVarCount();
 		field_offset+=inner.getFieldCount();
 	}
