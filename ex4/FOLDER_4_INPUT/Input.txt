@@ -23,7 +23,7 @@ void PrintPrimes(int start, int end)
 {
     int p := start;
     
-    while (p < (end+1))
+    while (p < end+1)
     {
         if (IsPrime(p))
         {
