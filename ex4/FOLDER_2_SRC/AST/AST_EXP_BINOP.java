@@ -162,9 +162,8 @@ public class AST_EXP_BINOP extends AST_EXP
 						Add_IRcommand(new IRcommand_Binop_Concatenate_Strings(dst,t1,t2));*/
 			}
 			else{
-				IR.
-						getInstance().
-						Add_IRcommand(new IRcommand_Binop_Add_Integers(dst,t1,t2));
+				IR.getInstance().Add_IRcommand(new IRcommand_Binop_Add_Integers(dst,t1,t2));
+				IR.getInstance().truncate_int(dst);
 			}
 
 		}

@@ -43,7 +43,6 @@ public class IRcommand_Binop_Add_Integers extends IRcommand
 	public void MIPSme()
 	{
 		sir_MIPS_a_lot.getInstance().add(dst,t1,t2);
-		IR.getInstance().truncate_int(dst);
 	}
 
 	public void printMe() { IR.getInstance().fileNewLine(); IR.getInstance().filePrintln(dst + " = add " + t1 + ", " + t2); }

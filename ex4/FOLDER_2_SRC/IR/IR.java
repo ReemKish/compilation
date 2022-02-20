@@ -44,6 +44,9 @@ public class IR
 	public TEMP s1;
 	public static final String strSpace = " ";
 	public static final String funcLabelPrefix = "FUNC_LABEL_";
+	public static final String  overflowLabelPrefix = "OVERFLOW_";
+	public static final String  underflowLabelPrefix = "UNDERFLOW_";
+	public static final String  inboundsLabelPrefix = "INBOUNDS_";
 	public static final String endProgLabel = "END_PROGRAM";
 	public static final String  globalVarPrefix = "GLOBAL_VAR_";
 	public static final String  strPrefix = "DATA_STR_";
@@ -144,24 +147,49 @@ public class IR
 
 	public void truncate_int(TEMP dst){
 		/*
-		String over_max_label = "over_max_"+IR.getInstance().getLabelIndex();
-		String after_max_label = "after_max_fix_"+IR.getInstance().getLabelIndex();
-		String under_min_label = "under_min"+IR.getInstance().getLabelIndex();
-		String after_min_label = "after_min_fix_"+IR.getInstance().getLabelIndex();
-		// check if the result is over the maximum int value
-		sir_MIPS_a_lot.getInstance().ble(dst, IR.getInstance().maxIntTemp, after_max_label);
-		// if so, truncate it (label for code readability only)
-		sir_MIPS_a_lot.getInstance().label(over_max_label);
-		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().maxIntTemp);
-		// check if the result is under the minimum int value
-		sir_MIPS_a_lot.getInstance().label(after_max_label);
-		sir_MIPS_a_lot.getInstance().ble(IR.getInstance().minIntTemp, dst, after_min_label);
-		// if so, truncate it (label for code readability only)
-		sir_MIPS_a_lot.getInstance().label(under_min_label);
-		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().minIntTemp);
-		sir_MIPS_a_lot.getInstance().label(after_min_label);
-		// done!;
-		 */
+		Typical bounds check (on $t0):
+		  ...
+		  bgt $t0, 32767, OVERFLOW_1
+		  blt $t0, -32768, UNDERFLOW_1
+		  jmp INBOUNDS_1
+		UNDERFLOW_1:
+		  li $t0, -32768
+		  jmp INBOUNDS_1
+		OVERFLOW_1:
+		  li $t0, 32767
+		INBOUNDS_1:
+  			...
+		*/
+		int index = IR.getInstance().getLabelIndex();
+		String overflowLabel = overflowLabelPrefix + index;
+		String underflowLabel = underflowLabelPrefix + index;
+		String inboundsLabel = inboundsLabelPrefix + index;
+		IR.getInstance().Add_IRcommand(new IRcommand_Jump_If_LT(dst, MIN_INT, underflowLabel));
+		IR.getInstance().Add_IRcommand(new IRcommand_Jump_If_GT(dst, MAX_INT, overflowLabel));
+		IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label(inboundsLabel));
+		IR.getInstance().Add_IRcommand(new IRcommand_Label(underflowLabel));
+		IR.getInstance().Add_IRcommand(new IRcommandConstInt(dst, MIN_INT));
+		IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label(inboundsLabel));
+		IR.getInstance().Add_IRcommand(new IRcommand_Label(overflowLabel));
+		IR.getInstance().Add_IRcommand(new IRcommandConstInt(dst, MAX_INT));
+		IR.getInstance().Add_IRcommand(new IRcommand_Label(inboundsLabel));
+//		String over_max_label = "over_max_"+IR.getInstance().getLabelIndex();
+//		String after_max_label = "after_max_fix_"+IR.getInstance().getLabelIndex();
+//		String under_min_label = "under_min"+IR.getInstance().getLabelIndex();
+//		String after_min_label = "after_min_fix_"+IR.getInstance().getLabelIndex();
+//		// check if the result is over the maximum int value
+//		sir_MIPS_a_lot.getInstance().ble(dst, IR.getInstance().maxIntTemp, after_max_label);
+//		// if so, truncate it (label for code readability only)
+//		sir_MIPS_a_lot.getInstance().label(over_max_label);
+//		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().maxIntTemp);
+//		// check if the result is under the minimum int value
+//		sir_MIPS_a_lot.getInstance().label(after_max_label);
+//		sir_MIPS_a_lot.getInstance().ble(IR.getInstance().minIntTemp, dst, after_min_label);
+//		// if so, truncate it (label for code readability only)
+//		sir_MIPS_a_lot.getInstance().label(under_min_label);
+//		sir_MIPS_a_lot.getInstance().move(dst, IR.getInstance().minIntTemp);
+//		sir_MIPS_a_lot.getInstance().label(after_min_label);
+//		// done!;
 	}
 
 	public int getLabelIndex(){

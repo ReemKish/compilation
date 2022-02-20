@@ -197,6 +197,18 @@ public class sir_MIPS_a_lot
 	{
 		fileWriter.format("\tblt %s,%s,%s\n",oprnd1.toString(),oprnd2.toString(),label);
 	}
+	public void blt(TEMP oprnd1,int immed,String label)
+	{
+		fileWriter.format("\tblt %s,%s,%s\n",oprnd1.toString(),immed,label);
+	}
+	public void bgt(TEMP oprnd1,TEMP oprnd2,String label)
+	{
+		fileWriter.format("\tbgt %s,%s,%s\n",oprnd1.toString(),oprnd2.toString(),label);
+	}
+	public void bgt(TEMP oprnd1,int immed,String label)
+	{
+		fileWriter.format("\tbgt %s,%s,%s\n",oprnd1.toString(),immed,label);
+	}
 	public void bltz(TEMP oprnd1,String label)
 	{
 		fileWriter.format("\tbltz %s, %s\n",oprnd1.toString(),label);
