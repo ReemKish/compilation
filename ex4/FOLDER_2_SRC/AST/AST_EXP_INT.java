@@ -53,8 +53,17 @@ public class AST_EXP_INT extends AST_EXP
 	}
 	public TEMP IRme()
 	{
-		TEMP t = TEMP_FACTORY.getInstance().getFreshTEMP();
-		IR.getInstance().Add_IRcommand(new IRcommandConstInt(t,value));
-		return t;
+		return this.IRme(false);
+	}
+	public TEMP IRme(boolean allowImmediate)
+	{
+		if(allowImmediate){
+			return new TEMP(value, true);
+		}
+		else {
+			TEMP t = TEMP_FACTORY.getInstance().getFreshTEMP();
+			IR.getInstance().Add_IRcommand(new IRcommandConstInt(t, value));
+			return t;
+		}
 	}
 }

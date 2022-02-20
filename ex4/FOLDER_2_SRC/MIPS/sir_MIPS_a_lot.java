@@ -93,19 +93,7 @@ public class sir_MIPS_a_lot
 	/***********************/
 	/* Sections */
 	/***********************/
-	public void dataSection()
-	{
-		fileWriter.println(".data");
-		// number constants
-		fileWriter.println("CONST_MAX_INT: .word " + MAX_INT);
-		fileWriter.println("CONST_MIN_INT: .word " + MIN_INT);
-		fileWriter.println("CONST_WORD_SIZE: .word " + WORD_SIZE);
-
-		// string constants
-		fileWriter.println(strPrefix + ERR_AccessViolation + ": .asciiz " + MSG_AccessViolation);
-		fileWriter.println(strPrefix + ERR_ZeroDiv + ": .asciiz " + MSG_ZeroDiv);
-		fileWriter.println(strPrefix + ERR_InvalidPointer + ": .asciiz " + MSG_InvalidPointer);
-	}
+	public void dataSection() { fileWriter.format(".data\n"); }
 	public void textSection(){
 		fileWriter.format(".text\n");
 	}

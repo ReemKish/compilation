@@ -24,12 +24,14 @@ public class IR
 	private IRdata dataHead=null;
 	private IRdataList dataTail=null;
 	private int labelCounter = 0;
+	private static final int MAX_INT = 32767;
+	private static final int MIN_INT = -32768;
 	public TEMP accessViolation;
 	public TEMP zeroDiv;
 	public TEMP invalidPtr = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_WORD_SIZE");
 	public TEMP maxIntTemp;
 	public TEMP minIntTemp;
-	public TEMP wordSizeTemp;
+	public TEMP wordSizeTemp = new TEMP(sir_MIPS_a_lot.WORD_SIZE, true);
 	public TEMP sp;
 	public TEMP fp;
 	public TEMP ra;
@@ -206,7 +208,23 @@ public class IR
 			/* [0] The instance itself ... */
 			/*******************************/
 			instance = new IR();
-
+			instance.maxIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MAX_INT");
+			instance.minIntTemp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("CONST_MIN_INT");
+			instance.Add_IRdata(new IRdata_Global_Var(instance.maxIntTemp, "" + MAX_INT));
+			instance.Add_IRdata(new IRdata_Global_Var(instance.minIntTemp, "" + MIN_INT));
+			// string constants
+			TEMP accessViolationData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_ACCESS_VIOLATION");
+			TEMP zeroDivData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_ZERO_DIV");
+			TEMP invalidPtrData = TEMP_FACTORY.getInstance().getFreshNamedTEMP(strPrefix + "ERR_INVALID_POINTER");
+			instance.Add_IRdata(new IRdata_Constant_String(accessViolationData, "Access Violation"));
+			instance.Add_IRdata(new IRdata_Constant_String(zeroDivData, "Illegal Division By Zero"));
+			instance.Add_IRdata(new IRdata_Constant_String(invalidPtrData, "Invalid Pointer Dereference"));
+			instance.accessViolation = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_ACCESS_VIOLATION");
+			instance.zeroDiv = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_ZERO_DIV");
+			instance.invalidPtr = TEMP_FACTORY.getInstance().getFreshNamedTEMP("ERR_INVALID_POINTER");
+			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.accessViolation, accessViolationData.toString()));
+			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.zeroDiv, zeroDivData.toString()));
+			IR.getInstance().Add_IRdata(new IRdata_Global_Var(instance.invalidPtr, invalidPtrData.toString()));
 
 			// unique registers
 			instance.sp = TEMP_FACTORY.getInstance().getFreshNamedTEMP("$sp");
