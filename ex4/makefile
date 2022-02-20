@@ -60,7 +60,7 @@ OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
 ##########
 # TARGET #
 ##########
-all: run test
+all: run
 	clear
 	@echo "* [10] Allocate registers (just for this running example) *"
 	@sed -i 's/\bTemp_0\b/$$t0/g'  ${OUTPUT_DIR}/MIPS.txt
